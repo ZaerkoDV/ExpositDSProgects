@@ -20,6 +20,12 @@
 			<name>Zaerko Denis</name>
 			<email>zaerko1991@gmail.com</email>
 		</developer>
+		
+		<developer>
+			<id>Khomyakov</id>
+			<name>Khomyakov Artyom</name>
+			<email>homa.php@gmail.com</email>
+		</developer>
 	</developers>
 
 	<properties>

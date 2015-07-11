@@ -20,7 +20,7 @@
 			<name>Zaerko Denis</name>
 			<email>zaerko1991@gmail.com</email>
 		</developer>
-		
+
 		<developer>
 			<id>Khomyakov</id>
 			<name>Khomyakov Artyom</name>
@@ -109,7 +109,7 @@
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>
-		
+
 		<!--BD connector -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -147,6 +147,12 @@
 			<scope>runtime</scope>
 		</dependency>
 		
+		<!--BD connector -->
+		  <dependency>
+		   <groupId>mysql</groupId>
+		   <artifactId>mysql-connector-java</artifactId>
+		   <version>5.1.36</version>
+		  </dependency>
 
 		<!--log4j framework-->
 		<dependency>

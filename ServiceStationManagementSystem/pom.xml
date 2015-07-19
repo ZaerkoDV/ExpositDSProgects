@@ -111,12 +111,12 @@
 		</dependency>
 
 		<!--BD connector -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version>
-		</dependency>
-
+		  <dependency>
+		   <groupId>mysql</groupId>
+		   <artifactId>mysql-connector-java</artifactId>
+		   <version>5.1.36</version>
+		 </dependency>
+		  
 		<!--slf4j fremework-->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -146,13 +146,6 @@
 			<version>${org.slf4j-version}</version>
 			<scope>runtime</scope>
 		</dependency>
-		
-		<!--BD connector -->
-		  <dependency>
-		   <groupId>mysql</groupId>
-		   <artifactId>mysql-connector-java</artifactId>
-		   <version>5.1.36</version>
-		  </dependency>
 
 		<!--log4j framework-->
 		<dependency>

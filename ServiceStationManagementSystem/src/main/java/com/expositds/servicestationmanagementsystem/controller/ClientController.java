@@ -4,7 +4,7 @@
 package com.expositds.servicestationmanagementsystem.controller;
 
 /**
- * @author Zaerko_DV
+ * @author Artyom_Khomyakov
  *
  */
 public class ClientController {

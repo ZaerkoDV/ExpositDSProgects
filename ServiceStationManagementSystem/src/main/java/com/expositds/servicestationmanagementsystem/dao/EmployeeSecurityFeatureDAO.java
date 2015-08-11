@@ -15,18 +15,19 @@
 package com.expositds.servicestationmanagementsystem.dao;
 
 /**
- * <p>The interface ClientSecurityFeatureDAO contain methods ads which realize in class 
- * ClientSecurityFeatureDAOImpl. Class ClientSecurityFeatureDAOImpl use DAO pattern which
+ * <p>The interface EmployeeSecurityFeatureDAO contain methods ads which realize in class 
+ * EmployeeSecurityFeatureDAOImpl. Class EmployeeSecurityFeatureDAOImpl use DAO pattern which
  * describes layer of data access to object. DAO layer perform link between relational and
- * object model. Model for this dao layer describied in class ClientSecurityFeature.This
+ * object model.Model for this dao layer describied in class EmployeeSecurityFeature.This
  * interface contain ads methods which intended to access to operation with objects.Class
- * use Spring framework to work whith ORM.In particular often use  HibernateTemplate for
- * integration Hibernate and Spring technologys. For work with data base use hibernate criteria. 
+ * use Spring framework to work whith ORM.In particular often use HibernateTemplate for
+ * integration Hibernate and Spring technologys. For work with data base use hibernate
+ * criteria. 
  * 
  * @version 1.0 11.08.2015
  * @author Zaerko Denis
  */
-public interface ClientSecurityFeatureDAO {
+public interface EmployeeSecurityFeatureDAO {
 
 	/**
 	 * Return list of client by last name. If data base contains client with transmitted
@@ -41,6 +42,5 @@ public interface ClientSecurityFeatureDAO {
 	 * 
 	 * @return true if login and password not exist in data base else false.
 	 */
-	public Boolean isUniqueLoginPassword(String clientLogin, String clientPassword);
-	
+	public Boolean isUniqueLoginPassword(String employeLogin, String employePassword);
 }

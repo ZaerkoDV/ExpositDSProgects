@@ -56,6 +56,7 @@
 				<beans:value>com.expositds.servicestationmanagementsystem.model.DepartmentOrder</beans:value>
 				<beans:value>com.expositds.servicestationmanagementsystem.model.Detail</beans:value>
 				<beans:value>com.expositds.servicestationmanagementsystem.model.Employee</beans:value>
+				<beans:value>com.expositds.servicestationmanagementsystem.model.EmployeeSecurityFeature</beans:value>
 				<beans:value>com.expositds.servicestationmanagementsystem.model.Client</beans:value>
 				<beans:value>com.expositds.servicestationmanagementsystem.model.ClientSecurityFeature</beans:value>
 			</beans:list>
@@ -70,107 +71,130 @@
 				 <!--Cache get speed operation but more dengeres -->
 				<beans:prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</beans:prop>
 				<!--create new bd when start aplication-->
-				<!--<beans:prop  key="hibernate.hbm2ddl.auto">create</beans:prop>-->
+				<!--<beans:prop key="hibernate.hbm2ddl.auto">create</beans:prop>-->
 			</beans:props>
 		</beans:property>
 	</beans:bean>
 	
+	
+	<beans:bean id="entityUtilDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.EntityUtilDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<!--
+	<beans:bean id="entityUtilService" class="com.expositds.servicestationmanagementsystem.service.impl.EntityUtilServiceImpl">
+		<beans:property name="entityUtilDAO" ref="entityUtilDAO"></beans:property>
+	</beans:bean>
+	-->
+	
 	<!--dao for ServiceStation-->
-	<beans:bean id="serviceStationDAOImpi" class="com.expositds.servicestationmanagementsystem.dao.ServiceStationDAOImpi">
+	<beans:bean id="serviceStationDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.ServiceStationDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for ServiceStation-->
 	<!--
-	<beans:bean id="serviceStationServiceImpi" class="com.expositds.servicestationmanagementsystem.service.ServiceStationServiceImpi">
-		<beans:property name="serviceStationDAOImpi" ref="serviceStationDAO"></beans:property>
+	<beans:bean id="serviceStationService" class="com.expositds.servicestationmanagementsystem.service.impl.ServiceStationServiceImpl">
+		<beans:property name="serviceStationDAO" ref="serviceStationDAO"></beans:property>
 	</beans:bean>
 	 -->
 	
 	<!--dao for ServiceStationCommentMark-->
-	<beans:bean id="serviceStationCommentMarkDAOImpi" class="com.expositds.servicestationmanagementsystem.dao.ServiceStationCommentMarkDAOImpi">
+	
+	<beans:bean id="serviceStationCommentMarkDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.ServiceStationCommentMarkDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
+	 
 	<!--service for ServiceStationCommentMark-->
 	<!--
-	<beans:bean id="serviceStationCommentMarkServiceImpi" class="com.expositds.servicestationmanagementsystem.service.ServiceStationCommentMarkServiceImpi">
-		<beans:property name="serviceStationCommentMarkDAOImpi" ref="serviceStationCommentMarkDAOImpi"></beans:property>
+	<beans:bean id="serviceStationCommentMarkService" class="com.expositds.servicestationmanagementsystem.service.impl.ServiceStationCommentMarkServiceImpl">
+		<beans:property name="serviceStationCommentMarkDAO" ref="serviceStationCommentMarkDAO"></beans:property>
 	</beans:bean>
 	-->
 	
 	<!--dao for Stead-->
-	<beans:bean id="steadDAOImpi" class="com.expositds.servicestationmanagementsystem.dao.SteadDAOImpi">
+	<beans:bean id="steadDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.SteadDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for Stead-->
 	<!--
-	<beans:bean id="steadServiceImpi" class="com.expositds.servicestationmanagementsystem.service.SteadServiceImpi">
-		<beans:property name="steadDAOImpi" ref="steadDAO"></beans:property>
+	<beans:bean id="steadService" class="com.expositds.servicestationmanagementsystem.service.impl.SteadServiceImpl">
+		<beans:property name="steadDAO" ref="steadDAO"></beans:property>
 	</beans:bean>
 	-->
 	
 	<!--dao for Department-->
-	<beans:bean id="departmentDAOImpi" class="com.expositds.servicestationmanagementsystem.dao.DepartmentDAOImpi">
+	<beans:bean id="departmentDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.DepartmentDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for Department-->
 	<!--
-	<beans:bean id="departmentServiceImpi" class="com.expositds.servicestationmanagementsystem.service.DepartmentServiceImpi">
-		<beans:property name="departmentDAOImpi" ref="departmentDAOImpi"></beans:property>
+	<beans:bean id="departmentService" class="com.expositds.servicestationmanagementsystem.service.impl.DepartmentServiceImpl">
+		<beans:property name="departmentDAO" ref="departmentDAO"></beans:property>
 	</beans:bean>
 	-->
 	
 	<!--dao for Department-->
-	<beans:bean id="departmentOrderDAOImpi" class="com.expositds.servicestationmanagementsystem.dao.DepartmentOrderDAOImpi">
+	<beans:bean id="departmentOrderDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.DepartmentOrderDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for Department-->
 	<!--
-	<beans:bean id="departmentOrderServiceImpi" class="com.expositds.servicestationmanagementsystem.service.DepartmentOrderServiceImpi">
-		<beans:property name="departmentOrderDAOImpi" ref="departmentOrderDAOImpi"></beans:property>
+	<beans:bean id="departmentOrderService" class="com.expositds.servicestationmanagementsystem.service.impl.DepartmentOrderServiceImpi">
+		<beans:property name="departmentOrderDAO" ref="departmentOrderDAO"></beans:property>
 	</beans:bean>
 	-->
 	
 	<!--dao for Detail-->
-	<beans:bean id="detailDAOImpi" class="com.expositds.servicestationmanagementsystem.dao.DetailDAOImpi">
+	<beans:bean id="detailDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.DetailDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for Detail-->
 	<!--
-	<beans:bean id="detailServiceImpi" class="com.expositds.servicestationmanagementsystem.service.DetailServiceImpi">
-		<beans:property name="detailDAOImpi" ref="detailDAOImpi"></beans:property>
+	<beans:bean id="detailService" class="com.expositds.servicestationmanagementsystem.service.impl.DetailServiceImpl">
+		<beans:property name="detailDAO" ref="detailDAO"></beans:property>
 	</beans:bean>
 	-->
 	
 	<!--dao for Employee-->
-	<beans:bean id="employeeDAOImpi" class="com.expositds.servicestationmanagementsystem.dao.EmployeeDAOImpi">
+	<beans:bean id="employeeDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.EmployeeDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for Employee-->
 	<!--
-	<beans:bean id="employeeServiceImpi" class="com.expositds.servicestationmanagementsystem.service.EmployeeServiceImpi">
-		<beans:property name="employeeDAOImpi" ref="employeeDAOImpi"></beans:property>
+	<beans:bean id="employeeService" class="com.expositds.servicestationmanagementsystem.service.impl.EmployeeServiceImpl">
+		<beans:property name="employeeDAO" ref="employeeDAO"></beans:property>
+	</beans:bean>
+	-->
+	
+	<!--dao for EmployeeSecurityFeature-->
+	<beans:bean id="employeeSecurityFeatureDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.EmployeeSecurityFeatureDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<!--service for EmployeeSecurityFeature-->
+	<!--
+	<beans:bean id="employeeSecurityFeatureService" class="com.expositds.servicestationmanagementsystem.service.impl.EmployeeSecurityFeatureServiceImpl">
+		<beans:property name="employeeSecurityFeatureDAO" ref="employeeSecurityFeatureDAO"></beans:property>
 	</beans:bean>
 	-->
 	
 	<!--dao for Client-->
-	<beans:bean id="clientDAOImpi" class="com.expositds.servicestationmanagementsystem.dao.ClientDAOImpi">
+	<beans:bean id="clientDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.ClientDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for Client-->
 	<!--
-	<beans:bean id="clientServiceImpi" class="com.expositds.servicestationmanagementsystem.service.ClientServiceImpi">
-		<beans:property name="clientDAOImpi" ref="clientDAOImpi"></beans:property>
+	<beans:bean id="clientService" class="com.expositds.servicestationmanagementsystem.service.impl.ClientServiceImpl">
+		<beans:property name="clientDAO" ref="clientDAO"></beans:property>
 	</beans:bean>
 	-->
 	
 	<!--dao for ClientSecurityFeature-->
-	<beans:bean id="clientSecurityFeatureDAOImpi" class="com.expositds.servicestationmanagementsystem.dao.ClientSecurityFeatureDAOImpi">
+	<beans:bean id="clientSecurityFeatureDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.ClientSecurityFeatureDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for ClientSecurityFeature-->
 	<!--
-	<beans:bean id="clientSecurityFeatureServiceImpi" class="com.expositds.servicestationmanagementsystem.service.ClientSecurityFeatureServiceImpi">
-		<beans:property name="clientSecurityFeatureDAOImpi" ref="clientSecurityFeatureDAOImpi"></beans:property>
+	<beans:bean id="clientSecurityFeatureService" class="com.expositds.servicestationmanagementsystem.service.impl.ClientSecurityFeatureServiceImpl">
+		<beans:property name="clientSecurityFeatureDAO" ref="clientSecurityFeatureDAO"></beans:property>
 	</beans:bean>
 	-->
 	
@@ -178,7 +202,7 @@
 	
 	<context:component-scan base-package="com.expositds.servicestationmanagementsystem">
 		<context:include-filter type="regex" expression="com.expositds.servicestationmanagementsystem.dao.*"/>
-		<context:include-filter type="regex" expression="com.expositds.servicestationmanagementsystem.*"/>
+		<context:include-filter type="regex" expression="com.expositds.servicestationmanagementsystem.service.*"/>
 		<context:include-filter type="regex" expression="com.expositds.servicestationmanagementsystem.controller.*"/>
 	</context:component-scan>
 	

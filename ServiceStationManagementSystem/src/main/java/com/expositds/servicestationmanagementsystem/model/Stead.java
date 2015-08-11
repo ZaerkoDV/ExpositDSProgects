@@ -10,15 +10,11 @@
  */
 package com.expositds.servicestationmanagementsystem.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -54,27 +50,21 @@ public class Stead {
 	@Column(name="stead_cost")
 	private Double steadCost;	
 	
-	@OneToMany(targetEntity=Department.class , mappedBy="stead", fetch = FetchType.LAZY)
-	private List<Department> department; 
-	
 	/**
 	 * Overloaded constructor of Stead class.
 	 * 
 	 * @type Long
 	 * @type Double
 	 * @type List
-	 * @type Department
 	 * 
 	 * @param idStead
 	 * @param steadArea
 	 * @param steadCost
-	 * @param department
 	 */
-	public Stead(Long idStead, Double steadArea, Double steadCost, List<Department> department){
+	public Stead(Long idStead, Double steadArea, Double steadCost){
 		this.idStead=idStead;
 		this.steadArea=steadArea;
 		this.steadCost=steadCost;
-		this.department=department;
 	}
 	
 	/**
@@ -135,24 +125,6 @@ public class Stead {
 	 */
 	public void setSteadCost(Double steadCost) {
 		this.steadCost = steadCost;
-	}
-
-	/**
-	 * @type List<Department>
-	 * @return department entity
-	 */
-	public List<Department> getDepartment() {
-		return department;
-	}
-
-	/**
-	 * Method change department entity
-	 * 
-	 * @type List<Department>
-	 * @param department
-	 */
-	public void setDepartment(List<Department> department) {
-		this.department = department;
 	}
 	
 	/**

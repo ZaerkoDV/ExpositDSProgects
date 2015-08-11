@@ -20,7 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
-
 /**
  * Detail entity describe base characteristics and behavior of detail. Most of order(department order)
  * include replacement details. Order may include replacement many details. Every detail have status
@@ -67,7 +66,6 @@ public class Detail {
 	@ManyToOne
 	@JoinColumn(name="department_order_id")
 	private DepartmentOrder departmentOrder;
-	
 	
 	/**
 	 * Overloaded constructor of Department class.

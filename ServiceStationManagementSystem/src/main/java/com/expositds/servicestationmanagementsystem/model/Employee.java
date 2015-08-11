@@ -11,15 +11,12 @@
  package com.expositds.servicestationmanagementsystem.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -27,7 +24,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.springframework.format.annotation.DateTimeFormat;
-
 /**
  * Employee entity describe base characteristics and behavior of employee. Employee execute
  * orders (mechanic) or govern service station (director). Role (function) in service station
@@ -49,7 +45,6 @@ import org.springframework.format.annotation.DateTimeFormat;
  * 
  * @version 1.0 31.07.2015
  * @author Denis Zaerko
- * 
  */
 @Entity(name="Employee")
 @Table(name="employee")
@@ -61,21 +56,21 @@ public class Employee {
 	private Long idEmployee;
 
 	@NotNull
-	@Size(min=1, max=15)
+	@Size(min=2)
 	@Column(name="employe_first_name")
 	private String employeFirstName;
 
 	@NotNull
-	@Size(min=1, max=15)
+	@Size(min=2)
 	@Column(name="employe_last_name")
 	private String employeLastName;
 
-	@Size(min=1, max=15)
+	@Size(min=0)
 	@Column(name="employe_middle_name")
 	private String employeMiddleName;
 
 	@NotNull
-	@Size(min=1, max=15)
+	@Size(min=3)
 	@Column(name="employe_function")
 	private String employeFunction;
 
@@ -96,19 +91,6 @@ public class Employee {
 	@Column(name="wages")
 	private Double wages;
 
-	@NotNull
-	@Size(min=4, max=15)
-	@Column(name="employe_login")
-	private String employeLogin;
-
-	@NotNull
-	@Size(min=4, max=15)
-	@Column(name="employe_password")
-	private String employePassword;
-
-	@OneToMany(targetEntity=DepartmentOrder.class , mappedBy="employee",fetch = FetchType.LAZY)
-	private List<DepartmentOrder> departmentOrder; 
-
 	/**
 	 * Overloaded constructor of Employee class.
 	 * 
@@ -116,8 +98,6 @@ public class Employee {
 	 * @type Double
 	 * @type String
 	 * @type Data
-	 * @type List
-	 * @type DepartmentOrder
 	 * 
 	 * @param idEmployee
 	 * @param employeFirstName
@@ -128,13 +108,9 @@ public class Employee {
 	 * @param employeBirthday
 	 * @param employeEmail
 	 * @param wages
-	 * @param employeLogin
-	 * @param employePassword
-	 * @param departmentOrder
 	 */
 	public Employee(Long idEmployee, String employeFirstName, String employeLastName, String employeMiddleName,
-			String employeFunction,String employeTelephone, Date employeBirthday, String employeEmail, Double wages,
-			String employeLogin, String employePassword,List<DepartmentOrder> departmentOrder){
+			String employeFunction,String employeTelephone, Date employeBirthday, String employeEmail, Double wages){
 	
 		this.idEmployee=idEmployee;
 		this.employeFirstName=employeFirstName;
@@ -145,9 +121,6 @@ public class Employee {
 		this.employeBirthday=employeBirthday;
 		this.employeEmail=employeEmail;
 		this.wages=wages;
-		this.employeLogin=employeLogin;
-		this.employePassword=employePassword;
-		this.departmentOrder=departmentOrder;
 	}
 	
 	/**
@@ -317,60 +290,6 @@ public class Employee {
 	public void setWages(Double wages) {
 		this.wages = wages;
 	}
-
-	/**
-	 * @type String
-	 * @return employeLogin attribute of the Employee
-	 */
-	public String getEmployeLogin() {
-		return employeLogin;
-	}
-
-	/**
-	 * Method change employeLogin attribute of the Employee
-	 * 
-	 * @type String
-	 * @param employeLogin
-	 */
-	public void setEmployeLogin(String employeLogin) {
-		this.employeLogin = employeLogin;
-	}
-
-	/**
-	 * @type String
-	 * @return employePassword attribute of the Employee
-	 */
-	public String getEmployePassword() {
-		return employePassword;
-	}
-
-	/**
-	 * Method change employePassword attribute of the Employee
-	 * 
-	 * @type String
-	 * @param employePassword
-	 */
-	public void setEmployePassword(String employePassword) {
-		this.employePassword = employePassword;
-	}
-
-	/**
-	 * @type List<DepartmentOrder>
-	 * @return List departmentOrder.
-	 */
-	public List<DepartmentOrder> getDepartmentOrder() {
-		return departmentOrder;
-	}
-
-	/**
-	 * Method change departmentOrder.
-	 * 
-	 * @type List<DepartmentOrder>
-	 * @param departmentOrder
-	 */
-	public void setDepartmentOrder(List<DepartmentOrder> departmentOrder) {
-		this.departmentOrder = departmentOrder;
-	}
 	
 	/**
 	 * Overload basic method hashCode()
@@ -394,9 +313,7 @@ public class Employee {
 		if(!this.idEmployee.equals(null)){
 			return this.idEmployee.toString()+" "+this.employeFirstName.toString()+" "+this.employeLastName.toString()+" "
 		+this.employeMiddleName.toString()+" "+this.employeTelephone.toString()+" "+this.employeFunction.toString()+" "
-					+this.employeBirthday.toString()+" "+this.employeEmail.toString()+" "+this.wages.toString()+" "+
-		this.employeLogin.toString()+" "+this.employePassword.toString();
-					
+					+this.employeBirthday.toString()+" "+this.employeEmail.toString()+" "+this.wages.toString();
 		}
 		return super.toString();
 	}

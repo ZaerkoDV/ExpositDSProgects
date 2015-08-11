@@ -46,7 +46,7 @@ public class ClientSecurityFeature {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_client_security")
+	@Column(name="id_client_security_feature")
 	private Long id—lientSecurityFeature;
 
 	@NotEmpty
@@ -89,6 +89,7 @@ public class ClientSecurityFeature {
 	}
 
 	/**
+	 * 
 	 * @type Long
 	 * @return id—lientSecurityFeature attribute of the ClientSecurityFeature
 	 */
@@ -100,7 +101,7 @@ public class ClientSecurityFeature {
 	 * Method change id—lientSecurityFeature attribute of the ClientSecurityFeature
 	 * 
 	 * @type Long
-	 * @param idAuthor
+	 * @param id—lientSecurityFeature
 	 */
 	public void setId—lientSecurityFeature(Long id—lientSecurityFeature) {
 		this.id—lientSecurityFeature = id—lientSecurityFeature;

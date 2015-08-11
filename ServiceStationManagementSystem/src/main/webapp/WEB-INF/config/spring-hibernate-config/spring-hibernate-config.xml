@@ -178,7 +178,6 @@
 	
 	<context:component-scan base-package="com.expositds.servicestationmanagementsystem">
 		<context:include-filter type="regex" expression="com.expositds.servicestationmanagementsystem.dao.*"/>
-		<context:include-filter type="regex" expression="com.expositds.servicestationmanagementsystem.*"/>
 		<context:include-filter type="regex" expression="com.expositds.servicestationmanagementsystem.controller.*"/>
 	</context:component-scan>
 	

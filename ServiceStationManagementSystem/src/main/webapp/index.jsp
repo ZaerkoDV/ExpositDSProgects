@@ -8,11 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Main Page</title>
 
-    <!-- Bootstrap
+    
     	<link href="resources/libs/bootstrap.min.css" rel="stylesheet">
 	    <script src="resources/libs/jquery.min.js"/></script>
 	    <script src="resources/libs/bootstrap.min.js"/></script>
-	    -->
+	    
 	   
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
@@ -45,12 +45,12 @@
 		      <input type="checkbox"> Remember me
 		    </label>
 		  </div>
-		  <a href="#"><button type="submit" class="btn btn-success">Sign in</button></a>
-          <a href="/ServiceStationManagementSystem/registration"><button type="button" class="btn btn-primary">Sign up</button></a>
+		  <a href="/auth"><button type="submit" class="btn btn-success">Sign in</button></a>
+          <a href="/registration"><button type="button" class="btn btn-primary">Sign up</button></a>
 		</form>
       </div>
     </div>
-   <c:if test="${!empty listServiceStation}">  
+   <!-- c:if test="${!empty listServiceStation}" -->  
     <table class="table table-hover" style="margin-top: 50px;">
   	<tr>
   		<th>Logotype</th>
@@ -59,17 +59,17 @@
   		<th>Mark</th>
   		<th>Go</th>
   	</tr>
-  <c:forEach items="${listServiceStation}" var="ServiceStation"> 
+  <!--  c:forEach items="${listServiceStation}" var="ServiceStation" --> 
   	<tr style="font-size: 18px;">
-  		<td><img src="img/logo.png" alt="Logo" class="img-circle"></td>
+  		<td><img src="resources/img/logo.png" alt="Logo" class="img-circle"></td>
   		<td>${ServiceStation.name}</td>
   		<td>${ServiceStation.location}</td>
   		<td>${ServiceStation.mark}</td>
-  		<td><a href="<c:url value='/ServiceStationManagementSystem/station/${SercieStation.id}' />"><button type="button" class="btn btn-primary">Go</button></a></td>
+  		<td><a href="<c:url value='/station/${ServiceStation.id}' />"><button type="button" class="btn btn-primary">Go</button></a></td>
   	</tr>
-  </c:forEach> 
+  <!--  /c:forEach --> 
 	</table>
-    </c:if> 
+    <!-- /c:if --> 
     </div> 
   </body>
 </html>

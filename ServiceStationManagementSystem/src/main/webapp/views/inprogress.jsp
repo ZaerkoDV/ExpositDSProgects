@@ -46,22 +46,22 @@
      </div>
      <!--STATUS IN PROGRESS -->
      <div class="row" style="padding-top: 50px;">
-     <c:if test="${!empty listDepartmentOrder}">
+     <!--  c:if test="${!empty listDepartmentOrder}" -->
        <table class="table table-striped">
         <tr>
           <th>№</th>
           <th>Mechanic</th>
           <th>Deadline</th>
         </tr>
-        <c:forEach items="${listDepartmentOrder}" var="DepartmentOrder">
+        <!--  c:forEach items="${listDepartmentOrder}" var="DepartmentOrder" -->
         <tr>
           <td>${DepartmentOrder.id}</td>
           <td>${DepartmentOrder.employee}</td>
           <td>${DepartmentOrder.endOrder}</td>
         </tr>
-        </c:forEach>
+        <!--  /c:forEach -->
        </table>
-       </c:if>
+       <!--  /c:if -->
      </div>
      </div>
   </body>

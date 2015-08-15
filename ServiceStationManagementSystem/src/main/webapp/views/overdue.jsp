@@ -45,6 +45,7 @@
      </div>
      <!--STATUS OVERDUE -->
      <div class="row" style="padding-top: 50px;">
+     <!--  c:if test="${!empty listDepartmentOrder}" -->
        <table class="table table-striped">
         <tr>
           <th>${DepartmentOrder.id}</th>
@@ -54,15 +55,18 @@
           <th>Comments</th>
           <th>Delete</th>
         </tr>
+         <!-- c:forEach items="${listDepartmentOrder}" var="DepartmentOrder" -->
         <tr>
           <td>1</td>
           <td>${DepartmentOrder.employee}</td>
           <td>${DepartmentOrder.endOrder}</td>
-          <td><a href="<c:url value='/ServiceStationManagementSystem/profile/renew/${DepartmentOrder.id}' />"><button type="button" class="btn btn-xs btn-success">Renew</button></a></td>
-          <td><a href="<c:url value='/ServiceStationManagementSystem/profile/addcomment/${ServiceStation.id}' />"><button type="button" class="btn btn-xs btn-primary">Add a comment</button></a></td>
-          <td><a href="<c:url value='/ServiceStationManagementSystem/profile/delete/${DepartmentOrder.id}' />"><button type="button" class="btn btn-xs btn-danger">Delete</button></a></td>
+          <td><a href="<c:url value='/profile/overdue/renew/${DepartmentOrder.id}' />"><button type="button" class="btn btn-xs btn-success">Renew</button></a></td>
+          <td><a href="<c:url value='/profile/overdue/addcomment/${ServiceStation.id}' />"><button type="button" class="btn btn-xs btn-primary">Add a comment</button></a></td>
+          <td><a href="<c:url value='/profile/overdue/delete/${DepartmentOrder.id}' />"><button type="button" class="btn btn-xs btn-danger">Delete</button></a></td>
         </tr>
+        <!-- /c:forEach -->
        </table>
+       <!-- /c:if -->
      </div>
    </div>
   </body>

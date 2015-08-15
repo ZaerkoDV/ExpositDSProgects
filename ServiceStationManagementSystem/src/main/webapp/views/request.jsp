@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Station</title>
+    <title>In progress</title>
 
     <!-- Bootstrap
     	<link href="resources/libs/bootstrap.min.css" rel="stylesheet">
@@ -26,7 +26,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
   </head>
- <body>
+  <body>
   <div class="container">
     <div class="row">
       <div class="col-md-4">
@@ -44,52 +44,29 @@
               <input type="checkbox"> Remember me
             </label>
           </div>
-          <a href="#"><button type="submit" class="btn btn-success">Sign in</button></a>
-          <a href="#"><button type="button" class="btn btn-primary">Sign up</button></a>
+          <button type="submit" class="btn btn-success">Sign in</button>
+          <a href="registration.html"><button type="button" class="btn btn-primary">Sign up</button></a>
         </form>
       </div>
       <div class="row" style="padding-top: 150px;">
-           <div class="col-md-2"><a href="#"><button type="button" class="btn btn-default">Back</button></a></div>
+           <div class="col-md-2"><a href="station.html"><button type="button" class="btn btn-default"> < Back</button></a></div>
            <div class="col-md-4"><h3>${ServiceStation.name}</h3></div>
-           <div class="col-md-2"><a href="<c:url value='/station/${ServiceStation.id}/request/' />"><button type="button" class="btn btn-danger">Make a request</button></a></div>
+           
       </div>
-      <h4>Main information: </h4>
+      <h4>Make a request: </h4>
       <div class="row" style="padding-top: 50px;">
-        <div class="col-md-2">
-          <p>Address: </p>
-          <p>Phone number: </p>
-          <p>Mark: </p>
-        </div>
         <div class="col-md-4">
-          <p>${ServiceStation.adress}</p>
-          <p>${ServiceStation.phoneNumber}</p>
-          <p>${ServiceStation.mark}</p>
+        <!--FOR NOT SIGN UP -->
+          <p>Leave your phone number</p>
+          <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Phone number">
+          <p style="padding-top: 20px;">Leave your email</p>
+          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+        <!-- -->
+          <p style="padding-top: 20px;">Description</p>
+          <textarea class="form-control" rows="3"></textarea>
+          <a href="<c:url value='/station/${stationId}/request/send' />"><button type="button" class="btn btn-primary" style="margin-top: 30px;">Send</button></a>
         </div>
       </div>
-      <h4>Check status: </h4>
-      <form class="form-inline">
-        <div class="form-group">
-          <input type="email" class="form-control" id="email" placeholder="email">
-        </div>
-        <a href="<c:url value='/station/${stationId}/check' />"><button type="submit" class="btn btn-default">Check</button></a>
-      </form>
-      <div class="row" style="padding-top: 50px;">
-        <c:if test="${!empty listServiceStationCommentMark}">
-        <table class="table">
-          <tr>
-            <th>Comment: </th>
-            <th>From: </th>
-            <th>Mark: </th>
-          </tr>
-          <c:forEach items="${listServiceStationCommentMark}" var="ServiceStationCommentMark">
-          <tr>
-            <td>${ServiceStationCommentMark.comment}</td>
-            <td>${ServiceStationCommentMark.client}</td>
-            <td>${ServiceStationCommentMark.mark}</td>
-          </tr>
-          </c:forEach>
-        </table>
-        </c:if>
-      </div>
+  </div>
   </body>
 </html>

@@ -32,23 +32,33 @@ public class ClientController {
 		return "registration";
 	}
 	
-	@RequestMapping(value="/station", method=RequestMethod.GET)
+	@RequestMapping(value="/station/{stationId}", method=RequestMethod.GET)
 	public String station(Model model) {	
 		return "station";
 	}
 	
-	@RequestMapping(value="/station/request/{stationId}", method=RequestMethod.GET)
+	@RequestMapping(value="/station/{stationId}/request", method=RequestMethod.GET)
 	public String request(Model model) {	
 		return "request";
+	}
+	
+	@RequestMapping(value="/station/{stationId}/request/send", method=RequestMethod.GET)
+	public String send(Model model) {	
+		return "redirect:/station/{stationId}/request";
+	}
+	
+	@RequestMapping(value="/station/{stationId}/check", method=RequestMethod.GET)
+	public String check(Model model) {	
+		return "redirect:/station/{stationId}";
 	}
 	
 	/**
      * Retrieves the profile pages
      *
      */
-	@RequestMapping(value="/profile/", method=RequestMethod.GET)
-	public String main(Model model) {	
-		return "redirect: /profile/inprogress";
+	@RequestMapping(value="/profile", method=RequestMethod.GET)
+	public String home(Model model) {	
+		return "redirect:profile/inprogress";
 	}
 	
 	@RequestMapping(value="/profile/inprogress", method=RequestMethod.GET)
@@ -66,7 +76,7 @@ public class ClientController {
 		return "overdue";
 	}
 	
-	@RequestMapping(value="/profile/overdue/renew/{departmentOrderId}", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/overdue/renew/{DepartmentId}", method=RequestMethod.GET)
 	public String renew(Model model) {	
 		return "renew";
 	}
@@ -78,7 +88,7 @@ public class ClientController {
 	
 	@RequestMapping(value="/profile/overdue/detele/{departmentOrderId}", method=RequestMethod.GET)
 	public String delete(Model model) {	
-		return "redirect: /profile/overdue";
+		return "redirect:/overdue";
 	}
 	
 }

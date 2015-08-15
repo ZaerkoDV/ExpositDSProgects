@@ -45,7 +45,7 @@
      </div>
       <!--STATUS DONE -->
      <div class="row" style="padding-top: 50px;">
-     <c:if test="${!empty listDepartmentOrder}">
+     <!--  c:if test="${!empty listDepartmentOrder}" -->
        <table class="table table-striped">
         <tr>
           <th>№</th>
@@ -54,17 +54,17 @@
           <th>Cost</th>
           <th>Add a comment</th>
         </tr>
-        <c:forEach items="${listDepartmentOrder}" var="DepartmentOrder">
+        <!-- c:forEach items="${listDepartmentOrder}" var="DepartmentOrder" -->
         <tr>
           <td>${DepartmentOrder.id}</td>
           <td>${DepartmentOrder.employee}</td>
           <td>${DepartmentOrder.endOrder}</td>
           <td>${DepartmentOrder.orderCost}</td>
-          <td><a href="<c:url value='/ServiceStationManagementSystem/profile/addcomment/${ServiceStation.id}' />"><button type="button" class="btn btn-xs btn-primary">Add a comment</button></a></td>
+          <td><a href="<c:url value='/profile/done/addcomment/${ServiceStation.id}' />"><button type="button" class="btn btn-xs btn-primary">Add a comment</button></a></td>
         </tr>
-        </c:forEach>
+        <!-- /c:forEach -->
        </table>
-       </c:if>
+       <!-- /c:if -->
      </div> 
      </div>
   </body>

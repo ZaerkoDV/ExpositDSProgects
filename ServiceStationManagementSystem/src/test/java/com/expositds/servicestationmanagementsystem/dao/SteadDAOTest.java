@@ -17,22 +17,20 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
-import com.expositds.servicestationmanagementsystem.dao.impl.EntityUtilDAOImpl;
-import com.expositds.servicestationmanagementsystem.dao.impl.SteadDAOImpl;
 import com.expositds.servicestationmanagementsystem.model.Department;
 import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 /**
- * Class SteadDAOTest use to testing SteadDAOImpl class which belong to dao layer.
- * Class use Junit tests.To create test objects use method createSteadForTest.That
- * method create new object for test and applying anatation Inject to get dependency
- * injection. This is realization of pattern IoC. All methods return void except 
- * createSteadForTest. All methods use annotation Rollback to roll back transaction
- * which created for test. Also in class use Assert. These  methods set assertion
+ * Class SteadDAOTest use to testing SteadDAOImpl class which belong to dao layer. Class use Junit
+ * tests.To create test objects use method createObjectsForTest.That method create new object for test
+ * and applying anatation Inject to get dependency injection. This is realization of pattern IoC.
+ * All methods return void include initObjectsBeforeTest. All methods use annotation Rollback to roll
+ * back transaction which created for test. Also in class use Assert. These  methods set assertion
  * methods useful for writing tests.
  * 
  * @see org.springframework.transaction
@@ -61,10 +59,8 @@ public class SteadDAOTest extends AbstractTest  {
 	 * JSR-330.
 	 */
 	@Inject
-	private SteadDAOImpl steadDAO;
-	
-	@Inject
-	private EntityUtilDAOImpl entityUtilDAO;
+	@Qualifier("steadDAO")
+	private SteadDAO steadDAO;
 
 	public Stead stead;
 	public ServiceStation serviceStation;
@@ -101,18 +97,18 @@ public class SteadDAOTest extends AbstractTest  {
 		//serviceStation.setServiceStationLogotype(serviceStationLogotype);
 		serviceStation.setServiceStationAddress("serviceStationAddressTest");
 		serviceStation.setServiceStationPhoneNumber("1234221");
-		entityUtilDAO.saveEntity(serviceStation);
+		steadDAO.saveEntity(serviceStation);
 
 		stead = new Stead();
 		stead.setSteadArea((Double)100.0);
 		stead.setSteadCost((Double)10.0);
-		entityUtilDAO.saveEntity(stead);
+		steadDAO.saveEntity(stead);
 	
 		department=new Department();
 		department.setDepartmentName("departmentNameTest");
 		department.setStead(stead);
 		department.setServiceStation(serviceStation);
-		entityUtilDAO.saveEntity(department);
+		steadDAO.saveEntity(department);
 
 		return stead;
 	}
@@ -148,7 +144,7 @@ public class SteadDAOTest extends AbstractTest  {
 	@Rollback(true)
 	@Test
 	public void testGettingSteadById(){
-		Assert.assertNotNull(entityUtilDAO.getEntityById(Stead.class, stead.getIdStead()));
+		Assert.assertNotNull(steadDAO.getEntityById(Stead.class, stead.getIdStead()));
 	}
 
 	/**
@@ -166,9 +162,9 @@ public class SteadDAOTest extends AbstractTest  {
 	public void testUpdateStead(){
 
 		stead.setSteadArea((Double)101.0);
-		entityUtilDAO.updateEntity(stead);
+		steadDAO.updateEntity(stead);
 
-		final Stead updatedStead =(Stead) entityUtilDAO.getEntityById(Stead.class,stead.getIdStead());	
+		final Stead updatedStead =(Stead) steadDAO.getEntityById(Stead.class,stead.getIdStead());	
 		Assert.assertTrue(updatedStead.getSteadArea().equals((Double)101.0));
 	}
 
@@ -187,8 +183,8 @@ public class SteadDAOTest extends AbstractTest  {
 	@Test
 	public void testDeleteStead(){
 
-		entityUtilDAO.deleteEntity(stead);
-		Assert.assertNull(entityUtilDAO.getEntityById(Stead.class, stead.getIdStead()));
+		steadDAO.deleteEntity(stead);
+		Assert.assertNull(steadDAO.getEntityById(Stead.class, stead.getIdStead()));
 	}
 	
 	/**
@@ -210,7 +206,7 @@ public class SteadDAOTest extends AbstractTest  {
 		Assert.assertFalse(steadDAO.getListStead().isEmpty());
 		
 		//stad not exist
-		entityUtilDAO.deleteEntity(stead);
+		steadDAO.deleteEntity(stead);
 		Assert.assertTrue(steadDAO.getListStead().isEmpty());
 	}
 	
@@ -234,7 +230,7 @@ public class SteadDAOTest extends AbstractTest  {
 		Assert.assertFalse(listDepartmetUseCurrentStead.isEmpty());
 		
 		//stad not exist
-		entityUtilDAO.deleteEntity(department);
+		steadDAO.deleteEntity(department);
 		listDepartmetUseCurrentStead=steadDAO.getListDepartmentUseCurrentStead(stead.getIdStead());
 		Assert.assertTrue(listDepartmetUseCurrentStead.isEmpty());
 	}

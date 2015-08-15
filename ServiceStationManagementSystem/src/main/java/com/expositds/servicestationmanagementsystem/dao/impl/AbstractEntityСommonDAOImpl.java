@@ -10,25 +10,31 @@
  * contain word ìDAOî provide to work DAL for Service Station Management System application.
  * 
  * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
- * to use information or have any questions.
+ * to use information or have any questions. 
  */
 package com.expositds.servicestationmanagementsystem.dao.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate4.HibernateObjectRetrievalFailureException;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.HibernateObjectRetrievalFailureException;
 import org.springframework.stereotype.Repository;
 
+import com.expositds.servicestationmanagementsystem.dao.AbstractEntityCommonDAO;
+
 /**
-  * <p>The class EntityUtilDAOImpl use DAO pattern which describes layer of data access to object.
- * DAO layer perform link between relational and object models. This class contain methods which
- * intended to access to set of CRUD (create, read, update, delete) operation with objects.Class
- * provide operation to any object(entity). Class implements interface EntityUtilDAO located in
- * package which have name com.expositds.servicestationmanagementsystem.dao. All methods are public
- * in class. For logging use framework shell slf4j and framework log4j. Class contain also private,
- * static variable logger, which use to call log message. Class  use Spring framework  to work whith
- * ORM. In particular often use HibernateTemplate for integration Hibernate and Spring technologys.
+ * <p>The class AbstractEntity—ommonDAOImpl use DAO pattern which describes layer of data access
+ * to object. DAO layer perform link between relational and object models. This class contain 
+ * methods which intended to access to set of CRUD (create, read, update, delete) operation with
+ * objects.Class provide operation to any object(entity).This class extend HibernateDaoSupport class
+ * which create own HibernateTemplate instance if a SessionFactory is passed in. The "allowCreate"
+ * flag on that HibernateTemplate will be "true" by default. A custom HibernateTemplate instance
+ * can be used through overriding createHibernateTemplate. Class implements interface  name as
+ * AbstractEntity—ommonDAO and located in package which have name com.expositds.servicestationmanagementsystem.dao.
+ * All methods are public in class. For logging use framework shell slf4j and framework log4j.Class
+ * contain also private, static variable logger, which use to call log message. Class  use Spring
+ * framework  to work whith ORM. In particular often use HibernateTemplate for integration Hibernate
+ * and Spring technologys.
  *  
  * @see org.springframework.stereotype
  * @see org.springframework.orm
@@ -38,16 +44,16 @@ import org.springframework.stereotype.Repository;
  * @version 1.0 09.08.2015
  * @author Zaerko Denis
  */
-@Repository(value="entityUtilDAO")
-public class EntityUtilDAOImpl extends HibernateDaoSupport {//implements EntityUtilDAO {
+@Repository(value="abstractEntity—ommonDAO")
+public class AbstractEntity—ommonDAOImpl extends HibernateDaoSupport implements AbstractEntityCommonDAO{
 
 	/**
-	 * Variable logger use to get logger level for class EntityUtilDAOImpl.
+	 * Variable logger use to get logger level for class AbstractEntity—ommonDAOImpl.
 	 * 
-	 * @param class name: EntityUtilDAOImpl 
-	 * @return logger for class EntityUtilDAOImpll.
+	 * @param class name: AbstractEntity—ommonDAOImpl
+	 * @return logger for class AbstractEntity—ommonDAOImpl.
 	 */
-	private static final Logger logger = LoggerFactory.getLogger(EntityUtilDAOImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(AbstractEntity—ommonDAOImpl.class);
 
 	/**
 	 * Return entity by id if entity exist in data base with specify id else null.
@@ -66,10 +72,11 @@ public class EntityUtilDAOImpl extends HibernateDaoSupport {//implements EntityU
 	public <T> Object getEntityById(Class<T> entityClass,Long idEntity) {
 
 		try{
+			logger.info("Entity"+entityClass.getName()+" loaded successfully id="+idEntity);
 			return this.getHibernateTemplate().get(entityClass, idEntity);
 			
 		}catch(final HibernateObjectRetrievalFailureException e){
-			logger.info("Entity not loaded,becouse successfully delete"+e);
+			logger.info("Entity not loaded,becouse successfully delete or never exist before"+e);
 			return null;
 		}
 	}
@@ -85,7 +92,9 @@ public class EntityUtilDAOImpl extends HibernateDaoSupport {//implements EntityU
 	 * @throws HibernateObjectRetrievalFailureException
 	 */
 	public void saveEntity(Object entity){
+		
 		this.getHibernateTemplate().persist(entity);
+		logger.info("Entity save successfully");
 		this.getHibernateTemplate().flush();
 	}
 
@@ -99,7 +108,9 @@ public class EntityUtilDAOImpl extends HibernateDaoSupport {//implements EntityU
 	 * @throws HibernateObjectRetrievalFailureException
 	 */
 	public void updateEntity(Object entity){
+		
 		this.getHibernateTemplate().update(entity);
+		logger.info("Entity update successfully");
 		this.getHibernateTemplate().flush();
 	}
 
@@ -118,7 +129,9 @@ public class EntityUtilDAOImpl extends HibernateDaoSupport {//implements EntityU
 	 */
 	public <T> void deleteEntityById(Class<T> entityClass,Long idEntity){
 		
+		logger.info("Entity"+entityClass.getName()+" delete successfully,id="+idEntity);
 		Object entity =this.getHibernateTemplate().get(entityClass, idEntity);
+		
 		this.getHibernateTemplate().delete(entity);
 		this.getHibernateTemplate().flush();
 	}
@@ -133,6 +146,8 @@ public class EntityUtilDAOImpl extends HibernateDaoSupport {//implements EntityU
 	 * @throws HibernateObjectRetrievalFailureException
 	 */
 	public void deleteEntity(Object entity){
+		
+		logger.info("Entity delete successfully");
 		this.getHibernateTemplate().delete(entity);
 		this.getHibernateTemplate().flush();
 	}

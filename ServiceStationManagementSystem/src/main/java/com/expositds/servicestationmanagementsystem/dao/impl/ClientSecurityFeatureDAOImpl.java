@@ -18,7 +18,6 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.expositds.servicestationmanagementsystem.dao.ClientSecurityFeatureDAO;
@@ -27,16 +26,17 @@ import com.expositds.servicestationmanagementsystem.model.ClientSecurityFeature;
  * <p>The class ClientSecurityFeatureDAOImpl use DAO pattern which describes layer of data access
  * to object. DAO layer perform link between relational and object model.Model for this dao layer
  * describied in class ClientSecurityFeature. This class contain methods which intended to access
- * to operation with objects.Class implements interface ClientSecurityFeatureDAO located in package
- * com.expositds.servicestationmanagementsystem.dao. All methods are public in class.For logging
- * use framework shell slf4j and framework log4j. Class contain also private, static variable
- * logger, which use to call log message. Class use Spring framework to work whith ORM. In
- * particular often use HibernateTemplate for integration Hibernate and Spring technologys.
- * For work with data base use hibernate criteria. This technology provide as object-oriented
- * select query in relation to a particular entity, and allows you to query the database without
- * writing SQL code. Use Criteria is the most successful approach to search interface with a 
- * variable number of conditions. To create copies of the Criteria used class Session, which
- * acts as a factory.
+ * special operation with client security featur.Class extend AbstractEntity—ommonDAOImpl class,
+ * which contain base set of operation(CRUD). Class implements interface ClientSecurityFeatureDAO
+ * located in package which have name com.expositds.servicestationmanagementsystem.dao.All methods
+ * are public in class.For logging use framework shell slf4j and framework log4j. Class contain
+ * also private, static variable logger, which use to call log message. Class use Spring framework
+ * to work whith ORM. In particular often use HibernateTemplate for integration Hibernate and Spring
+ * technologys. For work with data base use hibernate criteria. This technology provide as object
+ * oriented select query in relation to a particular entity, and allows you to query the database
+ * without writing SQL code. Use Criteria is the most successful approach to search interface with
+ * a variable number of conditions. To create copies of the Criteria used class Session, which acts
+ * as a factory.
  * 
  * @see org.springframework.stereotype
  * @see org.springframework.orm
@@ -48,12 +48,12 @@ import com.expositds.servicestationmanagementsystem.model.ClientSecurityFeature;
  * @author Zaerko Denis
  */
 @Repository(value = "clientSecurityFeatureDAO")
-public class ClientSecurityFeatureDAOImpl extends HibernateDaoSupport implements ClientSecurityFeatureDAO {
+public class ClientSecurityFeatureDAOImpl extends AbstractEntity—ommonDAOImpl implements ClientSecurityFeatureDAO {
 
 	/**
 	 * Variable logger use to get logger level for class ClientSecurityFeatureDAOImpl.
 	 * 
-	 * @param ClientSecurityFeatureDAOImpl
+	 * @param ClientSecurityFeatureServiceImpl
 	 * @return logger for class ClientSecurityFeatureDAOImpl.
 	 */
 	private static final Logger logger = LoggerFactory.getLogger(ClientSecurityFeatureDAOImpl.class);
@@ -81,11 +81,15 @@ public class ClientSecurityFeatureDAOImpl extends HibernateDaoSupport implements
 		try{
 			if(criteria.list().isEmpty()){
 				isUnique=true;
+				logger.info("DAO:User login"+clientLogin+" and password "+clientPassword+" is unique.");
+				
 			}else{
 				isUnique=false;
+				logger.info("DAO:User login"+clientLogin+" and password "+clientPassword+" is not unique.");
 			}	
 		}catch(NullPointerException e){
 			isUnique=false;
+			logger.info("DAO:User login"+clientLogin+" and password "+clientPassword+" is not unique.");
 		}
 		return isUnique;
 	}

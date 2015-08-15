@@ -19,23 +19,28 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * Client security feature  describe additional security characteristics of the
- * client. Security feature is part of Client entity. Not all clients have security
- * feature (login, password). ClientSecurityFeature have only registered client.This client
- * may authorized in system and do order in department by themselves.Client security
- * feature have relation one-to-one with client.
+ * Client security feature  describe additional security characteristics of the client.
+ * Security feature is part of Client entity. Not all clients have security feature (login,
+ * password). ClientSecurityFeature have only registered client.This client may authorized
+ * in system and do order in department by themselves.Client password stored in encrypted
+ * form. Client security feature have relation one-to-one with client.All communication is
+ * one-way.
  * 
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes
  * part of model in MVC architecture. This class includes a description ClientSecurityFeature 
  * entity as assotitiation with Client entity.For creating ClientSecurityFeature model use Hibernate
- * technology (anatations). Class contains exclusively no-static public methods that return
- * fields of entity.Methods intended to access object fields.Class also contain overload methods
- * toString(), hashCode(), equals().
+ * technology (anatations). Class contain method convertToMD5() which convert client password
+ * to to MD5 hash. Class contains exclusively no-static public methods that return fields of
+ * entity.Methods intended to access object fields.Class also contain overload methods toString(),
+ * hashCode(), equals().
  *
  * @see Hibernate annotations
+ * @see org.apache.commons.codec.digest.DigestUtils
  * 
  * @version 1.0 31.07.2015
  * @author Denis Zaerko
@@ -127,7 +132,8 @@ public class ClientSecurityFeature {
 
 	/**
 	 * @type String
-	 * @return clientPassword attribute of the ClientSecurityFeature
+	 * @return clientPassword attribute of the ClientSecurityFeature in
+	 * encrypted form.
 	 */
 	public String getClientPassword() {
 		return clientPassword;
@@ -135,12 +141,14 @@ public class ClientSecurityFeature {
 
 	/**
 	 * Method change clientPassword attribute of the ClientSecurityFeature
+	 * Password stored in encrypted form. For cript use MD5.
 	 * 
+	 * @see org.apache.commons.codec.digest.DigestUtils
 	 * @type String
 	 * @param clientPassword
 	 */
 	public void setClientPassword(String clientPassword) {
-		this.clientPassword = clientPassword;
+		this.clientPassword = DigestUtils.md5Hex(clientPassword);
 	}
 
 	/**
@@ -160,7 +168,7 @@ public class ClientSecurityFeature {
 	public void setClient(Client client) {
 		this.client = client;
 	}
-
+	
 	/**
 	 * Overload basic method hashCode()
 	 * 
@@ -185,5 +193,16 @@ public class ClientSecurityFeature {
 					" "+this.clientPassword.toString();
 		}
 		return super.toString();
+	}
+	
+	/**
+	 * Calculates the MD5 digest and returns the value as a 32 character hex string.
+	 * 
+	 * @type String
+	 * @param unconfirm
+	 * @return Calculates the MD5 digest and returns the value as a 32 character hex string. 
+	 */
+	public String convertToMD5(String unconfirm){
+		return DigestUtils.md5Hex(unconfirm);
 	}
 }

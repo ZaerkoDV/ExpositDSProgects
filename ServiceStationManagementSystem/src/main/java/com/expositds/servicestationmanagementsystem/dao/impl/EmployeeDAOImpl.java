@@ -22,7 +22,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.expositds.servicestationmanagementsystem.dao.EmployeeDAO;
@@ -33,12 +32,13 @@ import com.expositds.servicestationmanagementsystem.model.EmployeeSecurityFeatur
 /**
  * <p>The class EmployeeDAOImpl use DAO pattern which describes layer of data access to object.
  * DAO layer perform link between relational and object model. Model for this dao layer
- * describied in class Employee. This class contain methods which intended to access to operation
- * with objects.Class implements interface EmployeeDAO located in package which have name
- * com.expositds.servicestationmanagementsystem.dao. All methods are public in class.For logging
- * use framework shell slf4j and framework log4j. Class contain also private, static variable
- * logger, which use to call log message. Class  use Spring framework  to work whith ORM. In
- * particular often use HibernateTemplate for integration Hibernate and Spring technologys.
+ * describied in class Employee. This class contain methods which intended to access special 
+ * operation with employee.Class extend AbstractEntity—ommonDAOImpl class, which contain base
+ * set of operation(CRUD). Class implements interface EmployeeDAO located in package which have
+ * name com.expositds.servicestationmanagementsystem.dao. All methods are public in class.For
+ * logging use framework shell slf4j and framework log4j. Class contain also private, static
+ * variable logger, which use to call log message. Class  use Spring framework  to work whith
+ * ORM.In particular often use HibernateTemplate for integration Hibernate and Spring technologys.
  * For work with data base use hibernate criteria. This technology provide as object-oriented
  * select query in relation to a particular entity, and allows you to query the database without
  * writing SQL code. Use Criteria is the most successful approach to search interface with a 
@@ -57,7 +57,7 @@ import com.expositds.servicestationmanagementsystem.model.EmployeeSecurityFeatur
  * @author Zaerko Denis
  */ 
 @Repository(value="employeeDAO")
-public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO {
+public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements EmployeeDAO {
 
 	/**
 	 * Variable logger use to get logger level for class ClientDAOImpl.
@@ -88,7 +88,20 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 		criteria.setMaxResults(20);
 		criteria.setFirstResult(0);
 
-		return (List<Employee>)criteria.list();
+		List<Employee> listEmployee;
+		try {
+			listEmployee=(List<Employee>)criteria.list();
+			logger.info("Employee list loaded successfully");
+			
+			for(Employee employee : listEmployee){
+				logger.info("DAO:Employee list by last name"+employeLastName+" contain ="+employee);
+			}
+			
+		} catch (NullPointerException e) {
+			listEmployee=null;
+			logger.info("Employee list loaded successfully but is empty.");
+		}
+		return listEmployee;
 	}
 	
 	/**
@@ -117,13 +130,15 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 		Long idEmployee = null;
 		try {
 			employee = (Employee)criteria.uniqueResult();
-			idEmployee= employee.getIdEmployee();	
+			idEmployee= employee.getIdEmployee();
+			 logger.info("Employee loaded successfully, idEmplyee="+idEmployee);
 
 		}catch (final NullPointerException e) {
 			idEmployee = null;
+			logger.info("Employee not load successfully.");
 			
 		}catch(NonUniqueResultException e){
-			
+			logger.info("Employee with login and password not unique.");
 		}
 		finally{
 			return idEmployee;
@@ -159,14 +174,18 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 			
 			if(!employee.equals(null)){
 				signIn=true;
+				logger.info("Employee sign in successfully, idEmplyee="+employee.getIdEmployee());
+				
 			}else{
-				//any not catch error
+				logger.info("Employee sign in is failed.");
 				signIn=false;
 			}
 			
 		}catch (NullPointerException e) {
-		
+			logger.info("Client sign in is failed"+e);
+			
 		}catch(NonUniqueResultException e){
+			logger.info("Client sign in is failed because nonunique result "+e);
 			
 		}finally{
 			return signIn;
@@ -187,7 +206,7 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 	@SuppressWarnings({ "finally", "unchecked" })
 	public List<Employee> getListMechanic(){
 
-		List<Employee> listEmployee = null ;
+		List<Employee> listMechanic = null ;
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
 				.createCriteria(Employee.class);
 		criteria.add(Restrictions.eq("employeFunction", "mechanic"));
@@ -195,13 +214,18 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 		criteria.setFirstResult(0);
 		
 		try {
-			listEmployee=(List<Employee>)criteria.list();
+			listMechanic=(List<Employee>)criteria.list();
+			logger.info("Mechanic list loaded successfully");
 			
+			for(Employee employee : listMechanic){
+				logger.info("DAO:Mechanic list contain ="+employee);
+			}
 		}catch (NullPointerException e) {
-			listEmployee=null;
+			listMechanic=null;
+			logger.info("Mechanic list not loaded successfully because is empty.");
 			
 		}finally{
-			return listEmployee;
+			return listMechanic;
 		}
 	}
 	
@@ -230,7 +254,12 @@ public class EmployeeDAOImpl extends HibernateDaoSupport implements EmployeeDAO 
 		
 		try {
 			listDepartment=(List<Department>)criteria.list();
-
+			
+			logger.info("Department list for employee with id="+idEmployee+"loaded successfully");
+			
+			for(Department department : listDepartment){
+				logger.info("DAO:Department list for employee contain ="+department);
+			}
 		}catch (NullPointerException e) {
 			listDepartment=null;
 		}

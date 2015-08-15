@@ -20,21 +20,24 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * Employee security feature  describe additional security characteristics of the
- * employee. Security feature is part of Employee entity. All employees have security
- * feature (login, password). EmployeeSecurityFeature have only registered employee.
- * This employee must authorized in system and perform order in department by themselves.
- * Employee security feature have relation one-to-one with employee.
+ * Employee security feature  describe additional security characteristics of the employee.
+ * Security feature is part of Employee entity. All employees have security feature (login,
+ * password). EmployeeSecurityFeature have only registered employee. Employee password stored
+ * in encrypted form. This employee must authorized in system and perform order in department
+ * by themselves. Employee security feature have relation one-to-one with employee.All
+ * communication is one-way.
  * 
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes
  * part of model in MVC architecture. This class includes a description EmployeeSecurityFeature 
  * entity as assotitiation with Employee entity.For creating EmployeeSecurityFeature model use
- * Hibernate technology (anatations). Class contains exclusively no-static public methods that
- * return fields of entity.Methods intended to access object fields.Class also contain overload
- * methods toString(), hashCode(), equals().
+ * Hibernate technology (anatations).Class contain method convertToMD5() which convert client
+ * password to to MD5 hash. Class contains exclusively no-static public methods that return
+ * fields of entity.Methods intended to access object fields.Class also contain overload methods
+ * toString(), hashCode(), equals().
  *
  * @see Hibernate annotations
  * 
@@ -134,12 +137,15 @@ public class EmployeeSecurityFeature {
 
 	/**
 	 * Method change employePassword attribute of the EmployeeSecurityFeature
+	 * Password stored in encrypted form. For cript use MD5.
 	 * 
+	 * @see org.apache.commons.codec.digest.DigestUtils
+	 * @type String
 	 * @type String
 	 * @param employePassword
 	 */
 	public void setEmployePassword(String employePassword) {
-		this.employePassword = employePassword;
+		this.employePassword = DigestUtils.md5Hex(employePassword);
 	}
 
 	/**
@@ -184,5 +190,16 @@ public class EmployeeSecurityFeature {
 					" "+this.employePassword.toString();
 		}
 		return super.toString();
+	}
+	
+	/**
+	 * Calculates the MD5 digest and returns the value as a 32 character hex string.
+	 * 
+	 * @type String
+	 * @param unconfirm
+	 * @return Calculates the MD5 digest and returns the value as a 32 character hex string. 
+	 */
+	public String convertToMD5(String unconfirm){
+		return DigestUtils.md5Hex(unconfirm);
 	}
 }

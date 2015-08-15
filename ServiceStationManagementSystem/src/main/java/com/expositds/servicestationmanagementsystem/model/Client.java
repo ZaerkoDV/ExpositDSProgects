@@ -33,7 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * may do comments and exhibit same mark service station. If client log in system, he will have unique login
  * and password. Entity client security feature responsible for security login and password. Client may have
  * only one login and password. Client have relations: one-to-many with department order, one-to-many with
- * entity service station comment and mark, one-to-one with client security feature.
+ * entity service station comment and mark, one-to-one with client security feature.All communication is one-way.
  * 
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes part of model in
  * MVC architecture. This class includes a description Client entity. For creating Client model use Hibernate
@@ -237,7 +237,7 @@ public class Client {
 	public void setClientEmail(String clientEmail) {
 		this.clientEmail = clientEmail;
 	}
-	
+		
 	/**
 	 * Overload basic method hashCode()
 	 * 

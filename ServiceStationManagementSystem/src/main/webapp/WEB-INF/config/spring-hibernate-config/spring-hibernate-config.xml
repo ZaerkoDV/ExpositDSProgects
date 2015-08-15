@@ -76,15 +76,16 @@
 		</beans:property>
 	</beans:bean>
 	
+	<!-- for test -->
+	<!--
+	<beans:bean id="testObjectCreator" class="com.expositds.servicestationmanagementsystem.dao.TestObjectCreator">
+		<beans:property name="testObjectCreator" ref="testObjectCreator"/>
+	</beans:bean>
+	 -->
 	
-	<beans:bean id="entityUtilDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.EntityUtilDAOImpl">
+	<beans:bean id="abstractEntityСommonDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.AbstractEntityСommonDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	<!--
-	<beans:bean id="entityUtilService" class="com.expositds.servicestationmanagementsystem.service.impl.EntityUtilServiceImpl">
-		<beans:property name="entityUtilDAO" ref="entityUtilDAO"></beans:property>
-	</beans:bean>
-	-->
 	
 	<!--dao for ServiceStation-->
 	<beans:bean id="serviceStationDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.ServiceStationDAOImpl">
@@ -138,7 +139,7 @@
 	</beans:bean>
 	<!--service for Department-->
 	<!--
-	<beans:bean id="departmentOrderService" class="com.expositds.servicestationmanagementsystem.service.impl.DepartmentOrderServiceImpi">
+	<beans:bean id="departmentOrderService" class="com.expositds.servicestationmanagementsystem.service.impl.DepartmentOrderServiceImpl">
 		<beans:property name="departmentOrderDAO" ref="departmentOrderDAO"></beans:property>
 	</beans:bean>
 	-->

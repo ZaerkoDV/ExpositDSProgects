@@ -22,28 +22,26 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate4.HibernateObjectRetrievalFailureException;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.expositds.servicestationmanagementsystem.dao.DepartmentOrderDAO;
-import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
 import com.expositds.servicestationmanagementsystem.model.Detail;
 /**
  * <p>The class DepartmentOrderDAOImpl use DAO pattern which describes layer of data access
  * to object.DAO layer perform link between relational and object model.Model for this dao layer
- * describied in class DepartmentOrder.This class contain methods which intended to access to
- * operatio with objects.Class implements interface DepartmentOrderDAO located in package 
- * com.expositds.servicestationmanagementsystem.dao. All methods are public in class.For logging
- * use framework shell slf4j and framework log4j. Class contain also private, static variable
- * logger, which use to call log message. Class use Spring framework  to work whith ORM. In
- * particular often use HibernateTemplate for integration Hibernate and Spring technologys.
- * For work with data base use hibernate criteria. This technology provide as object-oriented
- * select query in relation to a particular entity, and allows you to query the database without
- * writing SQL code. Use Criteria is the most successful approach to search interface with a 
- * variable number of conditions. To create copies of the Criteria used class Session, which
- * acts as a factory.
+ * describied in class DepartmentOrder.This class contain methods which intended to access
+ * special operation with department order.Class extend AbstractEntity—ommonDAOImpl class,
+ * which contain base set of operation(CRUD). Class implements interface DepartmentOrderDAO
+ * located in package which have name com.expositds.servicestationmanagementsystem.dao. All
+ * methods are public in class.For logging use framework shell slf4j and framework log4j.
+ * Class contain also private, static variable logger, which use to call log message. Class
+ * use Spring framework  to work whith ORM. In particular often use HibernateTemplate for
+ * integration Hibernate and Spring technologys. For work with data base use hibernate criteria.
+ * This technology provide as object-oriented select query in relation to a particular entity,
+ * and allows you to query the database without writing SQL code. Use Criteria is the most
+ * successful approach to search interface with a variable number of conditions. To create
+ * copies of the Criteria used class Session, which acts as a factory.
  *  
  * @see Collection
  * @see List
@@ -57,7 +55,7 @@ import com.expositds.servicestationmanagementsystem.model.Detail;
  * @author Zaerko Denis
  */
 @Repository(value="departmentOrderDAO")
-public class DepartmentOrderDAOImpl extends HibernateDaoSupport implements DepartmentOrderDAO{
+public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implements DepartmentOrderDAO{
 
 	/**
 	 * Variable logger use to get logger level for class DepartmentOrderDAOImpl.
@@ -91,10 +89,16 @@ public class DepartmentOrderDAOImpl extends HibernateDaoSupport implements Depar
 		criteria.setMaxResults(20);
 		
 		try{
+			logger.info("DepartmentOrder list for employee loaded successfully.");
 			listAllEmployeOrder=(List<DepartmentOrder>)criteria.list();
+			
+			for(DepartmentOrder order : listAllEmployeOrder){
+				logger.info("DAO:DepartmentOrder list for employee contain ="+order);
+			}
 
 		}catch(NullPointerException e){
 			listAllEmployeOrder=null;
+			logger.info("DepartmentOrder list for employee not loaded, because is empty.");
 		}
 		return listAllEmployeOrder;
 	}
@@ -130,9 +134,15 @@ public class DepartmentOrderDAOImpl extends HibernateDaoSupport implements Depar
 		List<DepartmentOrder> employeNotcompletedOverdueOrderList;
 		try{
 			employeNotcompletedOverdueOrderList=(List<DepartmentOrder>)criteria.list();
-
+			logger.info("DepartmentOrder list notcompleted and overdue order for employee loaded successfully.");
+			
+			for(DepartmentOrder order : employeNotcompletedOverdueOrderList){
+				logger.info("DAO:DepartmentOrder list notcompleted and overdue order for employee contain ="+order);
+			}
+			
 		}catch(NullPointerException e){
 			employeNotcompletedOverdueOrderList=null;
+			logger.info("DepartmentOrder list notcompleted and overdue order for employee not loaded because is null.");
 		}
 		return employeNotcompletedOverdueOrderList;
 	}
@@ -163,9 +173,15 @@ public class DepartmentOrderDAOImpl extends HibernateDaoSupport implements Depar
 	
 		try{
 			employeDoneDepartmentOrderList=(List<DepartmentOrder>)criteria.list();
+			logger.info("DepartmentOrder list done order for employee loaded successfully.");
+			
+			for(DepartmentOrder order : employeDoneDepartmentOrderList){
+				logger.info("DAO:DepartmentOrder list done order for employee contain ="+order);
+			}
 
 		}catch(NullPointerException e){
 			employeDoneDepartmentOrderList=null;
+			logger.info("DepartmentOrder list done order for employee not loaded because is null.");
 		}
 		return employeDoneDepartmentOrderList;
 	}
@@ -202,6 +218,7 @@ public class DepartmentOrderDAOImpl extends HibernateDaoSupport implements Depar
 		} catch (NullPointerException e) {
 			totalDetailsCost=0.0;
 		}
+		logger.info("Full detail cost for department order id="+idDepartmentOrder+" equals="+totalDetailsCost);
 		return totalDetailsCost;
 	}
 	
@@ -224,16 +241,17 @@ public class DepartmentOrderDAOImpl extends HibernateDaoSupport implements Depar
 		criteriaForOrder.setProjection(Projections.property("orderCost"));
 		criteriaForOrder.add(Restrictions.eq("idDepartmentOrder", idDepartmentOrder));
 		
-		Double workCost;
+		Double orderCost;
 		try{
-			workCost =(Double)criteriaForOrder.uniqueResult();
-			if(workCost.equals(null)){
-				workCost=0.0;
+			orderCost =(Double)criteriaForOrder.uniqueResult();
+			if(orderCost.equals(null)){
+				orderCost=0.0;
 			}
 
 		}catch(NullPointerException e){
-			workCost=0.0;
+			orderCost=0.0;
 		}
-		return workCost;
+		logger.info("Order cost for department order id="+idDepartmentOrder+" equals="+orderCost);
+		return orderCost;
 	}
 }

@@ -20,7 +20,6 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.expositds.servicestationmanagementsystem.dao.SteadDAO;
@@ -29,12 +28,13 @@ import com.expositds.servicestationmanagementsystem.model.Stead;
 /**
  * <p>The class SteadDAOImpl use DAO pattern which describes layer of data access to object.
  * DAO layer perform link between relational and object model.Model for this dao layer
- * describied in class Stead. This class contain methods which intended to access to operation
- * with objects.Class implements interface SteadDAO located in package which have name
- * com.expositds.servicestationmanagementsystem.dao. All methods are public in class.For logging
- * use framework shell slf4j and framework log4j. Class contain also private, static variable
- * logger, which use to call log message. Class  use Spring framework  to work whith ORM. In
- * particular often use HibernateTemplate for integration Hibernate and Spring technologys.
+ * describied in class Stead. This class contain methods which intended to access special
+ * operation with stead.Class extend AbstractEntity—ommonDAOImpl class, which contain base
+ * set of operation(CRUD). Class implements interface SteadDAO located in package which have
+ * name com.expositds.servicestationmanagementsystem.dao. All methods are public in class.For
+ * logging use framework shell slf4j and framework log4j. Class contain also private, static
+ * variable logger, which use to call log message. Class  use Spring framework to work whith
+ * ORM.In particular often use HibernateTemplate for integration Hibernate and Spring technologys.
  * For work with data base use hibernate criteria. This technology provide as object-oriented
  * select query in relation to a particular entity, and allows you to query the database without
  * writing SQL code. Use Criteria is the most successful approach to search interface with a 
@@ -53,7 +53,7 @@ import com.expositds.servicestationmanagementsystem.model.Stead;
  * @author Zaerko Denis
  */
 @Repository(value="steadDAO")
-public class SteadDAOImpl extends HibernateDaoSupport implements SteadDAO {
+public class SteadDAOImpl extends AbstractEntity—ommonDAOImpl implements SteadDAO {
 
 	/**
 	 * Variable logger use to get logger level for class SteadDAOImpl.
@@ -79,8 +79,14 @@ public class SteadDAOImpl extends HibernateDaoSupport implements SteadDAO {
 		List<Stead> steadList;
 		try{
 			steadList=(List<Stead>)criteria.list();
+			
+			logger.info("List of stead loaded successfully");
+			for(Stead stead : steadList){
+				logger.info("DAO:List steads contain="+stead);
+			}
 
 		}catch(NullPointerException e){
+			logger.info("Stead list loaded successfully but is empty.");
 			steadList=null;		
 		}
 		return steadList;
@@ -109,9 +115,15 @@ public class SteadDAOImpl extends HibernateDaoSupport implements SteadDAO {
 		
 		try{
 			listDepartmetUseCurrentStead=(List<Department>)criteria.list();
+			
+			logger.info("List of departments which use current stead="+idStead+" loaded successfully");
+			for(Department department : listDepartmetUseCurrentStead){
+				logger.info("DAO:List departments contain="+department);
+			}
 
 		}catch(NullPointerException e){
 			listDepartmetUseCurrentStead = null;
+			logger.info("List of departments which use current stead="+idStead+" loaded successfully but is empty.");
 		}
 		return listDepartmetUseCurrentStead;
 	}

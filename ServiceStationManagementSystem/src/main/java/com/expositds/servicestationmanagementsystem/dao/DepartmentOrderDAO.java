@@ -23,14 +23,16 @@ import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
  * DepartmentOrderDAOImpl. Class DepartmentOrderDAOImpl use DAO pattern which describes
  * layer of data access to object. DAO layer perform link between relational and object
  * model. Model for this dao layer describied in class DepartmentOrder.This interface
- * contain ads methods which intended to access to operation with objects.Class use Spring
+ * contain ads methods which intended to access operation with object.Interface produce
+ * special operation with object.Base operation(for any object) include as separate
+ * interface AbstractEntityCommonDAO which extend to this interface.Class use Spring
  * framework to work whith ORM.In particular often use HibernateTemplate for integration
  * Hibernate and Spring technologys. For work with data base use hibernate criteria. 
  * 
  * @version 1.0 11.08.2015
  * @author Zaerko Denis
  */
-public interface DepartmentOrderDAO {
+public interface DepartmentOrderDAO extends AbstractEntityCommonDAO {
 
 	/**
 	 * Return list of order which employee made in all departments. If employee

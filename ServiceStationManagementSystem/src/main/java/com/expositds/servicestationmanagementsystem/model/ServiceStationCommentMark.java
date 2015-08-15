@@ -28,7 +28,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * client want to show comment director and mechanic, client change view status on “mechanic”. Else
  * client want show comment director, mechanic and all other clients, client change status on “all”.
  * Service station rating (mark) varies between 1-10.Service station comment and mark have next
- * relations: many-to-one with client, many-to-one with service station.
+ * relations: many-to-one with client, many-to-one with service station.All communication is one-way.
  * 
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes part
  * of model in MVC architecture. This class includes a description ServiceStationCommentMark entity.

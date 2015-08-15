@@ -25,7 +25,7 @@ import javax.persistence.Table;
  * income and expenses. Report compiled on same date and include financial characteristics of each
  * department or all service station.Every service station have same comments, which may see other
  * clients, mechanics, director. Service station have unequal name and logotype for differ from other
- * service stations.
+ * service stations.All communication is one-way.
  * 
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes part
  * of model in MVC architecture. This class includes a description ServiceStation entity.For creating

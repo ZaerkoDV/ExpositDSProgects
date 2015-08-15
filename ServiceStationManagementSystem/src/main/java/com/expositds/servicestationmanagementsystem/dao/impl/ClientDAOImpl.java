@@ -14,6 +14,7 @@
  */
 package com.expositds.servicestationmanagementsystem.dao.impl;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -22,7 +23,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.expositds.servicestationmanagementsystem.dao.ClientDAO;
@@ -33,8 +33,9 @@ import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
 /**
  * <p>The class ClientDAOImpl use DAO pattern which describes layer of data access to object.
  * DAO layer perform link between relational and object model.Model for this dao layer
- * describied in class Client. This class contain methods which intended to access to operation
- * with objects.Class implements interface ClientDAO located in package which have name
+ * describied in class Client. This class contain methods which intended to access to special
+ * operation with client.Class extend AbstractEntity—ommonDAOImpl class, which contain base set
+ * of operation(CRUD). Class implements interface ClientDAO located in package which have name
  * com.expositds.servicestationmanagementsystem.dao. All methods are public in class.For logging
  * use framework shell slf4j and framework log4j. Class contain also private, static variable
  * logger, which use to call log message. Class  use Spring framework  to work whith ORM. In
@@ -57,7 +58,7 @@ import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
  * @author Zaerko Denis
  */
 @Repository(value = "clientDAO")
-public class ClientDAOImpl extends HibernateDaoSupport implements ClientDAO {
+public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements ClientDAO {
 
 	/**
 	 * Variable logger use to get logger level for class ClientDAOImpl.
@@ -77,7 +78,7 @@ public class ClientDAOImpl extends HibernateDaoSupport implements ClientDAO {
 	 * @throw DataAccessException 
 	 * @throw NullPointerException
 	 * 
-	 * @return List<Client> all client with last name as parametr.
+	 * @return List<Client> all client with last name as parametr else null.
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Client> getListClientByLastName(String clientLastName){
@@ -91,7 +92,14 @@ public class ClientDAOImpl extends HibernateDaoSupport implements ClientDAO {
 		List<Client> listClient;
 		try {
 			listClient= (List<Client>)criteria.list();
+			logger.info("Client list loaded successfully");
+			
+			for(Client client : listClient ){
+				logger.info("DAO:Client list by last name"+clientLastName+" contain ="+client);
+			}
+			
 		} catch (NullPointerException e) {
+			logger.info("Client list not loaded.");
 			listClient=null;
 		}
 		return listClient;
@@ -124,11 +132,16 @@ public class ClientDAOImpl extends HibernateDaoSupport implements ClientDAO {
 		 try {
 			 client = (Client)criteria.uniqueResult();
 			 idClient= client.getIdClient();	
+			 logger.info("Client loaded successfully, idClient="+idClient);
 
 		 }catch (final NullPointerException e) {
+			 logger.info("Client not loaded successfully");
 			 idClient = null;
 
-		 }catch(NonUniqueResultException e){}
+		 }catch(NonUniqueResultException e){
+			 logger.info("Client with login and password not unique.");
+			 idClient = null;
+		 }
 		 finally{
 			 return idClient;
 		 }
@@ -157,11 +170,15 @@ public class ClientDAOImpl extends HibernateDaoSupport implements ClientDAO {
 		Client client = null;
 		try {
 			client=(Client)criteria.uniqueResult();
+			logger.info("Client loaded successfully, idClient="+client.getIdClient());
 
 		}catch (NullPointerException e){
 			client= null;
+			logger.info("Client not loaded successfully.");
 
-		}catch(NonUniqueResultException e){}
+		}catch(NonUniqueResultException e){
+			 logger.info("Client with email not unique.");
+		}
 		return client;
 	}
 	
@@ -191,18 +208,17 @@ public class ClientDAOImpl extends HibernateDaoSupport implements ClientDAO {
 		
 		try {
 			client = (Client)criteria.uniqueResult();
-			if(!client.equals(null)){
-				signIn=true;
-			}else{
-				//any not catch error
-				signIn=false;
-			}
-			
+			logger.info("Client sign in is successfully id="+client.getIdClient());
+			signIn=true;		
+
 		}catch (NullPointerException e) {
+			logger.info("Client sign is failed"+e);
 			signIn=false;
-			
+
 		}catch(NonUniqueResultException e){
-			
+			logger.info("Client sign in is failed because nonunique result "+e);
+			signIn=false;
+
 		}finally{
 			return signIn;
 		}
@@ -224,9 +240,11 @@ public class ClientDAOImpl extends HibernateDaoSupport implements ClientDAO {
 		int clientListSize;	
 		try{
 			clientListSize=(int)criteria.list().size();
+			logger.info("Client count is equals="+clientListSize);
 			
 		}catch(NullPointerException e){
 			clientListSize= 0;
+			logger.info("Client count is equals="+clientListSize);
 		}
 		return clientListSize;
 	}
@@ -258,9 +276,15 @@ public class ClientDAOImpl extends HibernateDaoSupport implements ClientDAO {
 		
 		try{
 			clientOrderList=(List<DepartmentOrder>)criteria.list();
-
+			logger.info("List order for client loaded successfully");
+			
+			for(DepartmentOrder order : clientOrderList){
+				logger.info("DAO:Client order list contain ="+order);
+			}
+			
 		}catch(NullPointerException e){
 			clientOrderList=null;
+			logger.info("List order for client is empty");
 		}
 		return clientOrderList;
 	}
@@ -297,9 +321,15 @@ public class ClientDAOImpl extends HibernateDaoSupport implements ClientDAO {
 		
 		try{
 			clientNotcompletedOverdueOrderList=(List<DepartmentOrder>)criteria.list();
+			logger.info("List not completed and overdue order loaded successfully");
+			
+			for(DepartmentOrder order : clientNotcompletedOverdueOrderList){
+				logger.info("DAO:Client not completed and overdue order list contain ="+order.toString());
+			}
 
 		}catch(NullPointerException e){
 			clientNotcompletedOverdueOrderList=null;
+			logger.info("List not completed and overdue order loaded successfully but empty");
 		}
 		return clientNotcompletedOverdueOrderList;
 	}
@@ -331,9 +361,16 @@ public class ClientDAOImpl extends HibernateDaoSupport implements ClientDAO {
 		
 		try{
 			clientDoneOrderList=(List<DepartmentOrder>)criteria.list();
+			
+			logger.info("List done order loaded successfully");
+			
+			for(DepartmentOrder order : clientDoneOrderList){
+				logger.info("DAO:Client done order list contain ="+order.toString());
+			}
 
 		}catch(NullPointerException e){
 			clientDoneOrderList=null;
+			logger.info("List done order loaded successfully");
 		}
 		return clientDoneOrderList;
 	}

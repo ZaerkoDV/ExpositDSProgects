@@ -28,6 +28,7 @@ import javax.persistence.Table;
  * order which perform employee. Department have relations one-to-many with his orders, many-to-one
  * with stead, many-to-one with service station. Employees work under the control of the department.
  * Employee may work in couple of departments and even in other service station at the same time.
+ * All communication is one-way.
  * 
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes part
  * of model in MVC architecture. This class includes a description Department entity. For creating

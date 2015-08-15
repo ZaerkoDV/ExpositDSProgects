@@ -20,7 +20,6 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.expositds.servicestationmanagementsystem.dao.DetailDAO;
@@ -28,12 +27,13 @@ import com.expositds.servicestationmanagementsystem.model.Detail;
 /**
  * <p>The class DetailDAOImpl use DAO pattern which describes layer of data access to object.
  * DAO layer perform link between relational and object model. Model for this dao layer
- * describied in class Detail. This class contain methods which intended to access to operation
- * with objects.Class implements interface DetailDAO located in package which have name
- * com.expositds.servicestationmanagementsystem.dao. All methods are public in class.For logging
- * use framework shell slf4j and framework log4j. Class contain also private, static variable
- * logger, which use to call log message. Class  use Spring framework  to work whith ORM. In
- * particular often use HibernateTemplate for integration Hibernate and Spring technologys.
+ * describied in class Detail.This class contain methods which intended to access special
+ * operation with detail.Class extend AbstractEntity—ommonDAOImpl class, which contain base
+ * set of operation(CRUD). Class implements interface DetailDAO located in package which have
+ * name com.expositds.servicestationmanagementsystem.dao.All methods are public in class.For
+ * logging use framework shell slf4j and framework log4j. Class contain also private, static
+ * variable logger, which use to call log message. Class  use Spring framework  to work whith
+ * ORM.In particular often use HibernateTemplate for integration Hibernate and Spring technologys.
  * For work with data base use hibernate criteria. This technology provide as object-oriented
  * select query in relation to a particular entity, and allows you to query the database without
  * writing SQL code. Use Criteria is the most successful approach to search interface with a 
@@ -52,7 +52,7 @@ import com.expositds.servicestationmanagementsystem.model.Detail;
  * @author Zaerko Denis
  */
 @Repository(value="detailDAO")
-public class DetailDAOImpl  extends HibernateDaoSupport implements  DetailDAO {
+public class DetailDAOImpl extends AbstractEntity—ommonDAOImpl implements  DetailDAO {
 
 	/**
 	 * Variable logger use to get logger level for class DetailDAOImpl.
@@ -83,9 +83,15 @@ public class DetailDAOImpl  extends HibernateDaoSupport implements  DetailDAO {
 		List<Detail> listDetail = null;
 		try{
 			listDetail=(List<Detail>)criteria.list();
+			logger.info("Detail list with status all loaded successfully");
 			
+			for(Detail detail : listDetail){
+				logger.info("DAO:Detail list contain ="+detail);
+			}
+
 		}catch(NullPointerException e){
 			listDetail=null;
+			logger.info("Detail list with all deatain loaded successfully, but is empty.");
 			
 		}finally{
 			return listDetail;
@@ -115,11 +121,20 @@ public class DetailDAOImpl  extends HibernateDaoSupport implements  DetailDAO {
 		try{
 			if(detailStaus.equals("exist") || detailStaus.equals("notexist")){
 				listDetailWithStausAsParam=(List<Detail>)criteria.list();	
+				
+				logger.info("Detail list with status "+detailStaus+" loaded successfully");
+				
+				for(Detail detail : listDetailWithStausAsParam){
+					logger.info("DAO:Detail list contain ="+detail);
+				}
+				
 			}else{
 				listDetailWithStausAsParam=null;
+				logger.info("Detail list with status "+detailStaus+" loaded successfully,but empty.");
 			}
 		}catch(NullPointerException e){
 			listDetailWithStausAsParam=null;
+			logger.info("Detail list with status "+detailStaus+" loaded successfully,but empty.");
 			
 		}finally{
 			return listDetailWithStausAsParam;

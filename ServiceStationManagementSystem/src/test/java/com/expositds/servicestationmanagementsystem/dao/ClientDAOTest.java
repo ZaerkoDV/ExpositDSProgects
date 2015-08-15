@@ -18,12 +18,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
-import com.expositds.servicestationmanagementsystem.dao.impl.ClientDAOImpl;
-import com.expositds.servicestationmanagementsystem.dao.impl.EntityUtilDAOImpl;
 import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.ClientSecurityFeature;
 import com.expositds.servicestationmanagementsystem.model.Department;
@@ -34,13 +33,12 @@ import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 
 /**
- * Class ClientDAOTest use to testing ClientDAO class which belong to dao layer.
- * Class use Junit tests. To create test objects use method clientForTest.That
- * method create new object for test and applying anatation Inject to get
- * dependency injection. This is realization of pattern IoC. All methods return
- * void except createClientForTest. All methods use annotation Rollback to roll
- * back transaction which created for test. Also in class use Assert. These 
- * methods set assertion methods useful for writing tests.
+ * Class ClientDAOTest use to testing ClientDAOImpl class which belong to dao layer. Class use Junit
+ * tests. To create test objects use method createObjectsForTest.That method create new object for
+ * test and applying anatation Inject to get dependency injection. This is realization of pattern IoC.
+ * All methods return void include initObjectsBeforeTest.All methods use annotation Rollback to roll
+ * back transaction which created for test. Also in class use Assert. These methods set assertion
+ * methods useful for writing tests.
  * 
  * @see org.springframework.transaction
  * @see javax.inject.Inject
@@ -68,10 +66,8 @@ public class ClientDAOTest extends AbstractTest {
 	 * JSR-330.
 	 */
 	@Inject
-	private EntityUtilDAOImpl entityUtilDAO;
-	
-	@Inject
-	private ClientDAOImpl clientDAO;
+	@Qualifier("clientDAO")
+	private ClientDAO clientDAO;
 
 	public ServiceStation serviceStation;
 	public Stead stead;
@@ -119,18 +115,18 @@ public class ClientDAOTest extends AbstractTest {
 		//serviceStation.setServiceStationLogotype(serviceStationLogotype);
 		serviceStation.setServiceStationAddress("serviceStationAddressTest");
 		serviceStation.setServiceStationPhoneNumber("1234221");
-		entityUtilDAO.saveEntity(serviceStation);
+		clientDAO.saveEntity(serviceStation);
 
 		stead = new Stead();
 		stead.setSteadArea((Double)100.0);
 		stead.setSteadCost((Double)10.0);
-		entityUtilDAO.saveEntity(stead);
+		clientDAO.saveEntity(stead);
 
 		department=new Department();
 		department.setDepartmentName("departmentNameTest");
 		department.setStead(stead);
 		department.setServiceStation(serviceStation);
-		entityUtilDAO.saveEntity(department);	
+		clientDAO.saveEntity(department);	
 
 		client = new Client();
 		client.setClientFirstName("clientFirstNameTest");
@@ -140,13 +136,13 @@ public class ClientDAOTest extends AbstractTest {
 		client.setClientBirthday(new Date(date.getTime()-10));
 		client.setClientTelephone("12345");
 		client.setClientEmail("test@mail.ru");
-		entityUtilDAO.saveEntity(client);
+		clientDAO.saveEntity(client);
 
 		clientSecurityFeature=new ClientSecurityFeature();
 		clientSecurityFeature.setClientLogin("clientTestLogin");
 		clientSecurityFeature.setClientPassword("clientPasswordTest");
 		clientSecurityFeature.setClient(client);
-		entityUtilDAO.saveEntity(clientSecurityFeature);
+		clientDAO.saveEntity(clientSecurityFeature);
 
 		employee = new Employee();
 		employee.setEmployeFirstName("employeFirstNameTest");
@@ -157,13 +153,13 @@ public class ClientDAOTest extends AbstractTest {
 		employee.setEmployeBirthday(new Date(date.getTime()-10));
 		employee.setEmployeEmail("test@mail.ru");
 		employee.setWages((Double)1024.1);
-		entityUtilDAO.saveEntity(employee);
+		clientDAO.saveEntity(employee);
 		
 		employeeSecurityFeature = new EmployeeSecurityFeature();
 		employeeSecurityFeature.setEmployeLogin("employeLoginTest");
 		employeeSecurityFeature.setEmployePassword("employePasswordTest");
 		employeeSecurityFeature.setEmployee(employee);
-		entityUtilDAO.saveEntity(employeeSecurityFeature);
+		clientDAO.saveEntity(employeeSecurityFeature);
 
 		departmentOrder=new DepartmentOrder();
 		departmentOrder.setOrderDescription("testOrderDescription");
@@ -175,7 +171,7 @@ public class ClientDAOTest extends AbstractTest {
 		departmentOrder.setClient(client);
 		departmentOrder.setEmployee(employee);
 		departmentOrder.setDepartment(department);
-		entityUtilDAO.saveEntity(departmentOrder);		
+		clientDAO.saveEntity(departmentOrder);		
 
 		return client;
 	}
@@ -211,7 +207,7 @@ public class ClientDAOTest extends AbstractTest {
 	@Rollback(true)
 	@Test
 	public void testGettingClientById(){
-		Assert.assertNotNull(entityUtilDAO.getEntityById(Client.class,client.getIdClient()));
+		Assert.assertNotNull(clientDAO.getEntityById(Client.class,client.getIdClient()));
 	}
 
 	/**
@@ -229,9 +225,9 @@ public class ClientDAOTest extends AbstractTest {
 	public void testUpdateClient(){
 
 		client.setClientFirstName("clientFirstNameTest2");
-		entityUtilDAO.updateEntity(client);
+		clientDAO.updateEntity(client);
 
-		final Client updatedClient =(Client) entityUtilDAO.getEntityById(Client.class, client.getIdClient());	
+		final Client updatedClient =(Client) clientDAO.getEntityById(Client.class, client.getIdClient());	
 		Assert.assertTrue(updatedClient.getClientFirstName().equals("clientFirstNameTest2"));
 	}
 
@@ -250,8 +246,8 @@ public class ClientDAOTest extends AbstractTest {
 	@Test
 	public void testDeleteClientById(){
 
-		entityUtilDAO.deleteEntity(client);
-		Assert.assertNull(entityUtilDAO.getEntityById(Client.class, client.getIdClient()));
+		clientDAO.deleteEntity(client);
+		Assert.assertNull(clientDAO.getEntityById(Client.class, client.getIdClient()));
 	}
 
 	/**
@@ -420,7 +416,7 @@ public class ClientDAOTest extends AbstractTest {
 
 		//notcomplited order not exist.
 		departmentOrder.setOrderStatus("done");
-		entityUtilDAO.updateEntity(departmentOrder);
+		clientDAO.updateEntity(departmentOrder);
 		Assert.assertTrue(clientDAO.getListNotcompletedOverdueOrderForClient(idClient).isEmpty());
 	}
 
@@ -444,12 +440,12 @@ public class ClientDAOTest extends AbstractTest {
 		
 		//done order exist.
 		departmentOrder.setOrderStatus("done");
-		entityUtilDAO.updateEntity(departmentOrder);
+		clientDAO.updateEntity(departmentOrder);
 		Assert.assertFalse(clientDAO.getListDoneOrderForClient(client.getIdClient()).isEmpty());
 
 		//done order not exist.
 		departmentOrder.setOrderStatus("notcompleted");
-		entityUtilDAO.deleteEntity(departmentOrder);
+		clientDAO.deleteEntity(departmentOrder);
 		Assert.assertTrue(clientDAO.getListDoneOrderForClient(idClient).isEmpty());
 	}
 }

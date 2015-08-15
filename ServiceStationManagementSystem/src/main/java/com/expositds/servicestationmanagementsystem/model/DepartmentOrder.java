@@ -32,7 +32,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * cancel order and conclude in other service station (department) or do nothing. Client may have
  * many orders in department. Every client order may have many details which need to repair or
  * replacement. Each order execute only one employee.Department order have relations one-to-many
- *  with entity details, many-to-one with client, many-to-one with employee, many-to-one department.
+ * with entity details, many-to-one with client, many-to-one with employee, many-to-one department.
+ * All communication is one-way.
  *  
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes part
  * of model in MVC architecture. This class includes a description DepartmentOrder entity.For creating

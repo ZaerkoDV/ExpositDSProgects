@@ -22,7 +22,6 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate4.HibernateObjectRetrievalFailureException;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.expositds.servicestationmanagementsystem.dao.ServiceStationCommentMarkDAO;
@@ -31,16 +30,17 @@ import com.expositds.servicestationmanagementsystem.model.ServiceStationCommentM
  * <p>The class ServiceStationCommentMarkDAOImpl use DAO pattern which describes layer of data
  * access to object. DAO layer perform link between relational and object model. Model for this
  * dao layer describied in class ServiceStationCommentMark. This class contain methods which
- *  intended to access to operation with objects.Class implements interface which have name
- * ServiceStationCommentMarkDAO located in package name com.expositds.servicestationmanagementsystem.dao.
- * All methods are public in class.For logging use framework shell slf4j and framework log4j.
- * Class contain also private, static variable logger, which use to call log message. Class use
- * Spring framework to work whith ORM. In particular often use HibernateTemplate for integration
- * Hibernate and Spring technologys. For work with data base use hibernate criteria.This technology
- * provide as object-oriented select query in relation to a particular entity, and allows you to
- * query the database without writing SQL code. Use Criteria is the most successful approach to
- * search interface with a  variable number of conditions. To create copies of the Criteria used
- * class Session, which acts as a factory.
+ * intended to access special operation with service station comment and mark.Class extend
+ * AbstractEntity—ommonDAOImpl class, which contain base set of operation(CRUD).Class implements
+ * interface ServiceStationCommentMarkDAO located in package which have name com.expositds.
+ * servicestationmanagementsystem.dao. All methods are public in class.For logging use framework
+ * shell slf4j and framework log4j. Class contain also private, static variable logger, which use
+ * to call log message. Class use Spring framework to work whith ORM. In particular often use
+ * HibernateTemplate for integration Hibernate and Spring technologys. For work with data base use
+ * hibernate criteria.This technology provide as object-oriented select query in relation to a
+ * particular entity, and allows you to query the database without writing SQL code. Use Criteria
+ * is the most successful approach to search interface with a  variable number of conditions. To
+ * create copies of the Criteria used class Session, which acts as a factory.
  *  
  * @see Collection
  * @see List
@@ -55,7 +55,7 @@ import com.expositds.servicestationmanagementsystem.model.ServiceStationCommentM
  *
  */
 @Repository(value="serviceStationCommentMarkDAO")
-public class ServiceStationCommentMarkDAOImpl extends HibernateDaoSupport implements ServiceStationCommentMarkDAO {
+public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImpl implements ServiceStationCommentMarkDAO {
 
 	/**
 	 * Variable logger use to get logger level for class ServiceStationCommentMarkDAOImpl.
@@ -95,9 +95,15 @@ public class ServiceStationCommentMarkDAOImpl extends HibernateDaoSupport implem
 		
 		try{
 			listServiceStationCommentMark=(List<ServiceStationCommentMark>)criteria.list();
-
+			logger.info("List comment mark with view status "+viewStatus+"for department id"+idServiceStation);
+			
+			for(ServiceStationCommentMark serviceStationCommentMark: listServiceStationCommentMark){
+				logger.info("DAO:Comment and mark list for ServiceStation contain ="+serviceStationCommentMark);
+			}
+			
 		}catch(NullPointerException e){
 			listServiceStationCommentMark=null;
+			logger.info("List comment mark with view status "+viewStatus+"for department id="+idServiceStation+" is empty.");
 		}
 		return listServiceStationCommentMark;
 	}
@@ -120,7 +126,6 @@ public class ServiceStationCommentMarkDAOImpl extends HibernateDaoSupport implem
 	@SuppressWarnings("unchecked")
 	public List<ServiceStationCommentMark> getListCommentMarkByIdClient(Long idClient){
 		
-		List<ServiceStationCommentMark> listCommentMarkByClient;
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
 				.createCriteria(ServiceStationCommentMark.class);
 		criteria.createAlias("client", "c");
@@ -128,11 +133,18 @@ public class ServiceStationCommentMarkDAOImpl extends HibernateDaoSupport implem
 		criteria.setMaxResults(20);
 		criteria.setFirstResult(0);
 	
+		List<ServiceStationCommentMark> listCommentMarkByClient;
 		try{
 			listCommentMarkByClient=(List<ServiceStationCommentMark>)criteria.list();
+			logger.info("Client id"+idClient+" comment and mark list load successfully");
+			
+			for(ServiceStationCommentMark serviceStationCommentMark: listCommentMarkByClient){
+				logger.info("DAO:Client comment and mark list contain ="+serviceStationCommentMark);
+			}
 
 		}catch(NullPointerException e){
 			listCommentMarkByClient=null;
+			logger.info("Client id"+idClient+" comment and mark list load successfully but list is empty.");
 		}
 		return listCommentMarkByClient;
 	}
@@ -166,9 +178,15 @@ public class ServiceStationCommentMarkDAOImpl extends HibernateDaoSupport implem
 		
 		try{
 			listServiceStationCommentMarkSortDegressiveMark=(List<ServiceStationCommentMark>)criteria.list();
+			logger.info("List comment and mark which sort by degessive mark load successfully");
+			
+			for(ServiceStationCommentMark serviceStationCommentMark: listServiceStationCommentMarkSortDegressiveMark){
+				logger.info("DAO:Client comment and mark sorted list contain ="+serviceStationCommentMark);
+			}
 
 		}catch(NullPointerException e){
 			listServiceStationCommentMarkSortDegressiveMark=null;
+			logger.info("List comment and mark which sort by degessive mark load successfully, but is empty.");
 		}
 		return listServiceStationCommentMarkSortDegressiveMark;
 	}		

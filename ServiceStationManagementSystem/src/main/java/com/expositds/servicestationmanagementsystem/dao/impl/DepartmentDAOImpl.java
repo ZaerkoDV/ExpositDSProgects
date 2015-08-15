@@ -22,7 +22,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.expositds.servicestationmanagementsystem.dao.DepartmentDAO;
@@ -33,17 +32,17 @@ import com.expositds.servicestationmanagementsystem.model.Employee;
 /**
  *<p>The class DepartmentDAOImpl use DAO pattern which describes layer of data access to object.
  * DAO layer perform link between relational and object model.Model for this dao layer describied
- * in class Department. This class contain methods which intended to access to operation with
- * objects. Class implements interface DepartmentDAO located in package which have name
- * com.expositds.servicestationmanagementsystem.dao. All methods are public in class.For logging
- * use framework shell slf4j and framework log4j. Class contain also private, static variable
- * logger, which use to call log message. Class  use Spring framework  to work whith ORM. In
- * particular often use HibernateTemplate for integration Hibernate and Spring technologys.
- * For work with data base use hibernate criteria. This technology provide as object-oriented
- * select query in relation to a particular entity, and allows you to query the database without
- * writing SQL code. Use Criteria is the most successful approach to search interface with a 
- * variable number of conditions. To create copies of the Criteria used class Session, which
- * acts as a factory.
+ * in class Department. This class contain methods which intended to access special operation with
+ * department.Class extend AbstractEntity—ommonDAOImpl class, which contain base set of operation
+ * (CRUD). Class implements interface DepartmentDAO located in package which have name com.expositds.
+ * servicestationmanagementsystem.dao. All methods are public in class.For logging use framework
+ * shell slf4j and framework log4j. Class contain also private, static variable logger, which use
+ * to call log message. Class  use Spring framework  to work whith ORM. In particular often use
+ * HibernateTemplate for integration Hibernate and Spring technologys. For work with data base use
+ * hibernate criteria. This technology provide as object-oriented select query in relation to a
+ * particular entity, and allows you to query the database without writing SQL code. Use Criteria
+ * is the most successful approach to search interface with a variable number of conditions.To create
+ * copies of the Criteria used class Session, which acts as a factory.
  *  
  * @see Collection
  * @see List
@@ -57,7 +56,7 @@ import com.expositds.servicestationmanagementsystem.model.Employee;
  * @author Zaerko Denis
  */
 @Repository(value = "departmentDAO")
-public class DepartmentDAOImpl extends HibernateDaoSupport implements DepartmentDAO{
+public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements DepartmentDAO{
 
 	/**
 	 * Variable logger use to get logger level for class DepartmentDAOImpl.
@@ -87,10 +86,16 @@ public class DepartmentDAOImpl extends HibernateDaoSupport implements Department
 		criteria.add(Restrictions.eq("d.idDepartment", idDepartment));
 		
 		try{
+			logger.info("DepartmentOrder list loaded successfully for department with, id="+idDepartment);
 			listDepartmentOrder=(List<DepartmentOrder>)criteria.list();
+			
+			for(DepartmentOrder order : listDepartmentOrder){
+				logger.info("DAO:DepartmentOrder list contain="+order);
+			}
 
 		}catch(NullPointerException e){
 			listDepartmentOrder = null;
+			logger.info("DepartmentOrder list not loaded because list is empty");
 		}
 		return listDepartmentOrder;
 	}
@@ -116,10 +121,16 @@ public class DepartmentDAOImpl extends HibernateDaoSupport implements Department
 		criteria.setProjection(Projections.property("client"));
 		
 		try{
+			logger.info("Client list loaded successfully for department id="+idDepartment);
 			listDepartmentClient=(List<Client>)criteria.list();
+			
+			for(Client client : listDepartmentClient){
+				logger.info("DAO:Client list contain="+client);
+			}
 
 		}catch(NullPointerException e){
 			listDepartmentClient = null;
+			logger.info("Client list not loaded because list is empty");
 		}
 		return listDepartmentClient;
 	}
@@ -145,10 +156,16 @@ public class DepartmentDAOImpl extends HibernateDaoSupport implements Department
 		criteria.setProjection(Projections.property("employee"));
 
 		try{
+			logger.info("Employee list loaded successfully for department id="+idDepartment);
 			listDepartmentEmployee=(List<Employee>)criteria.list();
+			
+			for(Employee employee : listDepartmentEmployee){
+				logger.info("DAO:Employee list contain="+employee);
+			}
 			
 		}catch(NullPointerException e){
 			listDepartmentEmployee = null;
+			logger.info("Employee list not loaded because list is empty");
 		}
 		return listDepartmentEmployee;
 	}
@@ -182,6 +199,8 @@ public class DepartmentDAOImpl extends HibernateDaoSupport implements Department
 		Double totalDetailCostForDepartment;
 		try{
 			totalDetailCostForDepartment = (Double)criteria.uniqueResult();
+			logger.info("Total detail cost for not completed and overdue department order load.");
+			
 			if(totalDetailCostForDepartment.equals(null)){
 				totalDetailCostForDepartment =0.0;
 			}
@@ -189,6 +208,7 @@ public class DepartmentDAOImpl extends HibernateDaoSupport implements Department
 		}catch(NullPointerException e){
 			totalDetailCostForDepartment=0.0;	
 		}
+		logger.info("Total detail cost for not completed and overdue department order equals="+totalDetailCostForDepartment);
 		return totalDetailCostForDepartment;
 	}
 
@@ -220,6 +240,8 @@ public class DepartmentDAOImpl extends HibernateDaoSupport implements Department
 
 		Double income;
 		try{
+			logger.info("Full income for notcompleted and overdue order loaded.");
+			
 			income = (Double)criteria.uniqueResult();
 			if(income.equals(null)){
 				income =0.0;	
@@ -227,6 +249,7 @@ public class DepartmentDAOImpl extends HibernateDaoSupport implements Department
 		}catch(NullPointerException e){
 			income=0.0;	
 		}
+		logger.info("Full income for notcompleted and overdue order equals="+income);
 		return income;
 	}
 }

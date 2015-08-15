@@ -22,13 +22,14 @@ import javax.persistence.Table;
  * locate (part of service station) on the stead. Stead (area) belong same owner. Owner
  * get income from the lease and department get expenses at the same time. One stead may
  * have many departments. One unit (stead area) of rented space have cost on (area cost)
- * in day.Stead have relations one-to-many with department.
+ * in day.Stead have relations one-to-many with department.All communication is one-way.
  *
- * The class is located in the com.expositds.servicestationmanagementsystem.model and describes part
- * of model in MVC architecture. This class includes a description Stead entity. For creating Stead
- * model use Hibernate technology (anatations). Class contains exclusively no-static public methods
- * that return fields of entity. Methods intended to access object fields.Class also contain overload
- * methods toString(), hashCode(), equals().
+ * The class is located in the com.expositds.servicestationmanagementsystem.model and
+ * describes part of model in MVC architecture. This class includes a description Stead
+ * entity. For creating Stead model use Hibernate technology (anatations). Class contains
+ * exclusively no-static public methods that return fields of entity. Methods intended
+ * to access object fields.Class also contain overload methods toString(), hashCode(),
+ * equals().
  * 
  * @see Hibernate annotations
  * 

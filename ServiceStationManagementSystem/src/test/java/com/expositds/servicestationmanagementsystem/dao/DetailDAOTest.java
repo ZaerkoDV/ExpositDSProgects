@@ -17,12 +17,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
-import com.expositds.servicestationmanagementsystem.dao.impl.DetailDAOImpl;
-import com.expositds.servicestationmanagementsystem.dao.impl.EntityUtilDAOImpl;
 import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.Department;
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
@@ -33,13 +32,12 @@ import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 
 /**
- * Class DetailDAOTest use to testing DetailDAO class which belong to dao layer.
- * Class use Junit tests. To create test objects use method createDetailForTest.
- * That method create new object for test and applying anatation Inject to get
- * dependency injection. This is realization of pattern IoC. All methods return
- * void except createDetailForTest. All methods use annotation Rollback to roll
- * back transaction which created for test. Also in class use Assert. These 
- * methods set assertion methods useful for writing tests.
+ * Class DetailDAOTest use to testing DetailDAOImpl class which belong to dao layer.Class
+ * use Junit tests.To create test objects use method createObjectsForTest. That method create
+ * new object for test and applying anatation Inject to get dependency injection. This is
+ * realization of pattern IoC. All methods return void include initObjectsBeforeTest. All
+ * methods use annotation Rollback to roll back transaction which created for test. Also in
+ * class use Assert.These methods set assertion methods useful for writing tests.
  * 
  * @see org.springframework.transaction
  * @see javax.inject.Inject
@@ -67,10 +65,8 @@ public class DetailDAOTest extends AbstractTest {
 	 * JSR-330.
 	 */
 	@Inject
-	private EntityUtilDAOImpl entityUtilDAO;
-
-	@Inject
-	private DetailDAOImpl detailDAO;
+	@Qualifier("detailDAO")
+	private DetailDAO detailDAO;
 
 	public ServiceStation serviceStation;
 	public Stead stead;
@@ -116,18 +112,18 @@ public class DetailDAOTest extends AbstractTest {
 		//serviceStation.setServiceStationLogotype(serviceStationLogotype);
 		serviceStation.setServiceStationAddress("serviceStationAddressTest");
 		serviceStation.setServiceStationPhoneNumber("1234221");
-		entityUtilDAO.saveEntity(serviceStation);
+		detailDAO.saveEntity(serviceStation);
 
 		stead = new Stead();
 		stead.setSteadArea((Double)100.0);
 		stead.setSteadCost((Double)10.0);
-		entityUtilDAO.saveEntity(stead);
+		detailDAO.saveEntity(stead);
 
 		department=new Department();
 		department.setDepartmentName("departmentNameTest");
 		department.setStead(stead);
 		department.setServiceStation(serviceStation);
-		entityUtilDAO.saveEntity(department);	
+		detailDAO.saveEntity(department);	
 
 		client = new Client();
 		client.setClientFirstName("clientFirstNameTest");
@@ -137,7 +133,7 @@ public class DetailDAOTest extends AbstractTest {
 		client.setClientBirthday(new Date(date.getTime()-10));
 		client.setClientTelephone("12345");
 		client.setClientEmail("test@mail.ru");
-		entityUtilDAO.saveEntity(client);
+		detailDAO.saveEntity(client);
 
 		employee = new Employee();
 		employee.setEmployeFirstName("employeFirstNameTest");
@@ -148,13 +144,13 @@ public class DetailDAOTest extends AbstractTest {
 		employee.setEmployeBirthday(new Date(date.getTime()-10));
 		employee.setEmployeEmail("test@mail.ru");
 		employee.setWages((Double)1024.1);
-		entityUtilDAO.saveEntity(employee);
+		detailDAO.saveEntity(employee);
 		
 		employeeSecurityFeature = new EmployeeSecurityFeature();
 		employeeSecurityFeature.setEmployeLogin("employeLoginTest");
 		employeeSecurityFeature.setEmployePassword("employePasswordTest");
 		employeeSecurityFeature.setEmployee(employee);
-		entityUtilDAO.saveEntity(employeeSecurityFeature);
+		detailDAO.saveEntity(employeeSecurityFeature);
 
 		departmentOrder=new DepartmentOrder();
 		departmentOrder.setOrderDescription("testOrderDescription");
@@ -166,7 +162,7 @@ public class DetailDAOTest extends AbstractTest {
 		departmentOrder.setClient(client);
 		departmentOrder.setEmployee(employee);
 		departmentOrder.setDepartment(department);
-		entityUtilDAO.saveEntity(departmentOrder);
+		detailDAO.saveEntity(departmentOrder);
 
 		detail=new Detail();
 		detail.setDetailName("detailNameTest");
@@ -175,7 +171,7 @@ public class DetailDAOTest extends AbstractTest {
 		detail.setDetailCost((Double)100.0);		
 		detail.setDetailWarrantyDay((long)100);
 		detail.setDepartmentOrder(departmentOrder);
-		entityUtilDAO.saveEntity(detail);
+		detailDAO.saveEntity(detail);
 
 		return detail;
 	}
@@ -211,7 +207,7 @@ public class DetailDAOTest extends AbstractTest {
 	@Rollback(true)
 	@Test
 	public void testGettingDetailById(){
-		Assert.assertNotNull(entityUtilDAO.getEntityById(Detail.class, detail.getIdDetail()));
+		Assert.assertNotNull(detailDAO.getEntityById(Detail.class, detail.getIdDetail()));
 	}
 
 	/**
@@ -229,9 +225,9 @@ public class DetailDAOTest extends AbstractTest {
 	public void testUpdateDetail(){
 
 		detail.setDetailManufacturer("detailManufacturerTest");
-		entityUtilDAO.updateEntity(detail);
+		detailDAO.updateEntity(detail);
 
-		final Detail updatedDetail =(Detail) entityUtilDAO.getEntityById(Detail.class,detail.getIdDetail());	
+		final Detail updatedDetail =(Detail) detailDAO.getEntityById(Detail.class,detail.getIdDetail());	
 		Assert.assertTrue(updatedDetail.getDetailManufacturer().equals("detailManufacturerTest"));
 	}
 
@@ -250,8 +246,8 @@ public class DetailDAOTest extends AbstractTest {
 	@Test
 	public void testDeleteDetailById(){
 
-		entityUtilDAO.deleteEntityById(Detail.class, detail.getIdDetail());
-		Assert.assertNull(entityUtilDAO.getEntityById(Detail.class, detail.getIdDetail()));
+		detailDAO.deleteEntityById(Detail.class, detail.getIdDetail());
+		Assert.assertNull(detailDAO.getEntityById(Detail.class, detail.getIdDetail()));
 	}
 	
 	/**
@@ -270,7 +266,7 @@ public class DetailDAOTest extends AbstractTest {
 	public void testGettingListAllDetail(){
 		
 		Assert.assertFalse(detailDAO.getListAllDetail().isEmpty());
-		entityUtilDAO.deleteEntity(detail);
+		detailDAO.deleteEntity(detail);
 		Assert.assertTrue(detailDAO.getListAllDetail().isEmpty());
 	}
 
@@ -296,7 +292,7 @@ public class DetailDAOTest extends AbstractTest {
 		
 		//detail exist		
 		detail.setDetailStatus("exist");
-		entityUtilDAO.updateEntity(detail);
+		detailDAO.updateEntity(detail);
 		Assert.assertFalse(detailDAO.getListDetailWithStausAsParam("exist").isEmpty());
 		Assert.assertTrue(detailDAO.getListDetailWithStausAsParam("notexist").isEmpty());
 	}	

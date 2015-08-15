@@ -18,23 +18,21 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
-import com.expositds.servicestationmanagementsystem.dao.impl.EntityUtilDAOImpl;
-import com.expositds.servicestationmanagementsystem.dao.impl.ServiceStationCommentMarkDAOImpl;
 import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.ServiceStationCommentMark;
 
 /**
- * <p> Class ServiceStationCommentMarkDAOTest use to testing ServiceStationCommentMarkDAO
- * class which belong to dao layer. Class use Junit tests. To create test objects use method
- * clearServiceStationCommentMarkAfterTest.That method create new object for test and applying
- * anatation Inject to get dependency injection.This is realization of pattern IoC.All methods
- * return void except clearServiceStationCommentMarkAfterTest.All methods use annotation 
- * Rollback to roll back transaction which created for test. Also in class use Assert.These 
+ * <p> Class ServiceStationCommentMarkDAOTest use to testing ServiceStationCommentMarkDAOImpl class which
+ * belong to dao layer. Class use Junit tests. To create test objects use method createObjectsForTest.
+ * That method create new object for test and applying anatation Inject to get dependency injection.This
+ * is realization of pattern IoC.All methods return void include initObjectsBeforeTest.All methods use
+ * annotation Rollback to roll back transaction which created for test. Also in class use Assert.These
  * methods set assertion methods useful for writing tests.
  * 
  * @see org.springframework.transaction
@@ -63,10 +61,8 @@ public class ServiceStationCommentMarkDAOTest extends AbstractTest {
 	 * of specification JSR-330.
 	 */
 	@Inject
-	private EntityUtilDAOImpl entityUtilDAO;
-	
-	@Inject
-	private ServiceStationCommentMarkDAOImpl serviceStationCommentMarkDAO;
+	@Qualifier("serviceStationCommentMarkDAO")
+	private ServiceStationCommentMarkDAO serviceStationCommentMarkDAO;
 
 	public ServiceStation serviceStation;
 	public Client client;
@@ -104,7 +100,7 @@ public class ServiceStationCommentMarkDAOTest extends AbstractTest {
 		//serviceStation.setServiceStationLogotype(serviceStationLogotype);
 		serviceStation.setServiceStationAddress("serviceStationAddressTest");
 		serviceStation.setServiceStationPhoneNumber("1234221");
-		entityUtilDAO.saveEntity(serviceStation);
+		serviceStationCommentMarkDAO.saveEntity(serviceStation);
 
 		client = new Client();
 		client.setClientFirstName("clientFirstNameTest");
@@ -114,7 +110,7 @@ public class ServiceStationCommentMarkDAOTest extends AbstractTest {
 		client.setClientBirthday(new Date(date.getTime()-10));
 		client.setClientTelephone("12345");
 		client.setClientEmail("test@mail.ru");
-		entityUtilDAO.saveEntity(client);
+		serviceStationCommentMarkDAO.saveEntity(client);
 
 		serviceStationCommentMark = new ServiceStationCommentMark();
 		serviceStationCommentMark.setComment("SameTestComment");
@@ -122,7 +118,7 @@ public class ServiceStationCommentMarkDAOTest extends AbstractTest {
 		serviceStationCommentMark.setMark((long)100);
 		serviceStationCommentMark.setServiceStation(serviceStation);	
 		serviceStationCommentMark.setClient(client);
-		entityUtilDAO.saveEntity(serviceStationCommentMark);
+		serviceStationCommentMarkDAO.saveEntity(serviceStationCommentMark);
 
 		return serviceStationCommentMark;
 	}
@@ -158,7 +154,7 @@ public class ServiceStationCommentMarkDAOTest extends AbstractTest {
 	@Rollback(true)
 	@Test
 	public void testGettingServiceStationCommentMarkById(){
-		Assert.assertNotNull(entityUtilDAO.getEntityById(ServiceStationCommentMark.class,
+		Assert.assertNotNull(serviceStationCommentMarkDAO.getEntityById(ServiceStationCommentMark.class,
 				serviceStationCommentMark.getIdServiceStation—ommentMark()));
 	}
 
@@ -177,9 +173,9 @@ public class ServiceStationCommentMarkDAOTest extends AbstractTest {
 	@Test
 	public void testUpdateServiceStationCommentMark(){
 		serviceStationCommentMark.setComment("SameTestCommentTest2");
-		entityUtilDAO.updateEntity(serviceStationCommentMark);
+		serviceStationCommentMarkDAO.updateEntity(serviceStationCommentMark);
 
-		final ServiceStationCommentMark updatedServiceStationCommentMark =(ServiceStationCommentMark) entityUtilDAO
+		final ServiceStationCommentMark updatedServiceStationCommentMark =(ServiceStationCommentMark) serviceStationCommentMarkDAO
 				.getEntityById(ServiceStationCommentMark.class,serviceStationCommentMark.getIdServiceStation—ommentMark());	
 		Assert.assertTrue(updatedServiceStationCommentMark.getComment().equals("SameTestCommentTest2"));
 	}
@@ -199,8 +195,8 @@ public class ServiceStationCommentMarkDAOTest extends AbstractTest {
 	@Test
 	public void testDeleteServiceStationCommentMark(){
 
-		entityUtilDAO.deleteEntity(serviceStationCommentMark);
-		Assert.assertNull(entityUtilDAO.getEntityById(ServiceStationCommentMark.class,serviceStationCommentMark
+		serviceStationCommentMarkDAO.deleteEntity(serviceStationCommentMark);
+		Assert.assertNull(serviceStationCommentMarkDAO.getEntityById(ServiceStationCommentMark.class,serviceStationCommentMark
 				.getIdServiceStation—ommentMark()));
 	}
 	
@@ -232,7 +228,7 @@ public class ServiceStationCommentMarkDAOTest extends AbstractTest {
 		//list of comment mark for mechanic in not empty
 		viewStatus="mechanic";
 		serviceStationCommentMark.setViewStatus(viewStatus);
-		entityUtilDAO.updateEntity(serviceStationCommentMark);
+		serviceStationCommentMarkDAO.updateEntity(serviceStationCommentMark);
 		listServiceStationCommentMark =serviceStationCommentMarkDAO
 				.getListCommentMarkStatusAsParamByIdServiceStation(idServiceStation, viewStatus);
 		Assert.assertFalse(listServiceStationCommentMark.isEmpty());
@@ -240,14 +236,14 @@ public class ServiceStationCommentMarkDAOTest extends AbstractTest {
 		//list of comment mark for director in not empty
 		viewStatus="director";
 		serviceStationCommentMark.setViewStatus(viewStatus);
-		entityUtilDAO.updateEntity(serviceStationCommentMark);
+		serviceStationCommentMarkDAO.updateEntity(serviceStationCommentMark);
 		
 		listServiceStationCommentMark =serviceStationCommentMarkDAO
 				.getListCommentMarkStatusAsParamByIdServiceStation(idServiceStation, viewStatus);
 		Assert.assertFalse(listServiceStationCommentMark.isEmpty());
 		
 		//list of comment mark is empty
-		entityUtilDAO.deleteEntity(serviceStationCommentMark);
+		serviceStationCommentMarkDAO.deleteEntity(serviceStationCommentMark);
 		listServiceStationCommentMark =serviceStationCommentMarkDAO
 				.getListCommentMarkStatusAsParamByIdServiceStation(idServiceStation, viewStatus);
 		Assert.assertTrue(listServiceStationCommentMark.isEmpty());
@@ -274,7 +270,7 @@ public class ServiceStationCommentMarkDAOTest extends AbstractTest {
 				.getIdClient());
 		Assert.assertFalse(listCommentMarkByClient.isEmpty());
 		
-		entityUtilDAO.deleteEntity(serviceStationCommentMark);
+		serviceStationCommentMarkDAO.deleteEntity(serviceStationCommentMark);
 		listCommentMarkByClient=serviceStationCommentMarkDAO.getListCommentMarkByIdClient(client
 				.getIdClient());
 		Assert.assertTrue(listCommentMarkByClient.isEmpty());
@@ -304,7 +300,7 @@ public class ServiceStationCommentMarkDAOTest extends AbstractTest {
 		Assert.assertFalse(listServiceStationCommentMarkSortDegressiveMark.isEmpty());
 	
 		//remove mark
-		entityUtilDAO.deleteEntity(serviceStationCommentMark);
+		serviceStationCommentMarkDAO.deleteEntity(serviceStationCommentMark);
 		//mark not exist
 		listServiceStationCommentMarkSortDegressiveMark=serviceStationCommentMarkDAO
 				.getListCommentMarkSortByDegressiveMark(serviceStation.getIdServiceStation());

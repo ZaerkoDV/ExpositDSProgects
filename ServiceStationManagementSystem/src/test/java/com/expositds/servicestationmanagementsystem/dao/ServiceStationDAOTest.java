@@ -17,24 +17,22 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
-import com.expositds.servicestationmanagementsystem.dao.impl.EntityUtilDAOImpl;
-import com.expositds.servicestationmanagementsystem.dao.impl.ServiceStationDAOImpl;
 import com.expositds.servicestationmanagementsystem.model.Department;
 import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 
 /**
- * Class ServiceStationDAOTest use to testing ServiceStationDAOImpl class which
- * belong to dao layer. Class use Junit tests. To create test objects use method
- * createServiceStationForTest.That method create new object for test and applying
- * anatation Inject to get dependency injection. This is realization of pattern IoC.
- * All methods return void except createServiceStationForTest.All methods use 
- * annotation Rollback to roll back transaction which created for test.Also in class
- * use Assert. These methods set assertion methods useful for writing tests.
+ * Class ServiceStationDAOTest use to testing ServiceStationDAOImpl class which belong to dao layer.
+ * Class use Junit tests. To create test objects use method createObjectsForTest.That method create
+ * new object for test and applying anatation Inject to get dependency injection. This is realization
+ * of pattern IoC. All methods return void include initObjectsBeforeTest.All methods use annotation
+ * Rollback to roll back transaction which created for test.Also in class use Assert.These methods
+ * set assertion methods useful for writing tests.
  * 
  * @see org.springframework.transaction
  * @see javax.inject.Inject
@@ -62,10 +60,8 @@ public class ServiceStationDAOTest extends AbstractTest  {
 	 * specification JSR-330.
 	 */
 	@Inject
-	private ServiceStationDAOImpl serviceStationDAO;
-
-	@Inject
-	private EntityUtilDAOImpl entityUtilDAO;
+	@Qualifier("serviceStationDAO")
+	private ServiceStationDAO serviceStationDAO;
 
 	public ServiceStation serviceStation;
 	public Stead stead;
@@ -102,18 +98,18 @@ public class ServiceStationDAOTest extends AbstractTest  {
 		//serviceStation.setServiceStationLogotype(serviceStationLogotype);
 		serviceStation.setServiceStationAddress("serviceStationAddressTest");
 		serviceStation.setServiceStationPhoneNumber("1234221");
-		entityUtilDAO.saveEntity(serviceStation);
+		serviceStationDAO.saveEntity(serviceStation);
 
 		stead = new Stead();
 		stead.setSteadArea((Double)100.0);
 		stead.setSteadCost((Double)10.0);
-		entityUtilDAO.saveEntity(stead);
+		serviceStationDAO.saveEntity(stead);
 
 		department=new Department();
 		department.setDepartmentName("departmentNameTest");
 		department.setStead(stead);
 		department.setServiceStation(serviceStation);
-		entityUtilDAO.saveEntity(department);	
+		serviceStationDAO.saveEntity(department);	
 
 		return serviceStation;
 	}
@@ -149,7 +145,7 @@ public class ServiceStationDAOTest extends AbstractTest  {
 	@Rollback(true)
 	@Test
 	public void testGettingServiceStationById(){
-		Assert.assertNotNull(entityUtilDAO.getEntityById(ServiceStation.class, serviceStation
+		Assert.assertNotNull(serviceStationDAO.getEntityById(ServiceStation.class, serviceStation
 				.getIdServiceStation()));
 	}
 
@@ -169,9 +165,9 @@ public class ServiceStationDAOTest extends AbstractTest  {
 	public void testUpdateServiceStation(){
 
 		serviceStation.setServiceStationName("serviceStationNameTest");
-		entityUtilDAO.updateEntity(serviceStation);
+		serviceStationDAO.updateEntity(serviceStation);
 
-		final ServiceStation updatedServiceStation =(ServiceStation) entityUtilDAO
+		final ServiceStation updatedServiceStation =(ServiceStation) serviceStationDAO
 				.getEntityById(ServiceStation.class,serviceStation.getIdServiceStation());	
 		Assert.assertTrue(updatedServiceStation.getServiceStationName().equals("serviceStationNameTest"));
 	}
@@ -191,8 +187,8 @@ public class ServiceStationDAOTest extends AbstractTest  {
 	@Test
 	public void testDeleteServiceStationById(){
 
-		entityUtilDAO.deleteEntityById(ServiceStation.class,serviceStation.getIdServiceStation());
-		Assert.assertNull(entityUtilDAO.getEntityById(ServiceStation.class, serviceStation.getIdServiceStation()));
+		serviceStationDAO.deleteEntityById(ServiceStation.class,serviceStation.getIdServiceStation());
+		Assert.assertNull(serviceStationDAO.getEntityById(ServiceStation.class, serviceStation.getIdServiceStation()));
 	}
 	
 	/**
@@ -215,7 +211,7 @@ public class ServiceStationDAOTest extends AbstractTest  {
 		Assert.assertFalse(listStead.isEmpty());
 		
 		//list is empty because department not exist
-		entityUtilDAO.deleteEntity(department);
+		serviceStationDAO.deleteEntity(department);
 		listStead= serviceStationDAO.getListSteadUseServiceStation(serviceStation.getIdServiceStation());
 		Assert.assertTrue(listStead.isEmpty());
 	}
@@ -240,7 +236,7 @@ public class ServiceStationDAOTest extends AbstractTest  {
 		Double expected=stead.getSteadArea();
 		Assert.assertEquals(expected, actual);
 		
-		entityUtilDAO.deleteEntity(department);
+		serviceStationDAO.deleteEntity(department);
 		actual=serviceStationDAO.getTotalServiceStationArea(serviceStation.getIdServiceStation());
 		expected=0.0;
 		Assert.assertEquals(expected, actual);

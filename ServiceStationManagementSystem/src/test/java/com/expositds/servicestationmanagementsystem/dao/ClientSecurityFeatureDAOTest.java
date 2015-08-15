@@ -17,22 +17,20 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
-import com.expositds.servicestationmanagementsystem.dao.impl.ClientSecurityFeatureDAOImpl;
-import com.expositds.servicestationmanagementsystem.dao.impl.EntityUtilDAOImpl;
 import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.ClientSecurityFeature;
 /**
- * Class ClientSecurityFeatureDAOTest use to testing ClientSecurityFeatureDAO class
- * which belong to dao layer. Class use Junit tests. To create test objects use method
- * clientForTest.That method create new object for test and applying anatation Inject
- * to get dependency injection. This is realization of pattern IoC. All methods return
- * void except createClientSecurityFeatureForTest. All methods use annotation Rollback
- * to roll back transaction which created for test. Also in class use Assert. These 
- * methods set assertion methods useful for writing tests.
+ * Class ClientSecurityFeatureDAOTest use to testing ClientSecurityFeatureDAOImpl class which belong
+ * to dao layer. Class use Junit tests. To create test objects use method createObjectsForTest.That
+ * method create new object for test and applying anatation Inject to get dependency injection. This
+ * is realization of pattern IoC. All methods return void include initObjectsBeforeTest. All methods
+ * use annotation Rollback to roll back transaction which created for test. Also in class use Assert.
+ * These methods set assertion methods useful for writing tests.
  * 
  * @see org.springframework.transaction
  * @see javax.inject.Inject
@@ -60,12 +58,11 @@ public class ClientSecurityFeatureDAOTest extends AbstractTest {
 	 * specification JSR-330.
 	 */
 	@Inject
-	private ClientSecurityFeatureDAOImpl clientSecurityFeatureDAO;
-	
-	@Inject
-	private EntityUtilDAOImpl entityUtilDAO;
+	@Qualifier("clientSecurityFeatureDAO")
+	private ClientSecurityFeatureDAO clientSecurityFeatureDAO;
 
 	public ClientSecurityFeature clientSecurityFeature;
+	
 	public Client client;
 
 	/**
@@ -102,14 +99,14 @@ public class ClientSecurityFeatureDAOTest extends AbstractTest {
 		client.setClientBirthday(new Date(date.getTime()-10));
 		client.setClientTelephone("12345");
 		client.setClientEmail("test@mail.ru");
-		entityUtilDAO.saveEntity(client);
+		clientSecurityFeatureDAO.saveEntity(client);
 
 		clientSecurityFeature = new ClientSecurityFeature();
 		clientSecurityFeature.setClientLogin("clientLoginTest");
 		clientSecurityFeature.setClientPassword("clientPasswordTest");
 		clientSecurityFeature.setClient(client);
-		entityUtilDAO.saveEntity(clientSecurityFeature);
-
+		clientSecurityFeatureDAO.saveEntity(clientSecurityFeature);
+		
 		return clientSecurityFeature;
 	}
 	
@@ -144,7 +141,7 @@ public class ClientSecurityFeatureDAOTest extends AbstractTest {
 	@Rollback(true)
 	@Test
 	public void testGettingClientSecurityFeatureById(){
-		Assert.assertNotNull(entityUtilDAO.getEntityById(ClientSecurityFeature.class,
+		Assert.assertNotNull(clientSecurityFeatureDAO.getEntityById(ClientSecurityFeature.class,
 				clientSecurityFeature.getId—lientSecurityFeature()));
 	}
 	
@@ -164,9 +161,9 @@ public class ClientSecurityFeatureDAOTest extends AbstractTest {
 	public void testUpdateClientSecurityFeature(){
 		
 		clientSecurityFeature.setClientLogin("clientLoginTest2");
-		entityUtilDAO.updateEntity(clientSecurityFeature);
+		clientSecurityFeatureDAO.updateEntity(clientSecurityFeature);
 		
-		final ClientSecurityFeature updatedClientSecurityFeature =(ClientSecurityFeature) entityUtilDAO
+		final ClientSecurityFeature updatedClientSecurityFeature =(ClientSecurityFeature) clientSecurityFeatureDAO
 				.getEntityById(ClientSecurityFeature.class,clientSecurityFeature.getId—lientSecurityFeature());	
 		Assert.assertTrue(updatedClientSecurityFeature.getClientLogin().equals("clientLoginTest2"));
 	}
@@ -186,9 +183,32 @@ public class ClientSecurityFeatureDAOTest extends AbstractTest {
 	@Test
 	public void testDeleteClientSecurityFeatureById(){
 
-		entityUtilDAO.deleteEntityById(ClientSecurityFeature.class,clientSecurityFeature.getId—lientSecurityFeature());
-		Assert.assertNull(entityUtilDAO.getEntityById(ClientSecurityFeature.class, clientSecurityFeature
+		clientSecurityFeatureDAO.deleteEntityById(ClientSecurityFeature.class,clientSecurityFeature
+				.getId—lientSecurityFeature());
+		Assert.assertNull(clientSecurityFeatureDAO.getEntityById(ClientSecurityFeature.class, clientSecurityFeature
 				.getId—lientSecurityFeature()));
+	}
+	
+	/**
+	 * Method testOnConfirmClientPassword are testing operation convert client password
+	 * to MD5 and check password. That method use test object, which create before test
+	 * run and destroy test object after method is finish.   
+	 * 
+	 * @see org.springframework.transaction.annotation.Transactional
+	 * @see org.springframework.test.annotation.Rollback
+	 * @see org.junit.Test
+	 * @see org.junit.Assert
+	 * @see org.apache.commons.codec.digest.DigestUtils
+	 */
+	@Transactional
+	@Rollback(true)
+	@Test
+	public void testOnConfirmClientPassword(){
+				
+		Assert.assertTrue(clientSecurityFeature.getClientPassword().equals(clientSecurityFeature
+	.convertToMD5("clientPasswordTest")));
+		Assert.assertFalse(clientSecurityFeature.getClientPassword().equals(clientSecurityFeature
+	.convertToMD5("clientPasswordTest2")));
 	}
 	
 	/**

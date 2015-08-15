@@ -33,7 +33,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * order, correct cost and purchase new detail. Mechanic change order status which signal of
  * the end of work. Also mechanic may watch client comments and marks. Director have right to
  * generate report about financial result and create (or delete) new department. Employee have
- * relations one-to-many with department order.
+ * relations one-to-many with department order and one-to-one with employee security order. All
+ * communication is one-way.
  * 
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes
  * part of model in MVC architecture. This class includes a description Employee entity. For

@@ -18,12 +18,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
-import com.expositds.servicestationmanagementsystem.dao.impl.DepartmentOrderDAOImpl;
-import com.expositds.servicestationmanagementsystem.dao.impl.EntityUtilDAOImpl;
 import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.Department;
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
@@ -34,13 +33,12 @@ import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 
 /**
- * Class DepartmentOrderDAOTest use to testing DepartmentOrderDAO class which
- * belong to dao layer. Class use Junit tests. To create test objects use method
- * createDepartmentOrderForTest.That method create new object for test and applying
- * anatation Inject to get dependency injection. This is realization of pattern
- * IoC. All methods return void except createDepartmentOrderForTest. All methods
- * use annotation Rollback to roll back transaction which created for test. Also
- * in class use Assert.These methods set assertion methods useful for writing tests.
+ * Class DepartmentOrderDAOTest use to testing DepartmentOrderDAOImpl class which belong to dao layer.
+ * Class use Junit tests. To create test objects use method createObjectsForTest.That method create
+ * new object for test and applying anatation Inject to get dependency injection.This is realization
+ * of pattern IoC. All methods return void include initObjectsBeforeTest. All methods use annotation
+ * Rollback to roll back transaction which created for test. Also in class use Assert. These methods
+ * set assertion methods useful for writing tests.
  * 
  * @see org.springframework.transaction
  * @see javax.inject.Inject
@@ -68,10 +66,8 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 	 * specification JSR-330.
 	 */
 	@Inject
-	private EntityUtilDAOImpl entityUtilDAO;
-
-	@Inject
-	private DepartmentOrderDAOImpl departmentOrderDAO;
+	@Qualifier("departmentOrderDAO")
+	private DepartmentOrderDAO departmentOrderDAO;
 
 	public ServiceStation serviceStation;
 	public Stead stead;
@@ -119,18 +115,18 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 		//serviceStation.setServiceStationLogotype(serviceStationLogotype);
 		serviceStation.setServiceStationAddress("serviceStationAddressTest");
 		serviceStation.setServiceStationPhoneNumber("1234221");
-		entityUtilDAO.saveEntity(serviceStation);
+		departmentOrderDAO.saveEntity(serviceStation);
 
 		stead = new Stead();
 		stead.setSteadArea((Double)100.0);
 		stead.setSteadCost((Double)10.0);
-		entityUtilDAO.saveEntity(stead);
+		departmentOrderDAO.saveEntity(stead);
 
 		department=new Department();
 		department.setDepartmentName("departmentNameTest");
 		department.setStead(stead);
 		department.setServiceStation(serviceStation);
-		entityUtilDAO.saveEntity(department);	
+		departmentOrderDAO.saveEntity(department);	
 
 		client = new Client();
 		client.setClientFirstName("clientFirstNameTest");
@@ -140,7 +136,7 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 		client.setClientBirthday(new Date(date.getTime()-10));
 		client.setClientTelephone("12345");
 		client.setClientEmail("test@mail.ru");
-		entityUtilDAO.saveEntity(client);
+		departmentOrderDAO.saveEntity(client);
 
 		employee = new Employee();
 		employee.setEmployeFirstName("employeFirstNameTest");
@@ -151,13 +147,13 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 		employee.setEmployeBirthday(new Date(date.getTime()-10));
 		employee.setEmployeEmail("test@mail.ru");
 		employee.setWages((Double)1024.1);
-		entityUtilDAO.saveEntity(employee);
+		departmentOrderDAO.saveEntity(employee);
 
 		employeeSecurityFeature = new EmployeeSecurityFeature();
 		employeeSecurityFeature.setEmployeLogin("employeLoginTest");
 		employeeSecurityFeature.setEmployePassword("employePasswordTest");
 		employeeSecurityFeature.setEmployee(employee);
-		entityUtilDAO.saveEntity(employeeSecurityFeature);
+		departmentOrderDAO.saveEntity(employeeSecurityFeature);
 		
 		departmentOrder=new DepartmentOrder();
 		departmentOrder.setOrderDescription("testOrderDescription");
@@ -169,7 +165,7 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 		departmentOrder.setClient(client);
 		departmentOrder.setEmployee(employee);
 		departmentOrder.setDepartment(department);
-		entityUtilDAO.saveEntity(departmentOrder);
+		departmentOrderDAO.saveEntity(departmentOrder);
 
 		detail=new Detail();
 		detail.setDetailName("detailNameTest");
@@ -178,7 +174,7 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 		detail.setDetailCost((Double)1000.0);		
 		detail.setDetailWarrantyDay((long)100);
 		detail.setDepartmentOrder(departmentOrder);
-		entityUtilDAO.saveEntity(detail);
+		departmentOrderDAO.saveEntity(detail);
 
 		return departmentOrder;
 	}
@@ -214,7 +210,7 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 	@Rollback(true)
 	@Test
 	public void testGettingDepartmentOrderById(){
-		Assert.assertNotNull(entityUtilDAO.getEntityById(DepartmentOrder.class,departmentOrder
+		Assert.assertNotNull(departmentOrderDAO.getEntityById(DepartmentOrder.class,departmentOrder
 				.getIdDepartmentOrder()));
 	}
 
@@ -233,9 +229,9 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 	@Test
 	public void testUpdateDepartmentOrdert(){
 		departmentOrder.setOrderDescription("testOrderDescription2");
-		entityUtilDAO.updateEntity(departmentOrder);
+		departmentOrderDAO.updateEntity(departmentOrder);
 
-		final DepartmentOrder updatedDepartmentOrder =(DepartmentOrder) entityUtilDAO
+		final DepartmentOrder updatedDepartmentOrder =(DepartmentOrder) departmentOrderDAO
 				.getEntityById(DepartmentOrder.class, departmentOrder.getIdDepartmentOrder());	
 		Assert.assertTrue(updatedDepartmentOrder.getOrderDescription().equals("testOrderDescription2"));
 	}
@@ -255,8 +251,8 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 	@Test
 	public void testDeleteDepartmentOrderById(){
 
-		entityUtilDAO.deleteEntityById(DepartmentOrder.class,departmentOrder.getIdDepartmentOrder());
-		Assert.assertNull(entityUtilDAO.getEntityById(DepartmentOrder.class,departmentOrder
+		departmentOrderDAO.deleteEntityById(DepartmentOrder.class,departmentOrder.getIdDepartmentOrder());
+		Assert.assertNull(departmentOrderDAO.getEntityById(DepartmentOrder.class,departmentOrder
 				.getIdDepartmentOrder()));
 	}
 
@@ -281,7 +277,7 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 		listEmployeOrder=departmentOrderDAO.getListDepartmentOrderForEmployee(employee.getIdEmployee());
 		Assert.assertFalse(listEmployeOrder.isEmpty());
 
-		entityUtilDAO.deleteEntity(employee);
+		departmentOrderDAO.deleteEntity(employee);
 		listEmployeOrder=departmentOrderDAO.getListDepartmentOrderForEmployee(employee.getIdEmployee());
 		Assert.assertTrue(listEmployeOrder.isEmpty());
 	}
@@ -306,7 +302,7 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 		
 		//overdue order exist.
 		departmentOrder.setOrderStatus("overdue");
-		entityUtilDAO.updateEntity(departmentOrder);
+		departmentOrderDAO.updateEntity(departmentOrder);
 		
 		employeNotcompletedOverdueOrderList=departmentOrderDAO
 				.getListNotcompletedOverdueDepartmentOrderForEmployee(employee.getIdEmployee());
@@ -314,7 +310,7 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 
 		//notcomplited order not exist.
 		departmentOrder.setOrderStatus("done");
-		entityUtilDAO.updateEntity(departmentOrder);
+		departmentOrderDAO.updateEntity(departmentOrder);
 
 		employeNotcompletedOverdueOrderList=departmentOrderDAO
 				.getListNotcompletedOverdueDepartmentOrderForEmployee(employee.getIdEmployee());
@@ -339,7 +335,7 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 
 		//notcomplited order exist.
 		departmentOrder.setOrderStatus("done");
-		entityUtilDAO.updateEntity(departmentOrder);
+		departmentOrderDAO.updateEntity(departmentOrder);
 		
 		List<DepartmentOrder> employeDoneDepartmentOrderList=departmentOrderDAO
 				.getListDoneDepartmentOrderForEmployee(employee.getIdEmployee());
@@ -347,7 +343,7 @@ public class DepartmentOrderDAOTest extends AbstractTest {
 
 		//notcomplited order not exist.
 		departmentOrder.setOrderStatus("notcomplited");
-		entityUtilDAO.updateEntity(departmentOrder);
+		departmentOrderDAO.updateEntity(departmentOrder);
 		
 		employeDoneDepartmentOrderList=departmentOrderDAO
 				.getListDoneDepartmentOrderForEmployee(employee.getIdEmployee());

@@ -22,7 +22,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.expositds.servicestationmanagementsystem.dao.ServiceStationDAO;
@@ -30,19 +29,20 @@ import com.expositds.servicestationmanagementsystem.model.Department;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 
 /**
- * <p>The class ServiceStationDAOImpl use DAO pattern which describes layer of data access
- * to object. DAO layer perform link between relational and object model.Model for this dao layer
- * describied in class ServiceStation. This class contain methods which intended to access to
- * operation with objects.Class implements interface ServiceStationDAO located in package 
- * com.expositds.servicestationmanagementsystem.dao. All methods are public in class.For logging
- * use framework shell slf4j and framework log4j. Class contain also private, static variable
- * logger, which use to call log message. Class  use Spring framework  to work whith ORM. In
- * particular often use HibernateTemplate for integration Hibernate and Spring technologys.
- * For work with data base use hibernate criteria. This technology provide as object-oriented
- * select query in relation to a particular entity, and allows you to query the database without
- * writing SQL code. Use Criteria is the most successful approach to search interface with a 
- * variable number of conditions. To create copies of the Criteria used class Session, which
- * acts as a factory.
+ * <p>The class ServiceStationDAOImpl use DAO pattern which describes layer of data access to
+ * object. DAO layer perform link between relational and object model.Model for this dao layer
+ * describied in class ServiceStation.This class contain methods which intended to access special
+ * operation with service station.Class extend AbstractEntity—ommonDAOImpl class, which contain
+ * base set of operation(CRUD). Class implements interface ServiceStationDAO located in package
+ * which have name com.expositds.servicestationmanagementsystem.dao. All methods are public in
+ * class.For logging use framework shell slf4j and framework log4j. Class contain also private,
+ * static variable logger, which use to call log message. Class  use Spring framework to work
+ * whith ORM. In particular often use HibernateTemplate for integration Hibernate and Spring
+ * technologys.For work with data base use hibernate criteria. This technology provide as object-
+ * -oriented select query in relation to a particular entity, and allows you to query the database
+ * without writing SQL code. Use Criteria is the most successful approach to search interface
+ * with a variable number of conditions. To create copies of the Criteria used class Session,
+ * which acts as a factory.
  *  
  * @see Collection
  * @see List
@@ -56,7 +56,7 @@ import com.expositds.servicestationmanagementsystem.model.Stead;
  * @author Zaerko Denis
  */
 @Repository(value="serviceStationDAO")
-public class ServiceStationDAOImpl extends HibernateDaoSupport implements ServiceStationDAO {
+public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implements ServiceStationDAO {
 
 	/**
 	 * Variable logger use to get logger level for class ServiceStationDAOImpl.
@@ -82,18 +82,24 @@ public class ServiceStationDAOImpl extends HibernateDaoSupport implements Servic
 	@SuppressWarnings("unchecked")
 	public List<Stead> getListSteadUseServiceStation(Long idServiceStation){
 		
-		List<Stead> listStead;
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
 				.createCriteria(Department.class);	
 		criteria.createAlias("serviceStation", "s");
 		criteria.add(Restrictions.eq("s.idServiceStation", idServiceStation));
 		criteria.setProjection(Projections.property("stead"));
 		
+		List<Stead> listStead;
 		try{
 			listStead=(List<Stead>)criteria.list();
+			logger.info("List stead which use service station "+idServiceStation+" loaded successfully");
+			
+			for(Stead stead : listStead){
+				logger.info("DAO:List service station steads contain ="+stead);
+			}
 			
 		}catch(NullPointerException e){
 			listStead= null;
+			logger.info("List stead which use service station "+idServiceStation+" loaded successfully but is empty.");
 		}
 		return listStead;
 	}
@@ -134,6 +140,7 @@ public class ServiceStationDAOImpl extends HibernateDaoSupport implements Servic
 		}catch(NullPointerException e){
 			totalServiceStationArea= 0.0;
 		}
+		logger.info("Total area for service station "+idServiceStation+" is equals="+totalServiceStationArea);
 		return totalServiceStationArea;
 	}
 }

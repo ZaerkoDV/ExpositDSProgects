@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!-- @author Artyom_Khomyakov -->
+ 
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,40 +38,40 @@
         <div class="col-md-4"></div>
         <div class="col-md-4">
           <h3>Registration</h3>
-          <form class="form-horizontal">
+          <form:form class="form-horizontal" method="post" commandName="newClient">
             <div class="form-group">
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="firstname" placeholder="First name">
+                <form:input type="text" class="form-control" id="firstname" placeholder="First name" path="clientFirstName" />
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="lastname" placeholder="Last name">
+                <form:input type="text" class="form-control" id="lastname" placeholder="Last name" path="clientLastName" />
               </div>
               </div>
               <div class="form-group">
               <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" placeholder="Email">
+                <form:input type="email" class="form-control" id="email" placeholder="Email" path="clientEmail" />
               </div>
               </div>
               <div class="form-group">
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="login" placeholder="Login">
+                <form:input type="text" class="form-control" id="login" placeholder="Login" path="clientLogin" />
               </div>
               </div>
               <div class="form-group">
               <div class="col-sm-10">
-                <input type="password" class="form-control" id="password" placeholder="Password">
+                <form:input type="password" class="form-control" id="password" placeholder="Password" path="clientPassword" />
               </div>
               </div>
               <div class="form-group">
               <div class="col-sm-10">
-                <input type="password" class="form-control" id="password" placeholder="Re-Password">
+                <input type="password" class="form-control" id="repassword" placeholder="Re-Password">
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="phone" placeholder="Phone number">
+                <form:input type="text" class="form-control" id="phone" placeholder="Phone number" path="clientTelephone" />
               </div>
             </div>
             <div class="form-group">
@@ -75,7 +80,7 @@
                 <button type="submit" class="btn btn-default">Sign up</button>
               </div>
             </div>
-        </form>
+        </form:form>
         </div>
         <div class="col-md-4"></div>
       </div>

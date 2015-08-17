@@ -10,15 +10,11 @@
  */
 package com.expositds.servicestationmanagementsystem.model;
 
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 /**
  * Service station entity contain base characteristics (fields) and behavior of service station
@@ -29,7 +25,7 @@ import javax.persistence.Table;
  * income and expenses. Report compiled on same date and include financial characteristics of each
  * department or all service station.Every service station have same comments, which may see other
  * clients, mechanics, director. Service station have unequal name and logotype for differ from other
- * service stations.
+ * service stations.All communication is one-way.
  * 
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes part
  * of model in MVC architecture. This class includes a description ServiceStation entity.For creating
@@ -54,15 +50,14 @@ public class ServiceStation {
 	@Column(name="service_station_name")
 	private String serviceStationName;	
 	
-	@Lob
-	@Column(name="service_station_logotype", columnDefinition = "mediumblob")
-	private byte[] serviceStationLogotype;	
+	@Column(name="service_station_logotype")
+	private String serviceStationLogotype;	
+
+	@Column(name="service_station_address")
+	private String serviceStationAddress;	
 	
-	@OneToMany(targetEntity=Department.class , mappedBy="serviceStation",fetch = FetchType.LAZY)
-	private List<Department> department; 
-	
-	@OneToMany(targetEntity=ServiceStationCommentMark.class , mappedBy="serviceStation",fetch = FetchType.LAZY)
-	private List<ServiceStationCommentMark> serviceStationCommentMark; 
+	@Column(name="service_station_phone_number")
+	private String serviceStationPhoneNumber;
 	
 	/**
 	 * Overloaded constructor of ServiceStation class.
@@ -78,16 +73,16 @@ public class ServiceStation {
 	 * @param idServiceStation
 	 * @param serviceStationName
 	 * @param serviceStationLogotype
-	 * @param department
-	 * @param serviceStationCommentMark
+	 * @param serviceStationAddress
+	 * @param serviceStationPhoneNumber
 	 */
-	public ServiceStation(Long idServiceStation,String serviceStationName,byte[] serviceStationLogotype,
-			List<Department> department, List<ServiceStationCommentMark> serviceStationCommentMark){
+	public ServiceStation(Long idServiceStation,String serviceStationName,String serviceStationLogotype,
+			String serviceStationAddress,String serviceStationPhoneNumber){
 		this.idServiceStation=idServiceStation;
 		this.serviceStationName=serviceStationName;
 		this.serviceStationLogotype=serviceStationLogotype;
-		this.department=department;
-		this.serviceStationCommentMark=serviceStationCommentMark;		
+		this.serviceStationAddress=serviceStationAddress;
+		this.serviceStationPhoneNumber=serviceStationPhoneNumber;	
 	}
 	
 	/**
@@ -133,59 +128,59 @@ public class ServiceStation {
 	}
 
 	/**
-	 * @type byte[]
+	 * @type String
 	 * @return serviceStationLogotype attribute of the ServiceStation
 	 */
-	public byte[] getServiceStationLogotype() {
+	public String getServiceStationLogotype() {
 		return serviceStationLogotype;
 	}
 
 	/**
 	 * Method change serviceStationLogotype attribute of the ServiceStation
 	 * 
-	 * @type byte[]
+	 * @type String
 	 * @param serviceStationLogotype
 	 */
-	public void setServiceStationLogotype(byte[] serviceStationLogotype) {
+	public void setServiceStationLogotype(String serviceStationLogotype) {
 		this.serviceStationLogotype = serviceStationLogotype;
 	}
 
 	/**
-	 * @type List<Department>
-	 * @return department entity
+	 * @type String 
+	 * @return serviceStationAddress attribute of the ServiceStation
 	 */
-	public List<Department> getDepartment() {
-		return department;
+	public String getServiceStationAddress() {
+		return serviceStationAddress;
 	}
 
 	/**
-	 * Method change department
+	 * Method change serviceStationAddress attribute of the ServiceStation
 	 * 
-	 * @type List<Department> 
-	 * @param department
+	 * @type String
+	 * @param serviceStationAddress
 	 */
-	public void setDepartment(List<Department> department) {
-		this.department = department;
+	public void setServiceStationAddress(String serviceStationAddress) {
+		this.serviceStationAddress = serviceStationAddress;
 	}
 
 	/**
-	 * @type List<ServiceStationCommentMark>
-	 * @return serviceStationCommentMark entity
+	 * @type String 
+	 * @return serviceStationPhoneNumber attribute of the ServiceStation
 	 */
-	public List<ServiceStationCommentMark> getServiceStationCommentMark() {
-		return serviceStationCommentMark;
+	public String getServiceStationPhoneNumber() {
+		return serviceStationPhoneNumber;
 	}
 
 	/**
-	 * Method change serviceStationCommentMark
+	  * Method change serviceStationPhoneNumber attribute of the ServiceStation
 	 * 
-	 * @type List<ServiceStationCommentMark> 
-	 * @param serviceStationCommentMark
+	 * @type String
+	 * @param serviceStationPhoneNumber
 	 */
-	public void setServiceStationCommentMark(List<ServiceStationCommentMark> serviceStationCommentMark) {
-		this.serviceStationCommentMark = serviceStationCommentMark;
+	public void setServiceStationPhoneNumber(String serviceStationPhoneNumber) {
+		this.serviceStationPhoneNumber = serviceStationPhoneNumber;
 	}
-	
+
 	/**
 	 * Overload basic method hashCode()
 	 * 
@@ -206,7 +201,8 @@ public class ServiceStation {
 	@Override
 	public String toString() {
 		if(!this.idServiceStation.equals(null)){
-			return this.idServiceStation.toString()+" "+this.serviceStationName.toString();
+			return this.idServiceStation.toString()+" "+this.serviceStationName.toString()+" "+this.serviceStationLogotype.toString()
+					+" "+this.serviceStationAddress.toString()+" "+this.serviceStationPhoneNumber.toString();
 		}
 		return super.toString();
 	}

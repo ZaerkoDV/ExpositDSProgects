@@ -19,15 +19,14 @@
   
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>
-    /WEB-INF/config/context-config.xml
-    </param-value>
+    <param-value>/WEB-INF/config/context-config.xml</param-value>
   </context-param>
   
+  <!--pages which display when application start -->
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  
+	
   <servlet-mapping>
     <servlet-name>ServiceStationManagementSystemServlet</servlet-name>
     <url-pattern>/</url-pattern>
@@ -45,7 +44,8 @@
       <param-value>true</param-value>
     </init-param>
   </filter>
-  <!--  
+
+  <!--
   <filter>
  	<filter-name>springSecurityFilterChain</filter-name>
  	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>

@@ -11,16 +11,12 @@
 package com.expositds.servicestationmanagementsystem.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -37,7 +33,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * may do comments and exhibit same mark service station. If client log in system, he will have unique login
  * and password. Entity client security feature responsible for security login and password. Client may have
  * only one login and password. Client have relations: one-to-many with department order, one-to-many with
- * entity service station comment and mark, one-to-one with client security feature.
+ * entity service station comment and mark, one-to-one with client security feature.All communication is one-way.
  * 
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes part of model in
  * MVC architecture. This class includes a description Client entity. For creating Client model use Hibernate
@@ -58,16 +54,16 @@ public class Client {
 	@Column(name="id_client")
 	private Long idClient;
 	
-	@Size(min=1, max=15)
+	@Size(min=1, max=25)
 	@Column(name="client_first_name")
 	private String clientFirstName;
 	
-	@Size(min=1, max=15)
-	@Column(name="clientLastName")
+	@Size(min=1, max=25)
+	@Column(name="client_last_name")
 	private String clientLastName;
 	
-	@Size(min=0, max=15)
-	@Column(name="clientMiddleName")
+	@Size(min=0, max=25)
+	@Column(name="client_middle_name")
 	private String clientMiddleName;
 
 	@Past
@@ -82,26 +78,13 @@ public class Client {
 	@Email
 	@Column(name="client_e_mail")
 	private String clientEmail;
-	
-	@OneToOne(targetEntity=ClientSecurityFeature.class , mappedBy="client",fetch = FetchType.LAZY)
-	private ClientSecurityFeature clientSecurityFeature; 
-	
-	@OneToMany(targetEntity=ServiceStationCommentMark.class , mappedBy="client",fetch = FetchType.LAZY)
-	private List<ServiceStationCommentMark> serviceStationCommentMark; 
-	
-	@OneToMany(targetEntity=DepartmentOrder.class , mappedBy="client",fetch = FetchType.LAZY)
-	private List<DepartmentOrder> departmentOrder; 
-	
+		
 	/**
 	 * Overloaded constructor of Client class.
 	 * 
 	 * @type Long
 	 * @type String
 	 * @type Data
-	 * @type List
-	 * @type ServiceStationCommentMark
-	 * @type ClientSecurityFeature
-	 * @type DepartmentOrder
 	 * 
 	 * @param idClient
 	 * @param clientFirstName
@@ -110,13 +93,9 @@ public class Client {
 	 * @param clientBirthday
 	 * @param clientTelephone
 	 * @param clientEmail
-	 * @param clientSecurityFeature
-	 * @param serviceStationCommentMark
-	 * @param departmentOrder
 	 */
 	public Client(Long idClient, String clientFirstName, String clientLastName, String clientMiddleName,
-			Date clientBirthday, String clientTelephone, String clientEmail,ClientSecurityFeature clientSecurityFeature,
-			List<ServiceStationCommentMark> serviceStationCommentMark,List<DepartmentOrder> departmentOrder){
+			Date clientBirthday, String clientTelephone, String clientEmail){
 		 
 		this.idClient=idClient;
 		this.clientFirstName=clientFirstName;
@@ -125,9 +104,6 @@ public class Client {
 		this.clientBirthday=clientBirthday;
 		this.clientTelephone=clientTelephone;
 		this.clientEmail=clientEmail;
-		this.clientSecurityFeature=clientSecurityFeature;
-		this.serviceStationCommentMark=serviceStationCommentMark;
-		this.departmentOrder=departmentOrder;	
 	}
 	
 	/**
@@ -261,61 +237,7 @@ public class Client {
 	public void setClientEmail(String clientEmail) {
 		this.clientEmail = clientEmail;
 	}
-
-	/**
-	 * @type ClientSecurityFeature
-	 * @return ClientSecurityFeature entity
-	 */
-	public ClientSecurityFeature getClientSecurityFeature() {
-		return clientSecurityFeature;
-	}
-
-	/**
-	 * Method change ClientSecurityFeature entity
-	 * 
-	 * @type ClientSecurityFeature
-	 * @param clientSecurityFeature entity
-	 */
-	public void setClientSecurityFeature(ClientSecurityFeature clientSecurityFeature) {
-		this.clientSecurityFeature = clientSecurityFeature;
-	}
-
-	/**
-	 * @type List<ServiceStationCommentMark>
-	 * @return List of ServiceStationCommentMark entity
-	 */
-	public List<ServiceStationCommentMark> getServiceStationCommentMark() {
-		return serviceStationCommentMark;
-	}
-
-	/**
-	 * Method change ServiceStationCommentMark entity
-	 * 
-	 * @type List<ServiceStationCommentMark>
-	 * @param List of serviceStationCommentMark entity
-	 */
-	public void setServiceStationCommentMark(List<ServiceStationCommentMark> serviceStationCommentMark) {
-		this.serviceStationCommentMark = serviceStationCommentMark;
-	}
-
-	/**
-	 * @type List<DepartmentOrder>
-	 * @return List of order in department(entity)
-	 */
-	public List<DepartmentOrder> getDepartmentOrder() {
-		return departmentOrder;
-	}
-
-	/**
-	 * Method change departmentOrder
-	 * 
-	 * @type List<DepartmentOrder>
-	 * @param List of departmentOrder entity
-	 */
-	public void setDepartmentOrder(List<DepartmentOrder> departmentOrder) {
-		this.departmentOrder = departmentOrder;
-	}
-	
+		
 	/**
 	 * Overload basic method hashCode()
 	 * 
@@ -338,8 +260,7 @@ public class Client {
 		if(!this.idClient.equals(null)){
 			return this.idClient.toString()+" "+this.clientFirstName.toString()+" "+this.clientLastName.toString()+" "
 		+this.clientMiddleName.toString()+" "+this.clientBirthday.toString()+" "+this.clientTelephone.toString()+" "
-					+this.clientEmail.toString()+" "+this.clientSecurityFeature.getClientLogin().toString()+" "
-		+this.clientSecurityFeature.getClientPassword().toString();
+					+this.clientEmail.toString();
 		}
 		return super.toString();
 	}

@@ -14,13 +14,11 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -30,6 +28,7 @@ import javax.persistence.Table;
  * order which perform employee. Department have relations one-to-many with his orders, many-to-one
  * with stead, many-to-one with service station. Employees work under the control of the department.
  * Employee may work in couple of departments and even in other service station at the same time.
+ * All communication is one-way.
  * 
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes part
  * of model in MVC architecture. This class includes a description Department entity. For creating
@@ -62,15 +61,11 @@ public class Department {
 	@JoinColumn(name="service_station_id")
 	private ServiceStation serviceStation;
 	
-	@OneToMany(targetEntity=DepartmentOrder.class , mappedBy="department", fetch = FetchType.LAZY)
-	private List<DepartmentOrder> departmentOrder;
-	
 	/**
 	 * Overloaded constructor of Department class.
 	 * 
 	 * @type Long
 	 * @type String
-	 * @type List
 	 * @type ServiceStation
 	 * @type DepartmentOrder
 	 * 
@@ -80,13 +75,12 @@ public class Department {
 	 * @param serviceStation
 	 * @param departmentOrder
 	 */
-	public Department(Long idDepartment, String departmentName, Stead stead,
-			ServiceStation serviceStation, List<DepartmentOrder> departmentOrder){
+	public Department(Long idDepartment, String departmentName, Stead stead,ServiceStation serviceStation,
+			List<DepartmentOrder> departmentOrder){
 		this.idDepartment=idDepartment;
 		this.departmentName=departmentName;
 		this.stead=stead;
 		this.serviceStation=serviceStation;
-		this.departmentOrder=departmentOrder;
 	}
 	
 	/**
@@ -165,24 +159,6 @@ public class Department {
 	 */
 	public void setServiceStation(ServiceStation serviceStation) {
 		this.serviceStation = serviceStation;
-	}
-
-	/**
-	 * @type DepartmentOrder
-	 * @return departmentOrder entity
-	 */
-	public List<DepartmentOrder> getDepartmentOrder() {
-		return departmentOrder;
-	}
-
-	/**
-	 * Method change DepartmentOrder entity
-	 * 
-	 * @type List<DepartmentOrder>
-	 * @param departmentOrder
-	 */
-	public void setDepartmentOrder(List<DepartmentOrder> departmentOrder) {
-		this.departmentOrder = departmentOrder;
 	}
 
 	/**

@@ -10,15 +10,11 @@
  */
 package com.expositds.servicestationmanagementsystem.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -26,13 +22,14 @@ import javax.persistence.Table;
  * locate (part of service station) on the stead. Stead (area) belong same owner. Owner
  * get income from the lease and department get expenses at the same time. One stead may
  * have many departments. One unit (stead area) of rented space have cost on (area cost)
- * in day.Stead have relations one-to-many with department.
+ * in day.Stead have relations one-to-many with department.All communication is one-way.
  *
- * The class is located in the com.expositds.servicestationmanagementsystem.model and describes part
- * of model in MVC architecture. This class includes a description Stead entity. For creating Stead
- * model use Hibernate technology (anatations). Class contains exclusively no-static public methods
- * that return fields of entity. Methods intended to access object fields.Class also contain overload
- * methods toString(), hashCode(), equals().
+ * The class is located in the com.expositds.servicestationmanagementsystem.model and
+ * describes part of model in MVC architecture. This class includes a description Stead
+ * entity. For creating Stead model use Hibernate technology (anatations). Class contains
+ * exclusively no-static public methods that return fields of entity. Methods intended
+ * to access object fields.Class also contain overload methods toString(), hashCode(),
+ * equals().
  * 
  * @see Hibernate annotations
  * 
@@ -54,27 +51,21 @@ public class Stead {
 	@Column(name="stead_cost")
 	private Double steadCost;	
 	
-	@OneToMany(targetEntity=Department.class , mappedBy="stead", fetch = FetchType.LAZY)
-	private List<Department> department; 
-	
 	/**
 	 * Overloaded constructor of Stead class.
 	 * 
 	 * @type Long
 	 * @type Double
 	 * @type List
-	 * @type Department
 	 * 
 	 * @param idStead
 	 * @param steadArea
 	 * @param steadCost
-	 * @param department
 	 */
-	public Stead(Long idStead, Double steadArea, Double steadCost, List<Department> department){
+	public Stead(Long idStead, Double steadArea, Double steadCost){
 		this.idStead=idStead;
 		this.steadArea=steadArea;
 		this.steadCost=steadCost;
-		this.department=department;
 	}
 	
 	/**
@@ -135,24 +126,6 @@ public class Stead {
 	 */
 	public void setSteadCost(Double steadCost) {
 		this.steadCost = steadCost;
-	}
-
-	/**
-	 * @type List<Department>
-	 * @return department entity
-	 */
-	public List<Department> getDepartment() {
-		return department;
-	}
-
-	/**
-	 * Method change department entity
-	 * 
-	 * @type List<Department>
-	 * @param department
-	 */
-	public void setDepartment(List<Department> department) {
-		this.department = department;
 	}
 	
 	/**

@@ -11,22 +11,18 @@
 package com.expositds.servicestationmanagementsystem.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-
 /**
  * Department order entity describe base characteristics and behavior of order in department.
  * Department get order from clients. Client described in special document (order description)
@@ -36,7 +32,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * cancel order and conclude in other service station (department) or do nothing. Client may have
  * many orders in department. Every client order may have many details which need to repair or
  * replacement. Each order execute only one employee.Department order have relations one-to-many
- *  with entity details, many-to-one with client, many-to-one with employee, many-to-one department.
+ * with entity details, many-to-one with client, many-to-one with employee, many-to-one department.
+ * All communication is one-way.
  *  
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes part
  * of model in MVC architecture. This class includes a description DepartmentOrder entity.For creating
@@ -50,7 +47,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @author Denis Zaerko
  */
 @Entity(name="DepartmentOrder")
-@Table(name="departmentOrder")
+@Table(name="department_order")
 public class DepartmentOrder {
 
 	@Id
@@ -63,6 +60,9 @@ public class DepartmentOrder {
 
 	@Column(name="order_cost")
 	private Double orderCost;
+	
+	@Column(name="work_cost")
+	private Double workCost;
 
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	@Column(name="start_order")
@@ -76,7 +76,7 @@ public class DepartmentOrder {
 	@Column(name="order_status", nullable = false, columnDefinition="varchar(45) default 'notcompleted'")
 	private String orderStatus;
 
-	@ManyToOne
+	@ManyToOne//(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="client_id")
 	private Client client;
 
@@ -88,9 +88,6 @@ public class DepartmentOrder {
 	@JoinColumn(name="department_id")
 	private Department department;
 
-	@OneToMany(targetEntity=Detail.class , mappedBy="departmentOrder",fetch = FetchType.LAZY)
-	private List<Detail> detail; 
-
 	/**
 	 * Overloaded constructor of DepartmentOrder class.
 	 * 
@@ -98,36 +95,34 @@ public class DepartmentOrder {
 	 * @type String
 	 * @type Double
 	 * @type Date
-	 * @type List
 	 * @type Client
 	 * @type Employee
 	 * @type Department
-	 * @type Detail
 	 * 
 	 * @param idDepartmentOrder
 	 * @param orderDescription
 	 * @param orderCost
+	 * @param workCost
 	 * @param startOrder
 	 * @param endOrder
 	 * @param orderStatus
 	 * @param client
 	 * @param employee
 	 * @param department
-	 * @param detail
 	 */
-	public DepartmentOrder(Long idDepartmentOrder, String orderDescription, Double orderCost,Date startOrder,Date endOrder,
-			String orderStatus, Client client, Employee employee, Department department, List<Detail> detail){
+	public DepartmentOrder(Long idDepartmentOrder, String orderDescription, Double orderCost, Double workCost,Date startOrder,
+			Date endOrder,String orderStatus, Client client, Employee employee, Department department){
 
 		this.idDepartmentOrder=idDepartmentOrder;
 		this.orderDescription=orderDescription;
 		this.orderCost=orderCost;
+		this.workCost=workCost;
 		this.startOrder=startOrder;
 		this.endOrder=endOrder;
 		this.orderStatus=orderStatus;
 		this.client=client;
 		this.employee=employee;
 		this.department=department;
-		this.detail=detail;
 	}
 
 	/**
@@ -183,13 +178,31 @@ public class DepartmentOrder {
 	/**
 	 * Method change orderCost attribute of the DepartmentOrder
 	 * 
-	 * @type String
+	 * @type Double
 	 * @param orderCost
 	 */
 	public void setOrderCost(Double orderCost) {
 		this.orderCost = orderCost;
 	}
 
+	/**
+	 * @type Double
+	 * @return workCost attribute of the DepartmentOrder
+	 */
+	public Double getWorkCost() {
+		return workCost;
+	}
+
+	/**
+	 * Method change workCost attribute of the DepartmentOrder
+	 * 
+	 * @type Double
+	 * @param workCost
+	 */
+	public void setWorkCost(Double workCost) {
+		this.workCost = workCost;
+	}
+	
 	/**
 	 * @type Date
 	 * @return startOrder attribute of the DepartmentOrder
@@ -297,24 +310,6 @@ public class DepartmentOrder {
 	public void setDepartment(Department department) {
 		this.department = department;
 	}
-
-	/**
-	 * @type List<Detail>
-	 * @return Detail entity.
-	 */
-	public List<Detail> getDetail() {
-		return detail;
-	}
-
-	/**
-	 * Method change detail entity
-	 * 
-	 * @type List<Detail>
-	 * @param detail entity.
-	 */
-	public void setDetail(List<Detail> detail) {
-		this.detail = detail;
-	}
 	
 	/**
 	 * Overload basic method hashCode()
@@ -341,5 +336,4 @@ public class DepartmentOrder {
 		}
 		return super.toString();
 	}
-	
 }

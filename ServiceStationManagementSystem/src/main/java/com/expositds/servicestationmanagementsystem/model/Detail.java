@@ -20,13 +20,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
-
 /**
  * Detail entity describe base characteristics and behavior of detail. Most of order(department order)
  * include replacement details. Order may include replacement many details. Every detail have status
  * (detail status).This status indicates the presence or absence of detail (exist or not exist). Detail
  * also have other attributes: name, manufacturer, cost (which include in order cost if detail use in order),
- * warranty (day).Detail have relations many-to-one with department order.
+ * warranty (day).Detail have relations many-to-one with department order.All communication is one-way.
  * 
  * The class is located in the com.expositds.servicestationmanagementsystem.model and describes part
  * of model in MVC architecture. This class includes a description Detail entity.For creating
@@ -67,7 +66,6 @@ public class Detail {
 	@ManyToOne
 	@JoinColumn(name="department_order_id")
 	private DepartmentOrder departmentOrder;
-	
 	
 	/**
 	 * Overloaded constructor of Department class.

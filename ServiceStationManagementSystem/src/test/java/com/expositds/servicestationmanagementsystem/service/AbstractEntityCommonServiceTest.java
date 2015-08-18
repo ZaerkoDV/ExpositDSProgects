@@ -1,11 +1,7 @@
 /**
- * @package com.expositds.servicestationmanagementsystem.dao
  * 
- * Packages located in the directory /src/test/java contains classes which exercise 
- * testing dao and service layer by mvc architecture. Classes used for test junit 
- * framework. 
  */
-package com.expositds.servicestationmanagementsystem.dao;
+package com.expositds.servicestationmanagementsystem.service;
 
 import javax.inject.Inject;
 
@@ -16,39 +12,24 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
 import com.expositds.servicestationmanagementsystem.TestObjectCreator;
 import com.expositds.servicestationmanagementsystem.model.ServiceStation;
+
 /**
- * Class AbstractEntityCommonDAOTest use to testing AbstractEntityCommonDAOImpl class(use intrface
- * AbstractEntityCommonDAO) which belong to dao layer.Class use Junit tests. To create test objects
- * use method createObjectsForTest.That method create new object for test and applying anatation
- * Inject to get dependency injection.This is realization of pattern IoC. All methods return void 
- * include initObjectsBeforeTest.All methods use annotation Rollback to roll back transaction
- * which created for test. Also in class use Assert. These  methods set assertion methods useful
- * for writing tests.
- * 
- * @see org.springframework.transaction
- * @see javax.inject.Inject
- * @see org.slf4j
- * @see org.junit
- * @see slf4j framework
- * @see log4j framework
- * 
- * @version 1.0 10.08.2015
- * @author Zaerko Denis
+ * @author Zaerko_DV
+ *
  */
-public class AbstractEntityCommonDAOTest {//extends AbstractTest {
+public class AbstractEntityCommonServiceTest {//extends AbstractTest  {
 	
-//	private static final Logger logger = LoggerFactory.getLogger(AbstractEntityCommonDAOTest.class);
+//	private static final Logger logger = LoggerFactory.getLogger(AbstractEntityCommonServiceTest.class);
 //	
 //	@Inject
-//	@Qualifier("abstractEntity—ommonDAO")
-//	private AbstractEntityCommonDAO abstractEntity—ommonDAO;
+//	@Qualifier("abstractEntity—ommonService")
+//	private AbstractEntityCommonService abstractEntity—ommonService;
 //	
 //	@Inject
 //	@Qualifier("testObjectCreator")								
@@ -97,7 +78,7 @@ public class AbstractEntityCommonDAOTest {//extends AbstractTest {
 //	@Rollback(true)
 //	@Test
 //	public void testGettingEntityById(){
-//		Object entity=abstractEntity—ommonDAO.getEntityById(ServiceStation.class, serviceStation.getIdServiceStation());
+//		Object entity=abstractEntity—ommonService.getEntityById(ServiceStation.class, serviceStation.getIdServiceStation());
 //		Assert.assertNotNull(entity);
 //	}
 //
@@ -117,9 +98,9 @@ public class AbstractEntityCommonDAOTest {//extends AbstractTest {
 //	public void testUpdateEntity(){
 //
 //		serviceStation.setServiceStationName("serviceStationNameTest");
-//		abstractEntity—ommonDAO.updateEntity(serviceStation);
+//		abstractEntity—ommonService.updateEntity(serviceStation);
 //
-//		final ServiceStation updatedServiceStation =(ServiceStation) abstractEntity—ommonDAO
+//		final ServiceStation updatedServiceStation =(ServiceStation) abstractEntity—ommonService
 //				.getEntityById(ServiceStation.class, serviceStation.getIdServiceStation());	
 //		Assert.assertTrue(updatedServiceStation.getServiceStationName().equals("serviceStationNameTest"));
 //	}
@@ -138,8 +119,8 @@ public class AbstractEntityCommonDAOTest {//extends AbstractTest {
 //	@Rollback(true)
 //	@Test
 //	public void testDeleteEntityById(){
-//		abstractEntity—ommonDAO.deleteEntityById(ServiceStation.class, serviceStation.getIdServiceStation());
-//		Assert.assertNull(abstractEntity—ommonDAO.getEntityById(ServiceStation.class, serviceStation.getIdServiceStation()));
+//		abstractEntity—ommonService.deleteEntityById(ServiceStation.class, serviceStation.getIdServiceStation());
+//		Assert.assertNull(abstractEntity—ommonService.getEntityById(ServiceStation.class, serviceStation.getIdServiceStation()));
 //	}
 //	
 //	/**
@@ -156,8 +137,7 @@ public class AbstractEntityCommonDAOTest {//extends AbstractTest {
 //	@Rollback(true)
 //	@Test
 //	public void testDeleteEntity(){
-//		abstractEntity—ommonDAO.deleteEntity(serviceStation);
-//		Assert.assertNull(abstractEntity—ommonDAO.getEntityById(ServiceStation.class, serviceStation.getIdServiceStation()));
+//		abstractEntity—ommonService.deleteEntity(serviceStation);
+//		Assert.assertNull(abstractEntity—ommonService.getEntityById(ServiceStation.class, serviceStation.getIdServiceStation()));
 //	}
 }
-

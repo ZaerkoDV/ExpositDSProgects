@@ -234,11 +234,13 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 	 * in departments method return list of work places else return null.
 	 * List  contain serving on 20 rows and start on 1 row. 
 	 * 
+	 * @type Long
 	 * @type List
+	 * @param idEmployee
 	 * @throw DataAccessException 
 	 * @throw NullPointerException
 	 * 
-	 * @return List<Employee> all employee which have function as mechanic.
+	 * @return List<Department> all department in which employee work.
 	 */
 	@SuppressWarnings({ "unchecked" })
 	public List<Department> getListDepartmentForEmployee(Long idEmployee){

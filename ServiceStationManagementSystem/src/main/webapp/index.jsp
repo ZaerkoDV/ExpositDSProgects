@@ -8,23 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Main Page</title>
 
-    <!-- Bootstrap
+    <!-- Bootstrap-->
+   
     	<link href="resources/libs/bootstrap.min.css" rel="stylesheet">
 	    <script src="resources/libs/jquery.min.js"/></script>
 	    <script src="resources/libs/bootstrap.min.js"/></script>
-	    -->
-	   
+	  
+	  <!--
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-<!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	  <!-- Latest compiled and minified CSS -->
-
-
-<!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+ -->
+ 
   </head>
   <body>
     <div class="container">
@@ -50,7 +46,7 @@
 		</form>
       </div>
     </div>
-   <c:if test="${!empty listServiceStation}">  
+   <!-- c:if test="${!empty listServiceStation}" -->  
     <table class="table table-hover" style="margin-top: 50px;">
   	<tr>
   		<th>Logotype</th>
@@ -69,7 +65,7 @@
   	</tr>
   </c:forEach> 
 	</table>
-    </c:if> 
+    <!-- /c:if --> 
     </div> 
   </body>
 </html>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
   <head>
@@ -32,23 +33,34 @@
       <div class="col-md-4">
           <h2>Service Stations</h2>
       </div>
-      <div class="col-md-8" style="padding-top: 20px;">
-         <form class="form-inline">
+      <div class="col-md-6">
+      </div>
+      <sec:authorize access="isAuthenticated()">
+      <div class="col-md-2" style="margin-top: 30px;">
+      <a href="<c:url value="/ServiceStationManagementSystem/profile" />">${ClientSecurityFeature.clientLogin}</a><br>
+      <a href="<c:url value="/ServiceStationManagementSystem/logout" />" style="margin-left: 50px;"><button type="button" class="btn btn-default">Logout</button></a>
+      </div>
+      </sec:authorize>
+      <sec:authorize access="!isAuthenticated()">
+      <div class="col-md-2" style="padding-top: 20px;">
+      <c:url value="/j_spring_security_check" var="loginUrl" />
+         <form class="form-inline" action="${loginUrl}" method="post">
 		  <div class="form-group">
-		    <input type="login" class="form-control" id="exampleInputEmail3" placeholder="Login">
-		  </div>
-		  <div class="form-group">
-		    <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
-		  </div>
+		    <input type="login" class="form-control" id="exampleInputEmail3" name="j_username" placeholder="Login">
+		  </div><br>
+		  <div class="form-group" style="margin-top: 5px;">
+		    <input type="password" class="form-control" id="exampleInputPassword3" name="j_password" placeholder="Password">
+		  </div><br>
 		  <div class="checkbox">
 		    <label>
-		      <input type="checkbox"> Remember me
+		      <input type="checkbox" name="_spring_security_remember_me"> Remember me
 		    </label>
-		  </div>
-		  <a href="/auth"><button type="submit" class="btn btn-success">Sign in</button></a>
-          <a href="/registration"><button type="button" class="btn btn-primary">Sign up</button></a>
+		  </div><br>
+		  <a href="<c:url value="/ServiceStationManagementSystem/login" />"><button type="submit" class="btn btn-default">Sign in</button></a>
+          <a href="<c:url value="/registration" />"><button type="button" class="btn btn-default">Sign up</button></a><br>
 		</form>
       </div>
+      </sec:authorize>
     </div>
    <!-- c:if test="${!empty listServiceStation}" -->  
     <table class="table table-hover" style="margin-top: 50px;">

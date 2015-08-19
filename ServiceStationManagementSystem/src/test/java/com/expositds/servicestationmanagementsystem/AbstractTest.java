@@ -24,7 +24,6 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
  * 
  * @version 1.0 01.08.2015
  * @author Zaerko Denis
- *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"file:src/main/webapp/WEB-INF/config/spring-hibernate-config/spring-hibernate-config.xml"})

@@ -9,23 +9,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Main Page</title>
 
-    
-    	<link href="resources/libs/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap-->
+   
+    <link href="resources/libs/bootstrap.min.css" rel="stylesheet">
 	    <script src="resources/libs/jquery.min.js"/></script>
 	    <script src="resources/libs/bootstrap.min.js"/></script>
-	    
-	   
+	  
+	
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-<!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	  <!-- Latest compiled and minified CSS -->
-
-
-<!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+ 
   </head>
   <body>
     <div class="container">
@@ -35,13 +32,13 @@
       </div>
       <div class="col-md-6">
       </div>
-      <sec:authorize access="isAuthenticated()">
+      <!-- sec:authorize access="isAuthenticated()" >
       <div class="col-md-2" style="margin-top: 30px;">
       <a href="<c:url value="/ServiceStationManagementSystem/profile" />">${ClientSecurityFeature.clientLogin}</a><br>
       <a href="<c:url value="/ServiceStationManagementSystem/logout" />" style="margin-left: 50px;"><button type="button" class="btn btn-default">Logout</button></a>
       </div>
-      </sec:authorize>
-      <sec:authorize access="!isAuthenticated()">
+      <!-- /sec:authorize -->
+      <!-- sec:authorize access="!isAuthenticated()" -->
       <div class="col-md-2" style="padding-top: 20px;">
       <c:url value="/j_spring_security_check" var="loginUrl" />
          <form class="form-inline" action="${loginUrl}" method="post">
@@ -60,7 +57,7 @@
           <a href="<c:url value="/registration" />"><button type="button" class="btn btn-default">Sign up</button></a><br>
 		</form>
       </div>
-      </sec:authorize>
+      <!-- /sec:authorize -->
     </div>
    <!-- c:if test="${!empty listServiceStation}" -->  
     <table class="table table-hover" style="margin-top: 50px;">
@@ -74,10 +71,10 @@
   <!--  c:forEach items="${listServiceStation}" var="ServiceStation" --> 
   	<tr style="font-size: 18px;">
   		<td><img src="resources/img/logo.png" alt="Logo" class="img-circle"></td>
-  		<td>${ServiceStation.name}</td>
-  		<td>${ServiceStation.location}</td>
+  		<td>${ServiceStation.serviceStationName}</td>
+  		<td>${ServiceStation.serviceStationAddress}</td>
   		<td>${ServiceStation.mark}</td>
-  		<td><a href="<c:url value='/station/${ServiceStation.id}' />"><button type="button" class="btn btn-primary">Go</button></a></td>
+  		<td><a href="<c:url value='/station/${ServiceStation.idServiceStation}' />"><button type="button" class="btn btn-primary">Go</button></a></td>
   	</tr>
   <!--  /c:forEach --> 
 	</table>

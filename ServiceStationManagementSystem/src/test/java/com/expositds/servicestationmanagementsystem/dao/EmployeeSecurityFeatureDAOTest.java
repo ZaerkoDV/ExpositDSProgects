@@ -7,7 +7,6 @@
  */
 package com.expositds.servicestationmanagementsystem.dao;
 
-import java.sql.Date;
 
 import javax.inject.Inject;
 
@@ -22,6 +21,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
+import com.expositds.servicestationmanagementsystem.TestObjectCreator;
 import com.expositds.servicestationmanagementsystem.model.Employee;
 import com.expositds.servicestationmanagementsystem.model.EmployeeSecurityFeature;
 
@@ -44,197 +44,172 @@ import com.expositds.servicestationmanagementsystem.model.EmployeeSecurityFeatur
  * @version 1.0 10.08.2015
  * @author Zaerko Denis
  */
-public class EmployeeSecurityFeatureDAOTest extends AbstractTest {
+public class EmployeeSecurityFeatureDAOTest {//extends AbstractTest {
 
-	/**
-	 * Variable logger use to get logger level for class EmployeeSecurityFeatureDAOTest.
-	 * 
-	 * @param EmployeeSecurityFeatureDAOTest.
-	 * @return logger for class EmployeeSecurityFeatureDAOTest.
-	 */
-	private static final Logger logger = LoggerFactory.getLogger(EmployeeSecurityFeatureDAOTest.class);
-	
-	/**
-	 * Annatation Inject use to get injection of EntityUtilDAOImpl
-	 * and EmployeeSecurityFeatureDAOImpl dependency. This is part
-	 * of specification JSR-330.
-	 */
-	@Inject
-	@Qualifier("employeeSecurityFeatureDAO")
-	private EmployeeSecurityFeatureDAO employeeSecurityFeatureDAO;
-
-	public Employee employee;
-	public EmployeeSecurityFeature employeeSecurityFeature;
-
-	/**
-	 * Create test object before test start.
-	 */
-	@Before
-	public void initEmployeeSecurityFeatureBeforeTest(){
-		employeeSecurityFeature = createEmployeeSecurityFeatureForTest();
-	}
-
-	/**
-	 * Destroy test object after method finish.
-	 */
-	@After 
-	public void clearEmployeeSecurityFeatureAfterTest(){
-		employee=null;
-		employeeSecurityFeature = null;
-	}
-	
-	/**
-	 * Method create new objects for test. 
-	 * 
-	 * @return  EmployeeSecurityFeature if operation create new 
-	 * employeeSecurityFeature successfully completed else null
-	 * and get exeption.
-	 */
-	public EmployeeSecurityFeature createEmployeeSecurityFeatureForTest() {
-
-		employee = new Employee();
-		employee.setEmployeFirstName("employeFirstNameTest");
-		employee.setEmployeLastName("employeLastNameTest");
-		employee.setEmployeMiddleName("employeMiddleNameTest");
-		employee.setEmployeFunction("mechanic");
-		employee.setEmployeTelephone("234567");
-		java.util.Date date = new java.util.Date();
-		employee.setEmployeBirthday(new Date(date.getTime()-10));
-		employee.setEmployeEmail("test@mail.ru");
-		employee.setWages((Double)1024.1);
-		employeeSecurityFeatureDAO.saveEntity(employee);
-
-		employeeSecurityFeature = new EmployeeSecurityFeature();
-		employeeSecurityFeature.setEmployeLogin("employeLoginTest");
-		employeeSecurityFeature.setEmployePassword("employePasswordTest");
-		employeeSecurityFeature.setEmployee(employee);
-		employeeSecurityFeatureDAO.saveEntity(employeeSecurityFeature);
-
-		return employeeSecurityFeature;
-	}
-	
-	/**
-	 * Method testSaveEmployeeSecurityFeature are testing EmployeeSecurityFeature
-	 * save operation.That method use test object, which create before test run
-	 * and destroy test object after method is finish. 
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testSaveEmployeeSecurityFeature(){
-		Assert.assertFalse(employeeSecurityFeature.equals(null));
-	}
-	
-	/**
-	 * Method testGettingEmployeeSecurityFeatureById are testing operation get
-	 * EmployeeSecurityFeature by id.That method use test object,which create
-	 * before test run and destroy test object after method is finish.  
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingEmployeeSecurityFeatureById(){
-		Assert.assertNotNull(employeeSecurityFeatureDAO.getEntityById(EmployeeSecurityFeature.class,
-				employeeSecurityFeature.getIdEmployeSecurityFeature()));
-	}
-	
-	/**
-	 * Method testUpdateEmployeeSecurityFeature are testing update EmployeeSecurityFeature.
-	 * That method use test object, which create before test run and destroy test object
-	 * after method is finish.  
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testUpdateEmployeeSecurityFeature(){
-		
-		employeeSecurityFeature.setEmployeLogin("employeLoginTest2");
-		employeeSecurityFeatureDAO.updateEntity(employeeSecurityFeature);
-		
-		final EmployeeSecurityFeature updatedEmployeeSecurityFeature =(EmployeeSecurityFeature) employeeSecurityFeatureDAO
-				.getEntityById(EmployeeSecurityFeature.class,employeeSecurityFeature.getIdEmployeSecurityFeature());	
-		Assert.assertTrue(updatedEmployeeSecurityFeature.getEmployeLogin().equals("employeLoginTest2"));
-	}
-	
-	/**
-	 * Method testDeleteEmployeeSecurityFeature are testing operation delete client
-	 * by id. That method use test object, which create before test run and destroy
-	 * test object after method is finish.   
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testDeleteEmployeeSecurityFeatureById(){
-
-		employeeSecurityFeatureDAO.deleteEntityById(EmployeeSecurityFeature.class,employeeSecurityFeature
-				.getIdEmployeSecurityFeature());
-		Assert.assertNull(employeeSecurityFeatureDAO.getEntityById(EmployeeSecurityFeature.class, employeeSecurityFeature
-				.getIdEmployeSecurityFeature()));
-	}
-	
-	/**
-	 * Method testOnConfirmEmployeePassword() are testing operation convert employee
-	 * password to MD5 and check password. That method use test object, which create
-	 * before test run and destroy test object after method is finish.   
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 * @see org.apache.commons.codec.digest.DigestUtils
-	 */
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testOnConfirmEmployeePassword(){
-		
-		Assert.assertTrue(employeeSecurityFeature.getEmployePassword().equals(employeeSecurityFeature
-				.convertToMD5("employePasswordTest")));
-		Assert.assertFalse(employeeSecurityFeature.getEmployePassword().equals(employeeSecurityFeature
-				.convertToMD5("employePasswordTest2")));
-	}
-	
-	/**
-	 * Method testOnUniqueEmployeeLoginPassword are testing on unique
-	 * variable login and password. That method use test object, which
-	 * create before test run and destroy test object after method is
-	 * finish.   
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testOnUniqueEmployeeLoginPassword(){
-
-		Boolean isUniqueFalse=employeeSecurityFeatureDAO.isUniqueLoginPassword(
-				employeeSecurityFeature.getEmployeLogin(),employeeSecurityFeature.getEmployePassword());
-		Assert.assertFalse(isUniqueFalse);
-		
-		Boolean isUniqueTrue=employeeSecurityFeatureDAO.isUniqueLoginPassword("loginTest","passTest");
-		Assert.assertTrue(isUniqueTrue);
-	}
+//	/**
+//	 * Variable logger use to get logger level for class EmployeeSecurityFeatureDAOTest.
+//	 * 
+//	 * @param EmployeeSecurityFeatureDAOTest.
+//	 * @return logger for class EmployeeSecurityFeatureDAOTest.
+//	 */
+//	private static final Logger logger = LoggerFactory.getLogger(EmployeeSecurityFeatureDAOTest.class);
+//	
+//	/**
+//	 * Annatation Inject use to get injection of EntityUtilDAOImpl
+//	 * and EmployeeSecurityFeatureDAOImpl dependency. This is part
+//	 * of specification JSR-330.
+//	 */
+//	@Inject
+//	@Qualifier("employeeSecurityFeatureDAO")
+//	private EmployeeSecurityFeatureDAO employeeSecurityFeatureDAO;
+//	
+//	@Inject
+//	@Qualifier("testObjectCreator")								
+//	private TestObjectCreator testObjectCreator;
+//
+//	public Employee employee;
+//	public EmployeeSecurityFeature employeeSecurityFeature;
+//
+//	/**
+//	 * Create test object before test start.
+//	 */
+//	@Before
+//	public void initEmployeeSecurityFeatureBeforeTest(){
+//		employee=testObjectCreator.createEmployeeForTest();
+//		employeeSecurityFeature=testObjectCreator.createEmployeeSecurityFeatureForTest();
+//	}
+//
+//	/**
+//	 * Destroy test object after method finish.
+//	 */
+//	@After 
+//	public void clearEmployeeSecurityFeatureAfterTest(){
+//		employee=null;
+//		employeeSecurityFeature = null;
+//	}
+//		
+//	/**
+//	 * Method testSaveEmployeeSecurityFeature are testing EmployeeSecurityFeature
+//	 * save operation.That method use test object, which create before test run
+//	 * and destroy test object after method is finish. 
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testSaveEmployeeSecurityFeature(){
+//		Assert.assertFalse(employeeSecurityFeature.equals(null));
+//	}
+//	
+//	/**
+//	 * Method testGettingEmployeeSecurityFeatureById are testing operation get
+//	 * EmployeeSecurityFeature by id.That method use test object,which create
+//	 * before test run and destroy test object after method is finish.  
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingEmployeeSecurityFeatureById(){
+//		Assert.assertNotNull(employeeSecurityFeatureDAO.getEntityById(EmployeeSecurityFeature.class,
+//				employeeSecurityFeature.getIdEmployeSecurityFeature()));
+//	}
+//	
+//	/**
+//	 * Method testUpdateEmployeeSecurityFeature are testing update EmployeeSecurityFeature.
+//	 * That method use test object, which create before test run and destroy test object
+//	 * after method is finish.  
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testUpdateEmployeeSecurityFeature(){
+//		
+//		employeeSecurityFeature.setEmployeLogin("employeLoginTest2");
+//		employeeSecurityFeatureDAO.updateEntity(employeeSecurityFeature);
+//		
+//		final EmployeeSecurityFeature updatedEmployeeSecurityFeature =(EmployeeSecurityFeature) employeeSecurityFeatureDAO
+//				.getEntityById(EmployeeSecurityFeature.class,employeeSecurityFeature.getIdEmployeSecurityFeature());	
+//		Assert.assertTrue(updatedEmployeeSecurityFeature.getEmployeLogin().equals("employeLoginTest2"));
+//	}
+//	
+//	/**
+//	 * Method testDeleteEmployeeSecurityFeature are testing operation delete client
+//	 * by id. That method use test object, which create before test run and destroy
+//	 * test object after method is finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testDeleteEmployeeSecurityFeatureById(){
+//
+//		employeeSecurityFeatureDAO.deleteEntityById(EmployeeSecurityFeature.class,employeeSecurityFeature
+//				.getIdEmployeSecurityFeature());
+//		Assert.assertNull(employeeSecurityFeatureDAO.getEntityById(EmployeeSecurityFeature.class, employeeSecurityFeature
+//				.getIdEmployeSecurityFeature()));
+//	}
+//	
+//	/**
+//	 * Method testOnConfirmEmployeePassword() are testing operation convert employee
+//	 * password to MD5 and check password. That method use test object, which create
+//	 * before test run and destroy test object after method is finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 * @see org.apache.commons.codec.digest.DigestUtils
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testOnConfirmEmployeePassword(){
+//		
+//		Assert.assertTrue(employeeSecurityFeature.getEmployePassword().equals(employeeSecurityFeature
+//				.convertToMD5("employePasswordTest")));
+//		Assert.assertFalse(employeeSecurityFeature.getEmployePassword().equals(employeeSecurityFeature
+//				.convertToMD5("employePasswordTest2")));
+//	}
+//	
+//	/**
+//	 * Method testOnUniqueEmployeeLoginPassword are testing on unique
+//	 * variable login and password. That method use test object, which
+//	 * create before test run and destroy test object after method is
+//	 * finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testOnUniqueEmployeeLoginPassword(){
+//
+//		Boolean isUniqueFalse=employeeSecurityFeatureDAO.isUniqueLoginPassword(
+//				employeeSecurityFeature.getEmployeLogin(),employeeSecurityFeature.getEmployePassword());
+//		Assert.assertFalse(isUniqueFalse);
+//		
+//		Boolean isUniqueTrue=employeeSecurityFeatureDAO.isUniqueLoginPassword("loginTest","passTest");
+//		Assert.assertTrue(isUniqueTrue);
+//	}
 }

@@ -14,6 +14,7 @@
  */
 package com.expositds.servicestationmanagementsystem.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.expositds.servicestationmanagementsystem.model.Client;
@@ -93,4 +94,8 @@ public interface DepartmentDAO extends AbstractEntityCommonDAO {
 	 * @return Total sum(double type) detail cost in department. 
 	 */
 	public Double getFullIncomeForNotcompletedOverdueDepartmentOrder(Long idDepartment);
+	
+	public Double getSumEmployeeWagesForDeportment(Long idDepartment);
+	public Double getTotalDetailCostForDoneDepartmentOrder(Long idDepartment, Date startData,Date endData);
+	public Double getFullIncomeForDoneDepartmentOrder(Long idDepartment,Date startData,Date endData);
 }

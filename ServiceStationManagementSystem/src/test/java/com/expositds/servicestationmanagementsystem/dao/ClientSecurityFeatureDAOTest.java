@@ -7,8 +7,6 @@
  */
 package com.expositds.servicestationmanagementsystem.dao;
 
-import java.sql.Date;
-
 import javax.inject.Inject;
 
 import org.junit.After;
@@ -22,6 +20,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
+import com.expositds.servicestationmanagementsystem.TestObjectCreator;
 import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.ClientSecurityFeature;
 /**
@@ -42,196 +41,173 @@ import com.expositds.servicestationmanagementsystem.model.ClientSecurityFeature;
  * @version 1.0 10.08.2015
  * @author Zaerko Denis
  */
-public class ClientSecurityFeatureDAOTest extends AbstractTest { 
+public class ClientSecurityFeatureDAOTest {//extends AbstractTest { 
 
-	/**
-	 * Variable logger use to get logger level for class ClientSecurityFeatureDAOTest.
-	 * 
-	 * @param ClientSecurityFeatureDAOTest.
-	 * @return logger for class ClientSecurityFeatureDAOTest.
-	 */
-	private static final Logger logger = LoggerFactory.getLogger(ClientSecurityFeatureDAOTest.class);
-
-	/**
-	 * Annatation Inject use to get injection of EntityUtilDAOImpl
-	 * and ClientSecurityFeatureDAOImpl dependency. This is part of
-	 * specification JSR-330.
-	 */
-	@Inject
-	@Qualifier("clientSecurityFeatureDAO")
-	private ClientSecurityFeatureDAO clientSecurityFeatureDAO;
-
-	public ClientSecurityFeature clientSecurityFeature;
-	
-	public Client client;
-
-	/**
-	 * Create test object before test start.
-	 */
-	@Before
-	public void initClientSecurityFeatureBeforeTest(){
-		clientSecurityFeature = createClientSecurityFeatureForTest();
-	}
-
-	/**
-	 * Destroy test object after method finish.
-	 */
-	@After 
-	public void clearClientSecurityFeatureAfterTest(){
-		client=null;
-		clientSecurityFeature = null;
-	}
-	
-	/**
-	 * Method create new objects for test. 
-	 * 
-	 * @return ClientSecurityFeature if operation create new 
-	 * clientSecurityFeature successfully completed else null
-	 * and get exeption.
-	 */
-	public ClientSecurityFeature createClientSecurityFeatureForTest() {
-
-		client = new Client();
-		client.setClientFirstName("clientFirstNameTest");
-		client.setClientLastName("clientLastNameTest");
-		client.setClientMiddleName("clientMiddleNameTest");
-		java.util.Date date = new java.util.Date();
-		client.setClientBirthday(new Date(date.getTime()-10));
-		client.setClientTelephone("12345");
-		client.setClientEmail("test@mail.ru");
-		clientSecurityFeatureDAO.saveEntity(client);
-
-		clientSecurityFeature = new ClientSecurityFeature();
-		clientSecurityFeature.setClientLogin("clientLoginTest");
-		clientSecurityFeature.setClientPassword("clientPasswordTest");
-		clientSecurityFeature.setClient(client);
-		clientSecurityFeatureDAO.saveEntity(clientSecurityFeature);
-		
-		return clientSecurityFeature;
-	}
-	
-	/**
-	 * Method testSaveClientSecurityFeature are testing ClientSecurityFeature save
-	 * operation.That method use test object, which create before test run and 
-	 * destroy test object after method is finish. 
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testSaveClientSecurityFeature(){
-		Assert.assertFalse(clientSecurityFeature.equals(null));
-	}
-	
-	/**
-	 * Method testGettingClientSecurityFeatureById are testing operation get ClientSecurityFeature
-	 * by id.That method use test object,which create before test run and destroy test object
-	 * after method is finish.  
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingClientSecurityFeatureById(){
-		Assert.assertNotNull(clientSecurityFeatureDAO.getEntityById(ClientSecurityFeature.class,
-				clientSecurityFeature.getId—lientSecurityFeature()));
-	}
-	
-	/**
-	 * Method testUpdateClientSecurityFeature are testing update ClientSecurityFeature.
-	 * That method use test object, which create before test run and destroy test object
-	 * after method is finish.  
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testUpdateClientSecurityFeature(){
-		
-		clientSecurityFeature.setClientLogin("clientLoginTest2");
-		clientSecurityFeatureDAO.updateEntity(clientSecurityFeature);
-		
-		final ClientSecurityFeature updatedClientSecurityFeature =(ClientSecurityFeature) clientSecurityFeatureDAO
-				.getEntityById(ClientSecurityFeature.class,clientSecurityFeature.getId—lientSecurityFeature());	
-		Assert.assertTrue(updatedClientSecurityFeature.getClientLogin().equals("clientLoginTest2"));
-	}
-	
-	/**
-	 * Method testDeleteClientSecurityFeature are testing operation delete client
-	 * by id. That method use test object, which create before test run and destroy
-	 * test object after method is finish.   
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testDeleteClientSecurityFeatureById(){
-
-		clientSecurityFeatureDAO.deleteEntityById(ClientSecurityFeature.class,clientSecurityFeature
-				.getId—lientSecurityFeature());
-		Assert.assertNull(clientSecurityFeatureDAO.getEntityById(ClientSecurityFeature.class, clientSecurityFeature
-				.getId—lientSecurityFeature()));
-	}
-	
-	/**
-	 * Method testOnConfirmClientPassword are testing operation convert client password
-	 * to MD5 and check password. That method use test object, which create before test
-	 * run and destroy test object after method is finish.   
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 * @see org.apache.commons.codec.digest.DigestUtils
-	 */
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testOnConfirmClientPassword(){
-				
-		Assert.assertTrue(clientSecurityFeature.getClientPassword().equals(clientSecurityFeature
-	.convertToMD5("clientPasswordTest")));
-		Assert.assertFalse(clientSecurityFeature.getClientPassword().equals(clientSecurityFeature
-	.convertToMD5("clientPasswordTest2")));
-	}
-	
-	/**
-	 * Method testOnUniqueClientLoginPassword are testing on unique
-	 * variable login and password. That method use test object, which
-	 * create before test run and destroy test object after method is
-	 * finish.   
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testOnUniqueClientLoginPassword(){
-
-		Boolean isUniqueFalse=clientSecurityFeatureDAO.isUniqueLoginPassword(
-				clientSecurityFeature.getClientLogin(),clientSecurityFeature.getClientPassword());
-		Assert.assertFalse(isUniqueFalse);
-		
-		Boolean isUniqueTrue=clientSecurityFeatureDAO.isUniqueLoginPassword("loginTest","passTest");
-		Assert.assertTrue(isUniqueTrue);
-	}
+//	/**
+//	 * Variable logger use to get logger level for class ClientSecurityFeatureDAOTest.
+//	 * 
+//	 * @param ClientSecurityFeatureDAOTest.
+//	 * @return logger for class ClientSecurityFeatureDAOTest.
+//	 */
+//	private static final Logger logger = LoggerFactory.getLogger(ClientSecurityFeatureDAOTest.class);
+//
+//	/**
+//	 * Annatation Inject use to get injection of EntityUtilDAOImpl
+//	 * and ClientSecurityFeatureDAOImpl dependency. This is part of
+//	 * specification JSR-330.
+//	 */
+//	@Inject
+//	@Qualifier("clientSecurityFeatureDAO")
+//	private ClientSecurityFeatureDAO clientSecurityFeatureDAO;
+//	
+//	@Inject
+//	@Qualifier("testObjectCreator")								
+//	private TestObjectCreator testObjectCreator;
+//
+//	public ClientSecurityFeature clientSecurityFeature;
+//	
+//	public Client client;
+//
+//	/**
+//	 * Create test object before test start.
+//	 */
+//	@Before
+//	public void initClientSecurityFeatureBeforeTest(){
+//		client =testObjectCreator.createClientForTest();
+//		clientSecurityFeature = testObjectCreator.createClientSecurityFeature();	
+//	}
+//
+//	/**
+//	 * Destroy test object after method finish.
+//	 */
+//	@After 
+//	public void clearClientSecurityFeatureAfterTest(){
+//		client=null;
+//		clientSecurityFeature = null;
+//	}
+//	
+//	/**
+//	 * Method testSaveClientSecurityFeature are testing ClientSecurityFeature save
+//	 * operation.That method use test object, which create before test run and 
+//	 * destroy test object after method is finish. 
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testSaveClientSecurityFeature(){
+//		Assert.assertFalse(clientSecurityFeature.equals(null));
+//	}
+//	
+//	/**
+//	 * Method testGettingClientSecurityFeatureById are testing operation get ClientSecurityFeature
+//	 * by id.That method use test object,which create before test run and destroy test object
+//	 * after method is finish.  
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingClientSecurityFeatureById(){
+//		Assert.assertNotNull(clientSecurityFeatureDAO.getEntityById(ClientSecurityFeature.class,
+//				clientSecurityFeature.getId—lientSecurityFeature()));
+//	}
+//	
+//	/**
+//	 * Method testUpdateClientSecurityFeature are testing update ClientSecurityFeature.
+//	 * That method use test object, which create before test run and destroy test object
+//	 * after method is finish.  
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testUpdateClientSecurityFeature(){
+//		
+//		clientSecurityFeature.setClientLogin("clientLoginTest2");
+//		clientSecurityFeatureDAO.updateEntity(clientSecurityFeature);
+//		
+//		final ClientSecurityFeature updatedClientSecurityFeature =(ClientSecurityFeature) clientSecurityFeatureDAO
+//				.getEntityById(ClientSecurityFeature.class,clientSecurityFeature.getId—lientSecurityFeature());	
+//		Assert.assertTrue(updatedClientSecurityFeature.getClientLogin().equals("clientLoginTest2"));
+//	}
+//	
+//	/**
+//	 * Method testDeleteClientSecurityFeature are testing operation delete client
+//	 * by id. That method use test object, which create before test run and destroy
+//	 * test object after method is finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testDeleteClientSecurityFeatureById(){
+//
+//		clientSecurityFeatureDAO.deleteEntityById(ClientSecurityFeature.class,clientSecurityFeature
+//				.getId—lientSecurityFeature());
+//		Assert.assertNull(clientSecurityFeatureDAO.getEntityById(ClientSecurityFeature.class, clientSecurityFeature
+//				.getId—lientSecurityFeature()));
+//	}
+//	
+//	/**
+//	 * Method testOnConfirmClientPassword are testing operation convert client password
+//	 * to MD5 and check password. That method use test object, which create before test
+//	 * run and destroy test object after method is finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 * @see org.apache.commons.codec.digest.DigestUtils
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testOnConfirmClientPassword(){
+//				
+//		Assert.assertTrue(clientSecurityFeature.getClientPassword().equals(clientSecurityFeature
+//	.convertToMD5("clientPasswordTest")));
+//		Assert.assertFalse(clientSecurityFeature.getClientPassword().equals(clientSecurityFeature
+//	.convertToMD5("clientPasswordTest2")));
+//	}
+//	
+//	/**
+//	 * Method testOnUniqueClientLoginPassword are testing on unique
+//	 * variable login and password. That method use test object, which
+//	 * create before test run and destroy test object after method is
+//	 * finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testOnUniqueClientLoginPassword(){
+//
+//		Boolean isUniqueFalse=clientSecurityFeatureDAO.isUniqueLoginPassword(
+//				clientSecurityFeature.getClientLogin(),clientSecurityFeature.getClientPassword());
+//		Assert.assertFalse(isUniqueFalse);
+//		
+//		Boolean isUniqueTrue=clientSecurityFeatureDAO.isUniqueLoginPassword("loginTest","passTest");
+//		Assert.assertTrue(isUniqueTrue);
+//	}
 }

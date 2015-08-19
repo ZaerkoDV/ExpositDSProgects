@@ -38,7 +38,7 @@
         <div class="col-md-4"></div>
         <div class="col-md-4">
           <h3>Registration</h3>
-          <form:form class="form-horizontal" method="post" commandName="newClient">
+          <form:form class="form-horizontal" method="post" commandName="client">
             <div class="form-group">
               <div class="col-sm-10">
                 <form:input type="text" class="form-control" id="firstname" placeholder="First name" path="clientFirstName" />

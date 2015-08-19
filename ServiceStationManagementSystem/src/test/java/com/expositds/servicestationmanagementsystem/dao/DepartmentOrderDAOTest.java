@@ -23,6 +23,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
+import com.expositds.servicestationmanagementsystem.TestObjectCreator;
 import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.Department;
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
@@ -50,344 +51,277 @@ import com.expositds.servicestationmanagementsystem.model.Stead;
  * @version 1.0 10.08.2015
  * @author Zaerko Denis
  */
-public class DepartmentOrderDAOTest extends AbstractTest {
+public class DepartmentOrderDAOTest {//extends AbstractTest {
 
-	/**
-	 * Variable logger use to get logger level for class DepartmentOrderDAOTest.
-	 * 
-	 * @param DepartmentOrderDAOTest.
-	 * @return logger for class DepartmentOrderDAOTest.
-	 */
-	private static final Logger logger = LoggerFactory.getLogger(DepartmentOrderDAOTest.class);
-
-	/**
-	 * Annatation Inject use to get injection of EntityUtilDAOImpl
-	 * and DepartmentOrderDAOImpl dependency. This is part of
-	 * specification JSR-330.
-	 */
-	@Inject
-	@Qualifier("departmentOrderDAO")
-	private DepartmentOrderDAO departmentOrderDAO;
-
-	public ServiceStation serviceStation;
-	public Stead stead;
-	public Department department;
-	public Client client;
-	public Employee employee;
-	public EmployeeSecurityFeature employeeSecurityFeature;
-	public DepartmentOrder departmentOrder;
-	public Detail detail;
-
-	/**
-	 * Create test object before test start.
-	 */
-	@Before
-	public void initDepartmentOrderBeforeTest(){
-		departmentOrder = createDepartmentOrderForTest();
-	}
-
-	/**
-	 * Destroy test object after method finish.
-	 */
-	@After 
-	public void clearDepartmentOrderAfterTest(){
-		serviceStation=null;
-		stead=null;
-		department=null;
-		client=null;
-		employee=null;
-		departmentOrder=null;
-		detail=null;
-		employeeSecurityFeature=null;
-	}
-
-	/**
-	 * Method create new objects for test. 
-	 * 
-	 * @return DepartmentOrder if operation create new 
-	 * departmentOrder successfully completed else null
-	 * and get exeption.
-	 */
-	public DepartmentOrder createDepartmentOrderForTest() {
-
-		serviceStation = new ServiceStation();
-		serviceStation.setServiceStationName("serviceStationNameTest");
-		//serviceStation.setServiceStationLogotype(serviceStationLogotype);
-		serviceStation.setServiceStationAddress("serviceStationAddressTest");
-		serviceStation.setServiceStationPhoneNumber("1234221");
-		departmentOrderDAO.saveEntity(serviceStation);
-
-		stead = new Stead();
-		stead.setSteadArea((Double)100.0);
-		stead.setSteadCost((Double)10.0);
-		departmentOrderDAO.saveEntity(stead);
-
-		department=new Department();
-		department.setDepartmentName("departmentNameTest");
-		department.setStead(stead);
-		department.setServiceStation(serviceStation);
-		departmentOrderDAO.saveEntity(department);	
-
-		client = new Client();
-		client.setClientFirstName("clientFirstNameTest");
-		client.setClientLastName("clientLastNameTest");
-		client.setClientMiddleName("clientMiddleNameTest");
-		java.util.Date date = new java.util.Date();
-		client.setClientBirthday(new Date(date.getTime()-10));
-		client.setClientTelephone("12345");
-		client.setClientEmail("test@mail.ru");
-		departmentOrderDAO.saveEntity(client);
-
-		employee = new Employee();
-		employee.setEmployeFirstName("employeFirstNameTest");
-		employee.setEmployeLastName("employeLastNameTest");
-		employee.setEmployeMiddleName("employeMiddleNameTest");
-		employee.setEmployeFunction("employeFunctionTest");
-		employee.setEmployeTelephone("234567");
-		employee.setEmployeBirthday(new Date(date.getTime()-10));
-		employee.setEmployeEmail("test@mail.ru");
-		employee.setWages((Double)1024.1);
-		departmentOrderDAO.saveEntity(employee);
-
-		employeeSecurityFeature = new EmployeeSecurityFeature();
-		employeeSecurityFeature.setEmployeLogin("employeLoginTest");
-		employeeSecurityFeature.setEmployePassword("employePasswordTest");
-		employeeSecurityFeature.setEmployee(employee);
-		departmentOrderDAO.saveEntity(employeeSecurityFeature);
-		
-		departmentOrder=new DepartmentOrder();
-		departmentOrder.setOrderDescription("testOrderDescription");
-		departmentOrder.setStartOrder(new Date(date.getTime()));
-		departmentOrder.setEndOrder(new Date(date.getTime()+1000));
-		departmentOrder.setOrderCost((Double)100.0);
-		departmentOrder.setWorkCost((Double)10.0);
-		departmentOrder.setOrderStatus("Notcompleted");
-		departmentOrder.setClient(client);
-		departmentOrder.setEmployee(employee);
-		departmentOrder.setDepartment(department);
-		departmentOrderDAO.saveEntity(departmentOrder);
-
-		detail=new Detail();
-		detail.setDetailName("detailNameTest");
-		detail.setDetailManufacturer("detailManufacturerTest");
-		detail.setDetailStatus("notexist");
-		detail.setDetailCost((Double)1000.0);		
-		detail.setDetailWarrantyDay((long)100);
-		detail.setDepartmentOrder(departmentOrder);
-		departmentOrderDAO.saveEntity(detail);
-
-		return departmentOrder;
-	}
-
-	/**
-	 * Method testSaveDepartmentOrder are testing DepartmentOrder on save operation.
-	 * That method use test object, which create before test run and destroy
-	 * test object after method is finish. 
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testSaveDepartmentOrder(){
-		Assert.assertFalse(departmentOrder.equals(null));
-	}
-
-	/**
-	 * Method testGettingDepartmentOrderById are testing operation get DepartmentOrder
-	 * by id.That method use test object,which create before test run and destroy test
-	 * object after method is finish.  
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingDepartmentOrderById(){
-		Assert.assertNotNull(departmentOrderDAO.getEntityById(DepartmentOrder.class,departmentOrder
-				.getIdDepartmentOrder()));
-	}
-
-	/**
-	 * Method testUpdateDepartmentOrdert are testing update DepartmentOrdert. That
-	 * method use test object, which create before test run and destroy test object
-	 * after method is finish.
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testUpdateDepartmentOrdert(){
-		departmentOrder.setOrderDescription("testOrderDescription2");
-		departmentOrderDAO.updateEntity(departmentOrder);
-
-		final DepartmentOrder updatedDepartmentOrder =(DepartmentOrder) departmentOrderDAO
-				.getEntityById(DepartmentOrder.class, departmentOrder.getIdDepartmentOrder());	
-		Assert.assertTrue(updatedDepartmentOrder.getOrderDescription().equals("testOrderDescription2"));
-	}
-
-	/**
-	 * Method testDeleteDepartmentOrder are testing operation delete DepartmentOrder
-	 * by id. That method use test object, which create before test run and destroy
-	 * test object after method is finish.   
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testDeleteDepartmentOrderById(){
-
-		departmentOrderDAO.deleteEntityById(DepartmentOrder.class,departmentOrder.getIdDepartmentOrder());
-		Assert.assertNull(departmentOrderDAO.getEntityById(DepartmentOrder.class,departmentOrder
-				.getIdDepartmentOrder()));
-	}
-
-	/**
-	 * Method testGettingListDepartmentOrderForEmployee are testing create list of 
-	 * department order for employee which work in this department. That method use
-	 * test object, which create before test run and destroy test object after method
-	 * is finish.   
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListDepartmentOrderForEmployee(){
-		
-		List<DepartmentOrder> listEmployeOrder;
-		
-		listEmployeOrder=departmentOrderDAO.getListDepartmentOrderForEmployee(employee.getIdEmployee());
-		Assert.assertFalse(listEmployeOrder.isEmpty());
-
-		departmentOrderDAO.deleteEntity(employee);
-		listEmployeOrder=departmentOrderDAO.getListDepartmentOrderForEmployee(employee.getIdEmployee());
-		Assert.assertTrue(listEmployeOrder.isEmpty());
-	}
-
-	/**
-	 * Method testGettingListDepartmentOrderForEmployee are testing create list of 
-	 * department order with notcompleted and overdue status for employee and which
-	 * work in this department. That method use test object, which create before test
-	 * run and destroy test object after method is finish.   
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListNotcompletedOverdueDepartmentOrderForEmployee(){
-
-		List<DepartmentOrder> employeNotcompletedOverdueOrderList;
-		
-		//overdue order exist.
-		departmentOrder.setOrderStatus("overdue");
-		departmentOrderDAO.updateEntity(departmentOrder);
-		
-		employeNotcompletedOverdueOrderList=departmentOrderDAO
-				.getListNotcompletedOverdueDepartmentOrderForEmployee(employee.getIdEmployee());
-		Assert.assertFalse(employeNotcompletedOverdueOrderList.isEmpty());
-
-		//notcomplited order not exist.
-		departmentOrder.setOrderStatus("done");
-		departmentOrderDAO.updateEntity(departmentOrder);
-
-		employeNotcompletedOverdueOrderList=departmentOrderDAO
-				.getListNotcompletedOverdueDepartmentOrderForEmployee(employee.getIdEmployee());
-		Assert.assertTrue(employeNotcompletedOverdueOrderList.isEmpty());
-	}
-	
-	/**
-	 * Method testGettingListDepartmentOrderForEmployee are testing create list of 
-	 * department order with done status for employee and which work in this
-	 * department. That method use test object, which create before test run and 
-	 * destroy test object after method is finish.   
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListDoneDepartmentOrderForEmployee(){
-
-		//notcomplited order exist.
-		departmentOrder.setOrderStatus("done");
-		departmentOrderDAO.updateEntity(departmentOrder);
-		
-		List<DepartmentOrder> employeDoneDepartmentOrderList=departmentOrderDAO
-				.getListDoneDepartmentOrderForEmployee(employee.getIdEmployee());
-		Assert.assertFalse(employeDoneDepartmentOrderList.isEmpty());
-
-		//notcomplited order not exist.
-		departmentOrder.setOrderStatus("notcomplited");
-		departmentOrderDAO.updateEntity(departmentOrder);
-		
-		employeDoneDepartmentOrderList=departmentOrderDAO
-				.getListDoneDepartmentOrderForEmployee(employee.getIdEmployee());
-		Assert.assertTrue(employeDoneDepartmentOrderList.isEmpty());
-	}
-
-	/**
-	 * Method testGettingFullDetailCostForDepartmentOrder are testing operation 
-	 * get full details cost for department order. That method use test object,
-	 * which create before test run and destroy test object after method is finish.   
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingFullDetailCostForDepartmentOrder(){
-
-		Double actual=departmentOrderDAO.getFullDetailCostForDepartmentOrder(departmentOrder.getIdDepartmentOrder());
-		Double expected=detail.getDetailCost();
-		Assert.assertEquals(expected, actual);
-	}
-
-	/**
-	 * Method testGettingOrderCostForDepartmentOrder are testing operation 
-	 * get order cost for department order. That method use test object,
-	 * which create before test run and destroy test object after method
-	 * is finish.   
-	 * 
-	 * @see org.springframework.transaction.annotation.Transactional
-	 * @see org.springframework.test.annotation.Rollback
-	 * @see org.junit.Test
-	 * @see org.junit.Assert
-	 */	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingOrderCostForDepartmentOrder(){
-
-		Double actual=departmentOrderDAO.getOrderCostForDepartmentOrder(departmentOrder.getIdDepartmentOrder());
-		Double expected=departmentOrder.getOrderCost();
-		Assert.assertEquals(expected, actual);
-	}
+//	/**
+//	 * Variable logger use to get logger level for class DepartmentOrderDAOTest.
+//	 * 
+//	 * @param DepartmentOrderDAOTest.
+//	 * @return logger for class DepartmentOrderDAOTest.
+//	 */
+//	private static final Logger logger = LoggerFactory.getLogger(DepartmentOrderDAOTest.class);
+//
+//	/**
+//	 * Annatation Inject use to get injection of EntityUtilDAOImpl
+//	 * and DepartmentOrderDAOImpl dependency. This is part of
+//	 * specification JSR-330.
+//	 */
+//	@Inject
+//	@Qualifier("departmentOrderDAO")
+//	private DepartmentOrderDAO departmentOrderDAO;
+//	
+//	@Inject
+//	@Qualifier("testObjectCreator")								
+//	private TestObjectCreator testObjectCreator;
+//
+//	public ServiceStation serviceStation;
+//	public Stead stead;
+//	public Department department;
+//	public Client client;
+//	public Employee employee;
+//	public EmployeeSecurityFeature employeeSecurityFeature;
+//	public DepartmentOrder departmentOrder;
+//	public Detail detail;
+//
+//	/**
+//	 * Create test object before test start.
+//	 */
+//	@Before
+//	public void initDepartmentOrderBeforeTest(){
+//		serviceStation=testObjectCreator.createServiceStationForTest();
+//		stead=testObjectCreator.createSteadForTest();	
+//		department=testObjectCreator.createDepartmentForTest();
+//		departmentOrder=testObjectCreator.createDepartmentOrder();
+//		detail=testObjectCreator.createDetailForTeat();
+//		client=testObjectCreator.createClientForTest();
+//		employee=testObjectCreator.createEmployeeForTest();
+//		employeeSecurityFeature=testObjectCreator.createEmployeeSecurityFeatureForTest();
+//	}
+//
+//	/**
+//	 * Destroy test object after method finish.
+//	 */
+//	@After 
+//	public void clearDepartmentOrderAfterTest(){
+//		serviceStation=null;
+//		stead=null;
+//		department=null;
+//		client=null;
+//		employee=null;
+//		departmentOrder=null;
+//		detail=null;
+//		employeeSecurityFeature=null;
+//	}
+//
+//	/**
+//	 * Method testSaveDepartmentOrder are testing DepartmentOrder on save operation.
+//	 * That method use test object, which create before test run and destroy
+//	 * test object after method is finish. 
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testSaveDepartmentOrder(){
+//		Assert.assertFalse(departmentOrder.equals(null));
+//	}
+//
+//	/**
+//	 * Method testGettingDepartmentOrderById are testing operation get DepartmentOrder
+//	 * by id.That method use test object,which create before test run and destroy test
+//	 * object after method is finish.  
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingDepartmentOrderById(){
+//		Assert.assertNotNull(departmentOrderDAO.getEntityById(DepartmentOrder.class,departmentOrder
+//				.getIdDepartmentOrder()));
+//	}
+//
+//	/**
+//	 * Method testUpdateDepartmentOrdert are testing update DepartmentOrdert. That
+//	 * method use test object, which create before test run and destroy test object
+//	 * after method is finish.
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testUpdateDepartmentOrdert(){
+//		departmentOrder.setOrderDescription("testOrderDescription2");
+//		departmentOrderDAO.updateEntity(departmentOrder);
+//
+//		final DepartmentOrder updatedDepartmentOrder =(DepartmentOrder) departmentOrderDAO
+//				.getEntityById(DepartmentOrder.class, departmentOrder.getIdDepartmentOrder());	
+//		Assert.assertTrue(updatedDepartmentOrder.getOrderDescription().equals("testOrderDescription2"));
+//	}
+//
+//	/**
+//	 * Method testDeleteDepartmentOrder are testing operation delete DepartmentOrder
+//	 * by id. That method use test object, which create before test run and destroy
+//	 * test object after method is finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testDeleteDepartmentOrderById(){
+//
+//		departmentOrderDAO.deleteEntityById(DepartmentOrder.class,departmentOrder.getIdDepartmentOrder());
+//		Assert.assertNull(departmentOrderDAO.getEntityById(DepartmentOrder.class,departmentOrder
+//				.getIdDepartmentOrder()));
+//	}
+//
+//	/**
+//	 * Method testGettingListDepartmentOrderForEmployee are testing create list of 
+//	 * department order for employee which work in this department. That method use
+//	 * test object, which create before test run and destroy test object after method
+//	 * is finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListDepartmentOrderForEmployee(){
+//		
+//		List<DepartmentOrder> listEmployeOrder;
+//		
+//		listEmployeOrder=departmentOrderDAO.getListDepartmentOrderForEmployee(employee.getIdEmployee());
+//		Assert.assertFalse(listEmployeOrder.isEmpty());
+//
+//		departmentOrderDAO.deleteEntity(employee);
+//		listEmployeOrder=departmentOrderDAO.getListDepartmentOrderForEmployee(employee.getIdEmployee());
+//		Assert.assertTrue(listEmployeOrder.isEmpty());
+//	}
+//
+//	/**
+//	 * Method testGettingListDepartmentOrderForEmployee are testing create list of 
+//	 * department order with notcompleted and overdue status for employee and which
+//	 * work in this department. That method use test object, which create before test
+//	 * run and destroy test object after method is finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListNotcompletedOverdueDepartmentOrderForEmployee(){
+//
+//		List<DepartmentOrder> employeNotcompletedOverdueOrderList;
+//		
+//		//overdue order exist.
+//		departmentOrder.setOrderStatus("overdue");
+//		departmentOrderDAO.updateEntity(departmentOrder);
+//		
+//		employeNotcompletedOverdueOrderList=departmentOrderDAO
+//				.getListNotcompletedOverdueDepartmentOrderForEmployee(employee.getIdEmployee());
+//		Assert.assertFalse(employeNotcompletedOverdueOrderList.isEmpty());
+//
+//		//notcomplited order not exist.
+//		departmentOrder.setOrderStatus("done");
+//		departmentOrderDAO.updateEntity(departmentOrder);
+//
+//		employeNotcompletedOverdueOrderList=departmentOrderDAO
+//				.getListNotcompletedOverdueDepartmentOrderForEmployee(employee.getIdEmployee());
+//		Assert.assertTrue(employeNotcompletedOverdueOrderList.isEmpty());
+//	}
+//	
+//	/**
+//	 * Method testGettingListDepartmentOrderForEmployee are testing create list of 
+//	 * department order with done status for employee and which work in this
+//	 * department. That method use test object, which create before test run and 
+//	 * destroy test object after method is finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListDoneDepartmentOrderForEmployee(){
+//
+//		//notcomplited order exist.
+//		departmentOrder.setOrderStatus("done");
+//		departmentOrderDAO.updateEntity(departmentOrder);
+//		
+//		List<DepartmentOrder> employeDoneDepartmentOrderList=departmentOrderDAO
+//				.getListDoneDepartmentOrderForEmployee(employee.getIdEmployee());
+//		Assert.assertFalse(employeDoneDepartmentOrderList.isEmpty());
+//
+//		//notcomplited order not exist.
+//		departmentOrder.setOrderStatus("notcomplited");
+//		departmentOrderDAO.updateEntity(departmentOrder);
+//		
+//		employeDoneDepartmentOrderList=departmentOrderDAO
+//				.getListDoneDepartmentOrderForEmployee(employee.getIdEmployee());
+//		Assert.assertTrue(employeDoneDepartmentOrderList.isEmpty());
+//	}
+//
+//	/**
+//	 * Method testGettingFullDetailCostForDepartmentOrder are testing operation 
+//	 * get full details cost for department order. That method use test object,
+//	 * which create before test run and destroy test object after method is finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingFullDetailCostForDepartmentOrder(){
+//
+//		Double actual=departmentOrderDAO.getFullDetailCostForDepartmentOrder(departmentOrder.getIdDepartmentOrder());
+//		Double expected=detail.getDetailCost();
+//		Assert.assertEquals(expected, actual);
+//	}
+//
+//	/**
+//	 * Method testGettingOrderCostForDepartmentOrder are testing operation 
+//	 * get order cost for department order. That method use test object,
+//	 * which create before test run and destroy test object after method
+//	 * is finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingOrderCostForDepartmentOrder(){
+//
+//		Double actual=departmentOrderDAO.getOrderCostForDepartmentOrder(departmentOrder.getIdDepartmentOrder());
+//		Double expected=departmentOrder.getOrderCost();
+//		Assert.assertEquals(expected, actual);
+//	}
 }

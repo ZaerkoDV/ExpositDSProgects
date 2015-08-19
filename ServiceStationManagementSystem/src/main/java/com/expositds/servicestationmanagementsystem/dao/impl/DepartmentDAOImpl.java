@@ -14,6 +14,7 @@
  */
 package com.expositds.servicestationmanagementsystem.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -180,7 +181,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 	 * 
 	 * @return Total sum(double type) detail cost in department. 
 	 */
-	public Double getTotalDetailCostForNotcompletedOverdueDepartmentOrder(Long idDepartment){
+	public Double getTotalDetailCostForNotcompletedOverdueDepartmentOrder(Long idDepartment){ 
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
 				.createCriteria(Detail.class);	
@@ -252,4 +253,58 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		logger.info("Full income for notcompleted and overdue order equals="+income);
 		return income;
 	}
+	
+	public Double getSumEmployeeWagesForDeportment(Long idDepartment){
+		
+		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
+				.createCriteria(DepartmentOrder.class);	
+		
+		criteria.createAlias("department", "dep");
+		criteria.add(Restrictions.eq("dep.idDepartment", idDepartment));
+		
+		criteria.createAlias("employee", "e");
+		ProjectionList proList = Projections.projectionList();
+		proList.add(Projections.sum("e.wages"));
+		criteria.setProjection(proList);
+		
+		Double sumWage = (Double)criteria.uniqueResult();
+		return sumWage;
+	}
+	
+	public Double getTotalDetailCostForDoneDepartmentOrder(Long idDepartment, Date startData,Date endData){
+		
+		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
+				.createCriteria(Detail.class);	
+		criteria.createAlias("departmentOrder", "ord");
+		criteria.add(Restrictions.eq("ord.department.idDepartment", idDepartment));
+		criteria.add(Restrictions.eq("ord.orderStatus", "done"));
+		criteria.add(Restrictions.ge("ord.startOrder", startData)); 
+		criteria.add(Restrictions.lt("ord.endOrder", endData));
+		
+		ProjectionList proList = Projections.projectionList();
+		proList.add(Projections.sum("detailCost"));
+		criteria.setProjection(proList);
+
+		Double totalDetailCost= (Double)criteria.uniqueResult();
+		return totalDetailCost;
+	}
+	
+	public Double getFullIncomeForDoneDepartmentOrder(Long idDepartment,Date startData,Date endData){
+		
+		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
+				.createCriteria(DepartmentOrder.class);	
+		criteria.createAlias("department", "dep");
+		criteria.add(Restrictions.eq("dep.idDepartment", idDepartment));
+		criteria.add(Restrictions.eq("orderStatus", "done"));
+		criteria.add(Restrictions.ge("startOrder", startData)); 
+		criteria.add(Restrictions.lt("endOrder", endData));
+		
+		ProjectionList proList = Projections.projectionList();
+		proList.add(Projections.sum("orderCost"));
+		criteria.setProjection(proList);
+
+		Double income = (Double)criteria.uniqueResult();
+		return income;
+	}
 }
+

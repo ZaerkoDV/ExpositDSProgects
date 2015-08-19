@@ -75,16 +75,13 @@
 			</beans:props>
 		</beans:property>
 	</beans:bean>
-	
-	<!-- for test -->
-	<!--
-	<beans:bean id="testObjectCreator" class="com.expositds.servicestationmanagementsystem.dao.TestObjectCreator">
-		<beans:property name="testObjectCreator" ref="testObjectCreator"/>
-	</beans:bean>
-	 -->
-	
-	<beans:bean id="abstractEntityСommonDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.AbstractEntityСommonDAOImpl">
+
+	 
+	 <beans:bean id="abstractEntityСommonDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.AbstractEntityСommonDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	<beans:bean id="abstractEntityСommonService" class="com.expositds.servicestationmanagementsystem.service.impl.AbstractEntityCommonServiceImpl">
+		<beans:property name="abstractEntityСommonDAO" ref="abstractEntityСommonDAO"/>
 	</beans:bean>
 	
 	<!--dao for ServiceStation-->
@@ -92,112 +89,96 @@
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for ServiceStation-->
-	<!--
 	<beans:bean id="serviceStationService" class="com.expositds.servicestationmanagementsystem.service.impl.ServiceStationServiceImpl">
 		<beans:property name="serviceStationDAO" ref="serviceStationDAO"></beans:property>
 	</beans:bean>
-	 -->
 	
 	<!--dao for ServiceStationCommentMark-->
-	
 	<beans:bean id="serviceStationCommentMarkDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.ServiceStationCommentMarkDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	 
 	<!--service for ServiceStationCommentMark-->
-	<!--
 	<beans:bean id="serviceStationCommentMarkService" class="com.expositds.servicestationmanagementsystem.service.impl.ServiceStationCommentMarkServiceImpl">
-		<beans:property name="serviceStationCommentMarkDAO" ref="serviceStationCommentMarkDAO"></beans:property>
+		<beans:property name="serviceStationCommentMarkDAO" ref="serviceStationCommentMarkDAO"/>
 	</beans:bean>
-	-->
 	
 	<!--dao for Stead-->
 	<beans:bean id="steadDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.SteadDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for Stead-->
-	<!--
 	<beans:bean id="steadService" class="com.expositds.servicestationmanagementsystem.service.impl.SteadServiceImpl">
-		<beans:property name="steadDAO" ref="steadDAO"></beans:property>
+		<beans:property name="steadDAO" ref="steadDAO"/>
 	</beans:bean>
-	-->
 	
 	<!--dao for Department-->
 	<beans:bean id="departmentDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.DepartmentDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for Department-->
-	<!--
 	<beans:bean id="departmentService" class="com.expositds.servicestationmanagementsystem.service.impl.DepartmentServiceImpl">
 		<beans:property name="departmentDAO" ref="departmentDAO"></beans:property>
 	</beans:bean>
-	-->
 	
-	<!--dao for Department-->
+	<!--dao for Department order-->
 	<beans:bean id="departmentOrderDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.DepartmentOrderDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for Department-->
-	<!--
 	<beans:bean id="departmentOrderService" class="com.expositds.servicestationmanagementsystem.service.impl.DepartmentOrderServiceImpl">
-		<beans:property name="departmentOrderDAO" ref="departmentOrderDAO"></beans:property>
+		<beans:property name="departmentOrderDAO" ref="departmentOrderDAO"/>
 	</beans:bean>
-	-->
 	
 	<!--dao for Detail-->
 	<beans:bean id="detailDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.DetailDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for Detail-->
-	<!--
 	<beans:bean id="detailService" class="com.expositds.servicestationmanagementsystem.service.impl.DetailServiceImpl">
 		<beans:property name="detailDAO" ref="detailDAO"></beans:property>
 	</beans:bean>
-	-->
 	
 	<!--dao for Employee-->
 	<beans:bean id="employeeDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.EmployeeDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for Employee-->
-	<!--
 	<beans:bean id="employeeService" class="com.expositds.servicestationmanagementsystem.service.impl.EmployeeServiceImpl">
-		<beans:property name="employeeDAO" ref="employeeDAO"></beans:property>
+		<beans:property name="employeeDAO" ref="employeeDAO"/>
 	</beans:bean>
-	-->
 	
 	<!--dao for EmployeeSecurityFeature-->
 	<beans:bean id="employeeSecurityFeatureDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.EmployeeSecurityFeatureDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for EmployeeSecurityFeature-->
-	<!--
 	<beans:bean id="employeeSecurityFeatureService" class="com.expositds.servicestationmanagementsystem.service.impl.EmployeeSecurityFeatureServiceImpl">
-		<beans:property name="employeeSecurityFeatureDAO" ref="employeeSecurityFeatureDAO"></beans:property>
+		<beans:property name="employeeSecurityFeatureDAO" ref="employeeSecurityFeatureDAO"/>
 	</beans:bean>
-	-->
 	
 	<!--dao for Client-->
 	<beans:bean id="clientDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.ClientDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	<!--service for Client-->
-	<!--
+	<!--service for Client-->	
 	<beans:bean id="clientService" class="com.expositds.servicestationmanagementsystem.service.impl.ClientServiceImpl">
 		<beans:property name="clientDAO" ref="clientDAO"></beans:property>
 	</beans:bean>
-	-->
-	
+
 	<!--dao for ClientSecurityFeature-->
 	<beans:bean id="clientSecurityFeatureDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.ClientSecurityFeatureDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<!--service for ClientSecurityFeature-->
-	<!--
 	<beans:bean id="clientSecurityFeatureService" class="com.expositds.servicestationmanagementsystem.service.impl.ClientSecurityFeatureServiceImpl">
-		<beans:property name="clientSecurityFeatureDAO" ref="clientSecurityFeatureDAO"></beans:property>
+		<beans:property name="clientSecurityFeatureDAO" ref="clientSecurityFeatureDAO"/>
 	</beans:bean>
-	-->
+
+	<!-- for test -->
+	<beans:bean id="testObjectCreator" class="com.expositds.servicestationmanagementsystem.TestObjectCreator">
+		<beans:property name="abstractEntityСommonDAO" ref="abstractEntityСommonDAO"/>
+	</beans:bean>
+	
 	
 	<context:annotation-config/>
 	

@@ -36,7 +36,7 @@ import com.expositds.servicestationmanagementsystem.service.EmployeeSecurityFeat
  * For logging use framework shell slf4j and framework log4j.Class contain also private, static
  * variable logger, which use to call log message. Class use Spring framework anatation to work
  * with service layer. 
- *  
+ * 
  * @see org.springframework.stereotype
  * @see slf4j framework
  * @see log4j framework
@@ -84,6 +84,7 @@ public class EmployeeSecurityFeatureServiceImpl extends AbstractEntityCommonServ
 	 * @return true if login and password not exist in data base else false.
 	 */
 	public Boolean isUniqueLoginPassword(String employeLogin, String employePassword){
+		logger.info("Service:Check login="+employeLogin+" and password="+employePassword+" on unique value");
 		return 	employeeSecurityFeatureDAO.isUniqueLoginPassword(employeLogin, employePassword);
 	}
 }

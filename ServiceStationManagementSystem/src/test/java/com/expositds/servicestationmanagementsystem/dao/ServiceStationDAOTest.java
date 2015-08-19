@@ -219,4 +219,24 @@ public class ServiceStationDAOTest {//extends AbstractTest  {
 //		expected=0.0;
 //		Assert.assertEquals(expected, actual);
 //	}
+//	
+//	/**
+//	 * Method testGettingAllServiceStation are testing create list of all service
+//	 * station. That method use test object, which create before test run and
+//	 * destroy test object after method is finish. 
+//	 * 
+//	 * @type List
+//	 * @throw DataAccessException 
+//	 * @throw NullPointerException
+//	 * 
+//	 * @return List<ServiceStation> or null.
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingAllServiceStation(){
+//		
+//		List<ServiceStation> listAllServiceStation= serviceStationDAO.getAllServiceStation();
+//		Assert.assertFalse(listAllServiceStation.isEmpty());
+//	}
 }

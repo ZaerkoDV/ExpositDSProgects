@@ -89,7 +89,7 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 		criteria.setMaxResults(20);
 		
 		try{
-			logger.info("DepartmentOrder list for employee loaded successfully.");
+			logger.info("DAO:DepartmentOrder list for employee loaded successfully.");
 			listAllEmployeOrder=(List<DepartmentOrder>)criteria.list();
 			
 			for(DepartmentOrder order : listAllEmployeOrder){
@@ -98,7 +98,7 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 
 		}catch(NullPointerException e){
 			listAllEmployeOrder=null;
-			logger.info("DepartmentOrder list for employee not loaded, because is empty.");
+			logger.info("DAO:DepartmentOrder list for employee not loaded, because is empty.");
 		}
 		return listAllEmployeOrder;
 	}
@@ -134,15 +134,15 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 		List<DepartmentOrder> employeNotcompletedOverdueOrderList;
 		try{
 			employeNotcompletedOverdueOrderList=(List<DepartmentOrder>)criteria.list();
-			logger.info("DepartmentOrder list notcompleted and overdue order for employee loaded successfully.");
+			logger.info("DAO:DepartmentOrder list notcompleted and overdue order for employee loaded successfully.");
 			
 			for(DepartmentOrder order : employeNotcompletedOverdueOrderList){
-				logger.info("DAO:DepartmentOrder list notcompleted and overdue order for employee contain ="+order);
+				logger.info("DAO:DAO:DepartmentOrder list notcompleted and overdue order for employee contain ="+order);
 			}
 			
 		}catch(NullPointerException e){
 			employeNotcompletedOverdueOrderList=null;
-			logger.info("DepartmentOrder list notcompleted and overdue order for employee not loaded because is null.");
+			logger.info("DAO:DepartmentOrder list notcompleted and overdue order for employee not loaded because is null.");
 		}
 		return employeNotcompletedOverdueOrderList;
 	}
@@ -173,7 +173,7 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 	
 		try{
 			employeDoneDepartmentOrderList=(List<DepartmentOrder>)criteria.list();
-			logger.info("DepartmentOrder list done order for employee loaded successfully.");
+			logger.info("DAO:DepartmentOrder list done order for employee loaded successfully.");
 			
 			for(DepartmentOrder order : employeDoneDepartmentOrderList){
 				logger.info("DAO:DepartmentOrder list done order for employee contain ="+order);
@@ -181,7 +181,7 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 
 		}catch(NullPointerException e){
 			employeDoneDepartmentOrderList=null;
-			logger.info("DepartmentOrder list done order for employee not loaded because is null.");
+			logger.info("DAO:DepartmentOrder list done order for employee not loaded because is null.");
 		}
 		return employeDoneDepartmentOrderList;
 	}
@@ -218,7 +218,7 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 		} catch (NullPointerException e) {
 			totalDetailsCost=0.0;
 		}
-		logger.info("Full detail cost for department order id="+idDepartmentOrder+" equals="+totalDetailsCost);
+		logger.info("DAO:Full detail cost for department order id="+idDepartmentOrder+" equals="+totalDetailsCost);
 		return totalDetailsCost;
 	}
 	
@@ -251,7 +251,7 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 		}catch(NullPointerException e){
 			orderCost=0.0;
 		}
-		logger.info("Order cost for department order id="+idDepartmentOrder+" equals="+orderCost);
+		logger.info("DAO:Order cost for department order id="+idDepartmentOrder+" equals="+orderCost);
 		return orderCost;
 	}
 }

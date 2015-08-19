@@ -72,11 +72,11 @@ public class AbstractEntity—ommonDAOImpl extends HibernateDaoSupport implements 
 	public <T> Object getEntityById(Class<T> entityClass,Long idEntity) {
 
 		try{
-			logger.info("Entity"+entityClass.getName()+" loaded successfully id="+idEntity);
+			logger.info("DAO:Entity"+entityClass.getName()+" loaded successfully id="+idEntity);
 			return this.getHibernateTemplate().get(entityClass, idEntity);
 			
 		}catch(final HibernateObjectRetrievalFailureException e){
-			logger.info("Entity not loaded,becouse successfully delete or never exist before"+e);
+			logger.info("DAO:Entity not loaded,becouse successfully delete or never exist before"+e);
 			return null;
 		}
 	}
@@ -94,7 +94,7 @@ public class AbstractEntity—ommonDAOImpl extends HibernateDaoSupport implements 
 	public void saveEntity(Object entity){
 		
 		this.getHibernateTemplate().persist(entity);
-		logger.info("Entity save successfully");
+		logger.info("DAO:Entity save successfully");
 		this.getHibernateTemplate().flush();
 	}
 
@@ -110,7 +110,7 @@ public class AbstractEntity—ommonDAOImpl extends HibernateDaoSupport implements 
 	public void updateEntity(Object entity){
 		
 		this.getHibernateTemplate().update(entity);
-		logger.info("Entity update successfully");
+		logger.info("DAO:Entity update successfully");
 		this.getHibernateTemplate().flush();
 	}
 
@@ -129,7 +129,7 @@ public class AbstractEntity—ommonDAOImpl extends HibernateDaoSupport implements 
 	 */
 	public <T> void deleteEntityById(Class<T> entityClass,Long idEntity){
 		
-		logger.info("Entity"+entityClass.getName()+" delete successfully,id="+idEntity);
+		logger.info("DAO:Entity"+entityClass.getName()+" delete successfully,id="+idEntity);
 		Object entity =this.getHibernateTemplate().get(entityClass, idEntity);
 		
 		this.getHibernateTemplate().delete(entity);
@@ -147,7 +147,7 @@ public class AbstractEntity—ommonDAOImpl extends HibernateDaoSupport implements 
 	 */
 	public void deleteEntity(Object entity){
 		
-		logger.info("Entity delete successfully");
+		logger.info("DAO:Entity delete successfully");
 		this.getHibernateTemplate().delete(entity);
 		this.getHibernateTemplate().flush();
 	}

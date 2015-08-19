@@ -87,7 +87,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		criteria.add(Restrictions.eq("d.idDepartment", idDepartment));
 		
 		try{
-			logger.info("DepartmentOrder list loaded successfully for department with, id="+idDepartment);
+			logger.info("DAO:DepartmentOrder list loaded successfully for department with, id="+idDepartment);
 			listDepartmentOrder=(List<DepartmentOrder>)criteria.list();
 			
 			for(DepartmentOrder order : listDepartmentOrder){
@@ -96,7 +96,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 
 		}catch(NullPointerException e){
 			listDepartmentOrder = null;
-			logger.info("DepartmentOrder list not loaded because list is empty");
+			logger.info("DAO:DepartmentOrder list not loaded because list is empty");
 		}
 		return listDepartmentOrder;
 	}
@@ -122,7 +122,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		criteria.setProjection(Projections.property("client"));
 		
 		try{
-			logger.info("Client list loaded successfully for department id="+idDepartment);
+			logger.info("DAO:Client list loaded successfully for department id="+idDepartment);
 			listDepartmentClient=(List<Client>)criteria.list();
 			
 			for(Client client : listDepartmentClient){
@@ -131,7 +131,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 
 		}catch(NullPointerException e){
 			listDepartmentClient = null;
-			logger.info("Client list not loaded because list is empty");
+			logger.info("DAO:Client list not loaded because list is empty");
 		}
 		return listDepartmentClient;
 	}
@@ -157,7 +157,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		criteria.setProjection(Projections.property("employee"));
 
 		try{
-			logger.info("Employee list loaded successfully for department id="+idDepartment);
+			logger.info("DAO:Employee list loaded successfully for department id="+idDepartment);
 			listDepartmentEmployee=(List<Employee>)criteria.list();
 			
 			for(Employee employee : listDepartmentEmployee){
@@ -166,7 +166,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 			
 		}catch(NullPointerException e){
 			listDepartmentEmployee = null;
-			logger.info("Employee list not loaded because list is empty");
+			logger.info("DAO:Employee list not loaded because list is empty");
 		}
 		return listDepartmentEmployee;
 	}
@@ -200,7 +200,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		Double totalDetailCostForDepartment;
 		try{
 			totalDetailCostForDepartment = (Double)criteria.uniqueResult();
-			logger.info("Total detail cost for not completed and overdue department order load.");
+			logger.info("DAO:Total detail cost for not completed and overdue department order load.");
 			
 			if(totalDetailCostForDepartment.equals(null)){
 				totalDetailCostForDepartment =0.0;
@@ -213,7 +213,6 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		return totalDetailCostForDepartment;
 	}
 
-	
 	/**
 	 * Method return full income(work cost and detail cost) which have department.  
 	 * 
@@ -241,7 +240,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 
 		Double income;
 		try{
-			logger.info("Full income for notcompleted and overdue order loaded.");
+			logger.info("DAO:Full income for notcompleted and overdue order loaded.");
 			
 			income = (Double)criteria.uniqueResult();
 			if(income.equals(null)){
@@ -250,10 +249,20 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		}catch(NullPointerException e){
 			income=0.0;	
 		}
-		logger.info("Full income for notcompleted and overdue order equals="+income);
+		logger.info("DAO:Full income for notcompleted and overdue order equals="+income);
 		return income;
 	}
 	
+	/**
+	 * Method return sum wages for all employes which work in department.  
+	 * 
+	 * @type Long
+	 * @type Double
+	 * @param idDepartment
+	 * @throw NullPointerException
+	 * 
+	 * @return sem wages or null if department have not employes 
+	 */
 	public Double getSumEmployeeWagesForDeportment(Long idDepartment){
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -268,9 +277,20 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		criteria.setProjection(proList);
 		
 		Double sumWage = (Double)criteria.uniqueResult();
+		logger.info("DAO:Sum employees wages which work in department equals="+sumWage);
 		return sumWage;
 	}
 	
+	/**
+	 * Method return total cost detail which use in department orders and 
+	 * have status done.  
+	 * 
+	 * @type Long
+	 * @param idDepartment
+	 * @throw NullPointerException
+	 * 
+	 * @return Total sum(double type) detail cost in department. 
+	 */
 	public Double getTotalDetailCostForDoneDepartmentOrder(Long idDepartment, Date startData,Date endData){
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -286,9 +306,21 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		criteria.setProjection(proList);
 
 		Double totalDetailCost= (Double)criteria.uniqueResult();
+		logger.info("DAO:Sum details cost for done order in department on date equals="+totalDetailCost);
+		
 		return totalDetailCost;
 	}
 	
+	/**
+	 * Method return full income(work cost and detail cost) which have department for
+	 * deprtment order which have status done.   
+	 * 
+	 * @type Long
+	 * @param idDepartment
+	 * @throw NullPointerException
+	 * 
+	 * @return full income for department.
+	 */
 	public Double getFullIncomeForDoneDepartmentOrder(Long idDepartment,Date startData,Date endData){
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -304,6 +336,8 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		criteria.setProjection(proList);
 
 		Double income = (Double)criteria.uniqueResult();
+		logger.info("DAO:Total income for department on date equals="+income);
+		
 		return income;
 	}
 }

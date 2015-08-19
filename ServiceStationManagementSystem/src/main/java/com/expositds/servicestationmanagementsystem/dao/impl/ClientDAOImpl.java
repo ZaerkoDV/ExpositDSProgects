@@ -92,14 +92,14 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 		List<Client> listClient;
 		try {
 			listClient= (List<Client>)criteria.list();
-			logger.info("Client list loaded successfully");
+			logger.info("DAO:Client list loaded successfully");
 			
 			for(Client client : listClient ){
 				logger.info("DAO:Client list by last name"+clientLastName+" contain ="+client);
 			}
 			
 		} catch (NullPointerException e) {
-			logger.info("Client list not loaded.");
+			logger.info("DAO:Client list not loaded.");
 			listClient=null;
 		}
 		return listClient;
@@ -132,14 +132,14 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 		 try {
 			 client = (Client)criteria.uniqueResult();
 			 idClient= client.getIdClient();	
-			 logger.info("Client loaded successfully, idClient="+idClient);
+			 logger.info("DAO:Client loaded successfully, idClient="+idClient);
 
 		 }catch (final NullPointerException e) {
-			 logger.info("Client not loaded successfully");
+			 logger.info("DAO:Client not loaded successfully");
 			 idClient = null;
 
 		 }catch(NonUniqueResultException e){
-			 logger.info("Client with login and password not unique.");
+			 logger.info("DAO:Client with login and password not unique.");
 			 idClient = null;
 		 }
 		 finally{
@@ -170,14 +170,14 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 		Client client = null;
 		try {
 			client=(Client)criteria.uniqueResult();
-			logger.info("Client loaded successfully, idClient="+client.getIdClient());
+			logger.info("DAO:Client loaded successfully, idClient="+client.getIdClient());
 
 		}catch (NullPointerException e){
 			client= null;
-			logger.info("Client not loaded successfully.");
+			logger.info("DAO:Client not loaded successfully.");
 
 		}catch(NonUniqueResultException e){
-			 logger.info("Client with email not unique.");
+			 logger.info("DAO:Client with email not unique.");
 		}
 		return client;
 	}
@@ -208,15 +208,15 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 		
 		try {
 			client = (Client)criteria.uniqueResult();
-			logger.info("Client sign in is successfully id="+client.getIdClient());
+			logger.info("DAO:Client sign in is successfully id="+client.getIdClient());
 			signIn=true;		
 
 		}catch (NullPointerException e) {
-			logger.info("Client sign is failed"+e);
+			logger.info("DAO:Client sign is failed"+e);
 			signIn=false;
 
 		}catch(NonUniqueResultException e){
-			logger.info("Client sign in is failed because nonunique result "+e);
+			logger.info("DAO:Client sign in is failed because nonunique result "+e);
 			signIn=false;
 
 		}finally{
@@ -240,11 +240,11 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 		int clientListSize;	
 		try{
 			clientListSize=(int)criteria.list().size();
-			logger.info("Client count is equals="+clientListSize);
+			logger.info("DAO:Client count is equals="+clientListSize);
 			
 		}catch(NullPointerException e){
 			clientListSize= 0;
-			logger.info("Client count is equals="+clientListSize);
+			logger.info("DAO:Client count is equals="+clientListSize);
 		}
 		return clientListSize;
 	}
@@ -276,7 +276,7 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 		
 		try{
 			clientOrderList=(List<DepartmentOrder>)criteria.list();
-			logger.info("List order for client loaded successfully");
+			logger.info("DAO:List order for client loaded successfully");
 			
 			for(DepartmentOrder order : clientOrderList){
 				logger.info("DAO:Client order list contain ="+order);
@@ -284,7 +284,7 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 			
 		}catch(NullPointerException e){
 			clientOrderList=null;
-			logger.info("List order for client is empty");
+			logger.info("DAO:List order for client is empty");
 		}
 		return clientOrderList;
 	}
@@ -321,7 +321,7 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 		
 		try{
 			clientNotcompletedOverdueOrderList=(List<DepartmentOrder>)criteria.list();
-			logger.info("List not completed and overdue order loaded successfully");
+			logger.info("DAO:List not completed and overdue order loaded successfully");
 			
 			for(DepartmentOrder order : clientNotcompletedOverdueOrderList){
 				logger.info("DAO:Client not completed and overdue order list contain ="+order.toString());
@@ -329,7 +329,7 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 
 		}catch(NullPointerException e){
 			clientNotcompletedOverdueOrderList=null;
-			logger.info("List not completed and overdue order loaded successfully but empty");
+			logger.info("DAO:List not completed and overdue order loaded successfully but empty");
 		}
 		return clientNotcompletedOverdueOrderList;
 	}
@@ -362,7 +362,7 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 		try{
 			clientDoneOrderList=(List<DepartmentOrder>)criteria.list();
 			
-			logger.info("List done order loaded successfully");
+			logger.info("DAO:List done order loaded successfully");
 			
 			for(DepartmentOrder order : clientDoneOrderList){
 				logger.info("DAO:Client done order list contain ="+order.toString());
@@ -370,7 +370,7 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 
 		}catch(NullPointerException e){
 			clientDoneOrderList=null;
-			logger.info("List done order loaded successfully");
+			logger.info("DAO:List done order loaded successfully");
 		}
 		return clientDoneOrderList;
 	}

@@ -1,5 +1,16 @@
 /**
+ * @package com.expositds.servicestationmanagementsystem.service
  * 
+ * Package com.expositds.servicestationmanagementsystem.service contain set of interfaces
+ * which description service layer in ServiceStationManagementSystem project. This project
+ * is based on MVC architecture.This inerface perform class which is part of service layer in
+ * MVC architecture.This layer defines the boundary of the application and a set of permitted
+ * operations. It encapsulates the business logic of the application and controls the answers
+ * in the implementation of operations. All classes which contain postfix “Service” provide to
+ * work Service  for Service Station Management System application.
+ * 
+ * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
+ * to use information or have any questions. 
  */
 package com.expositds.servicestationmanagementsystem.service;
 
@@ -11,8 +22,14 @@ import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
 import com.expositds.servicestationmanagementsystem.model.Employee;
 
 /**
- * @author Zaerko_DV
- *
+ * <p>The interface DepartmentService contain methods ads which realize in class DepartmentServiceImpl.
+ * Class DepartmentServiceImpl use Service pattern which describes service layer of application. This
+ * class contain general operation to all classes.This interface contain ads methods which perform
+ * busness logic all application. Interface extend AbstractEntityCommonService interface which contain
+ * ads base operation of any entity.
+ * 
+ * @version 1.0 19.08.2015
+ * @author Zaerko Denis
  */
 public interface DepartmentService extends  AbstractEntityCommonService{
 

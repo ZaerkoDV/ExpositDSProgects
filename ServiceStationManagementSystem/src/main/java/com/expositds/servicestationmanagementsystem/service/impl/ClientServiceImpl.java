@@ -33,9 +33,9 @@ import com.expositds.servicestationmanagementsystem.service.ClientService;
  * ServiceStationManagemrntSystem. Service layer perform link between, presentation layer and DAO
  * layer.This layer is the main role becouse layer contents(set of methods in classes) affect on
  * functionality of all application.
- * This class contain methods which describes specific operation for ClientService.This class perform
- * service layer to ClientServiceImpl.Class extend base class AbstractEntityCommonServiceImpl and
- * implement ClientService interface which perform all methods of this class.
+ * This class contain methods which describes specific operation for Client.This class perform
+ * service layer to Client.Class extend base class AbstractEntityCommonServiceImpl and implement
+ * ClientService interface which perform all methods of this class.
  * For logging use framework shell slf4j and framework log4j.Class contain also private, static
  * variable logger, which use to call log message. Class use Spring framework anatation to work
  * with service layer. 
@@ -85,6 +85,7 @@ public class ClientServiceImpl extends AbstractEntityCommonServiceImpl implement
 	 * @return List<Client> all client with last name as parametr else null.
 	 */
 	public List<Client> getListClientByLastName(String clientLastName){
+		logger.info("Service: create list client by last name"+clientLastName);
 		return clientDAO.getListClientByLastName(clientLastName);
 	}
 
@@ -100,6 +101,7 @@ public class ClientServiceImpl extends AbstractEntityCommonServiceImpl implement
 	 * @return id client(Long)
 	 */
 	public Long getIdClientByLoginPassword(String clientLogin, String clientPassword){
+		logger.info("Service: Get id client by login"+clientLogin+" and password"+clientPassword);
 		return clientDAO.getIdClientByLoginPassword(clientLogin, clientPassword);
 	}
 
@@ -114,6 +116,7 @@ public class ClientServiceImpl extends AbstractEntityCommonServiceImpl implement
 	 * @return Client or null.
 	 */
 	public Client getClientByEmail(String clientEmail){
+		logger.info("Service: Get client by email"+clientEmail);
 		return clientDAO.getClientByEmail(clientEmail);
 	}
 
@@ -130,6 +133,7 @@ public class ClientServiceImpl extends AbstractEntityCommonServiceImpl implement
 	 * @return Boolean
 	 */
 	public Boolean signInClientByLoginPassword(String clientLogin, String clientPassword){
+		logger.info("Service: Client sign in by login="+clientLogin+" and password="+clientPassword);
 		return clientDAO.signInClientByLoginPassword(clientLogin, clientPassword);
 	}
 
@@ -141,6 +145,7 @@ public class ClientServiceImpl extends AbstractEntityCommonServiceImpl implement
 	 * @return amount of client(int) 
 	 */
 	public int getCountClient(){
+		logger.info("Service: Count client in data base.");
 		return clientDAO.getCountClient();	
 	}
 
@@ -156,6 +161,7 @@ public class ClientServiceImpl extends AbstractEntityCommonServiceImpl implement
 	 * @return List<DepartmentOrder> or null;
 	 */
 	public List<DepartmentOrder> getListOrderAllServiceStationForClient(Long idClient){
+		logger.info("Service: Create list client order in all service station by client id="+idClient);
 		return clientDAO.getListDoneOrderForClient(idClient);
 	}
 	
@@ -171,6 +177,7 @@ public class ClientServiceImpl extends AbstractEntityCommonServiceImpl implement
 	 * @return List<DepartmentOrder> or null;
 	 */
 	public List<DepartmentOrder> getListNotcompletedOverdueOrderForClient(Long idClient){
+		logger.info("Service: Create list client order with status not completed or overdue by client id="+idClient);
 		return clientDAO.getListNotcompletedOverdueOrderForClient(idClient);
 	}
 	
@@ -186,6 +193,7 @@ public class ClientServiceImpl extends AbstractEntityCommonServiceImpl implement
 	 * @return List<DepartmentOrder> or null;
 	 */
 	public List<DepartmentOrder> getListDoneOrderForClient(Long idClient){
+		logger.info("Service: Create list client order with status done by client id="+idClient);
 		return clientDAO.getListDoneOrderForClient(idClient);
 	}
 }

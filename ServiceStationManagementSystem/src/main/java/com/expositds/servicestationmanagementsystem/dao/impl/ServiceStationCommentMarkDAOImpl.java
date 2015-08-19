@@ -95,7 +95,7 @@ public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImp
 		
 		try{
 			listServiceStationCommentMark=(List<ServiceStationCommentMark>)criteria.list();
-			logger.info("List comment mark with view status "+viewStatus+"for department id"+idServiceStation);
+			logger.info("DAO:List comment mark with view status "+viewStatus+"for department id"+idServiceStation);
 			
 			for(ServiceStationCommentMark serviceStationCommentMark: listServiceStationCommentMark){
 				logger.info("DAO:Comment and mark list for ServiceStation contain ="+serviceStationCommentMark);
@@ -103,7 +103,7 @@ public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImp
 			
 		}catch(NullPointerException e){
 			listServiceStationCommentMark=null;
-			logger.info("List comment mark with view status "+viewStatus+"for department id="+idServiceStation+" is empty.");
+			logger.info("DAO:List comment mark with view status "+viewStatus+"for department id="+idServiceStation+" is empty.");
 		}
 		return listServiceStationCommentMark;
 	}
@@ -136,7 +136,7 @@ public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImp
 		List<ServiceStationCommentMark> listCommentMarkByClient;
 		try{
 			listCommentMarkByClient=(List<ServiceStationCommentMark>)criteria.list();
-			logger.info("Client id"+idClient+" comment and mark list load successfully");
+			logger.info("DAO:Client id"+idClient+" comment and mark list load successfully");
 			
 			for(ServiceStationCommentMark serviceStationCommentMark: listCommentMarkByClient){
 				logger.info("DAO:Client comment and mark list contain ="+serviceStationCommentMark);
@@ -144,7 +144,7 @@ public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImp
 
 		}catch(NullPointerException e){
 			listCommentMarkByClient=null;
-			logger.info("Client id"+idClient+" comment and mark list load successfully but list is empty.");
+			logger.info("DAO:Client id"+idClient+" comment and mark list load successfully but list is empty.");
 		}
 		return listCommentMarkByClient;
 	}
@@ -178,7 +178,7 @@ public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImp
 		
 		try{
 			listServiceStationCommentMarkSortDegressiveMark=(List<ServiceStationCommentMark>)criteria.list();
-			logger.info("List comment and mark which sort by degessive mark load successfully");
+			logger.info("DAO:List comment and mark which sort by degessive mark load successfully");
 			
 			for(ServiceStationCommentMark serviceStationCommentMark: listServiceStationCommentMarkSortDegressiveMark){
 				logger.info("DAO:Client comment and mark sorted list contain ="+serviceStationCommentMark);
@@ -186,7 +186,7 @@ public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImp
 
 		}catch(NullPointerException e){
 			listServiceStationCommentMarkSortDegressiveMark=null;
-			logger.info("List comment and mark which sort by degessive mark load successfully, but is empty.");
+			logger.info("DAO:List comment and mark which sort by degessive mark load successfully, but is empty.");
 		}
 		return listServiceStationCommentMarkSortDegressiveMark;
 	}		

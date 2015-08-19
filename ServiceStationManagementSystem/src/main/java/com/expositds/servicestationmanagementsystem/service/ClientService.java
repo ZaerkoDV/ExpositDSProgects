@@ -20,7 +20,7 @@ import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
 
 /**
- * <p>The interface ClientService contain methods ads which realize in class  ClientServiceImpl.
+ * <p>The interface ClientService contain methods ads which realize in class ClientServiceImpl.
  * Class ClientServiceImpl use Service pattern which describes service layer of application.
  * This class contain general operation to all classes.This interface contain ads methods which
  * perform busness logic all application. Interface extend AbstractEntityCommonService interface

@@ -192,7 +192,26 @@ public class ServiceStationServiceTest {//extends AbstractTest {
 //		Assert.assertEquals(expected, actual);
 //	}
 //	
-//	//other methods
-//	
-//	
+//	/**
+//	 * Method testGettingAllServiceStation are testing create list of all service
+//	 * station. That method use test object, which create before test run and
+//	 * destroy test object after method is finish. 
+//	 * 
+//	 * @type List
+//	 * @return List<ServiceStation> or null.
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingAllServiceStation(){
+//
+//		List<ServiceStation> listAllServiceStation=serviceStationService.getAllServiceStation();
+//		Assert.assertFalse(listAllServiceStation.isEmpty());
+//	}
+	
+	
+	
+	//other test methods
+	
+
 }

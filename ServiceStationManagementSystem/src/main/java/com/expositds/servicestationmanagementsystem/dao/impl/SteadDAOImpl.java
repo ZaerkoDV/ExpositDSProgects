@@ -80,13 +80,13 @@ public class SteadDAOImpl extends AbstractEntity—ommonDAOImpl implements SteadDA
 		try{
 			steadList=(List<Stead>)criteria.list();
 			
-			logger.info("List of stead loaded successfully");
+			logger.info("DAO:List of stead loaded successfully");
 			for(Stead stead : steadList){
 				logger.info("DAO:List steads contain="+stead);
 			}
 
 		}catch(NullPointerException e){
-			logger.info("Stead list loaded successfully but is empty.");
+			logger.info("DAO:Stead list loaded successfully but is empty.");
 			steadList=null;		
 		}
 		return steadList;
@@ -116,14 +116,14 @@ public class SteadDAOImpl extends AbstractEntity—ommonDAOImpl implements SteadDA
 		try{
 			listDepartmetUseCurrentStead=(List<Department>)criteria.list();
 			
-			logger.info("List of departments which use current stead="+idStead+" loaded successfully");
+			logger.info("DAO:List of departments which use current stead="+idStead+" loaded successfully");
 			for(Department department : listDepartmetUseCurrentStead){
 				logger.info("DAO:List departments contain="+department);
 			}
 
 		}catch(NullPointerException e){
 			listDepartmetUseCurrentStead = null;
-			logger.info("List of departments which use current stead="+idStead+" loaded successfully but is empty.");
+			logger.info("DAO:List of departments which use current stead="+idStead+" loaded successfully but is empty.");
 		}
 		return listDepartmetUseCurrentStead;
 	}

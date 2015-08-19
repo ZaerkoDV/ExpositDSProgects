@@ -33,7 +33,7 @@ import com.expositds.servicestationmanagementsystem.service.EmployeeService;
  * ServiceStationManagemrntSystem. Service layer perform link between, presentation layer and DAO
  * layer.This layer is the main role becouse layer contents(set of methods in classes) affect on
  * functionality of all application.
- * This class contain methods which describes specific operation for EmployeeService.This class perform
+ * This class contain methods which describes specific operation for Employee.This class perform
  * service layer to EmployeeServiceImpl.Class extend base class AbstractEntityCommonServiceImpl and
  * implement EmployeeService interface which perform all methods of this class.
  * For logging use framework shell slf4j and framework log4j.Class contain also private, static
@@ -85,6 +85,7 @@ public class EmployeeServiceImpl extends AbstractEntityCommonServiceImpl impleme
 	 * @return List<Employee> all employee with last name as parametr.
 	 */
 	public List<Employee> getListEmployeByLastName(String employeLastName){
+		logger.info("Service:Create list employee by last name="+employeLastName);
 		return employeeDAO.getListEmployeByLastName(employeLastName);
 	}
 	
@@ -100,6 +101,7 @@ public class EmployeeServiceImpl extends AbstractEntityCommonServiceImpl impleme
 	 * @return id(Long) employee by login and password else null.
 	 */
 	public Long getIdEmployeByLoginPassword(String employeLogin, String employePassword){
+		logger.info("Service:get id employee by login="+employeLogin+" and password="+employePassword);
 		return employeeDAO.getIdEmployeByLoginPassword(employeLogin, employePassword);
 	}
 	
@@ -116,6 +118,7 @@ public class EmployeeServiceImpl extends AbstractEntityCommonServiceImpl impleme
 	 * @return Boolean
 	 */
 	public Boolean signInEmployeByLoginPassword(String employeLogin, String employePassword){
+		logger.info("Service: Employee sign in by login="+employeLogin+" and password="+employePassword);
 		return employeeDAO.signInEmployeByLoginPassword(employeLogin, employePassword);
 	}
 	
@@ -129,6 +132,7 @@ public class EmployeeServiceImpl extends AbstractEntityCommonServiceImpl impleme
 	 * @return List<Employee> all employee which have function as mechanic.
 	 */
 	public List<Employee> getListMechanic(){
+		logger.info("Service:Create list employee with function mechanic");
 		return employeeDAO.getListMechanic();
 	}
 
@@ -144,6 +148,7 @@ public class EmployeeServiceImpl extends AbstractEntityCommonServiceImpl impleme
 	 * @return List<Department> all department in which employee work.
 	 */
 	public List<Department> getListDepartmentForEmployee(Long idEmployee){
+		logger.info("Service:Get list departments in which employee work by employee id="+idEmployee);
 		return employeeDAO.getListDepartmentForEmployee(idEmployee);
 	}
 }

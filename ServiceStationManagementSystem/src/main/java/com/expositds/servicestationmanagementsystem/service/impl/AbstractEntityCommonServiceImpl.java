@@ -86,6 +86,7 @@ public class AbstractEntityCommonServiceImpl implements AbstractEntityCommonServ
 	 * @return Object or null.
 	 */
 	public <T> Object getEntityById(Class<T> entityClass,Long idEntity) {
+		logger.info("Service:Entity load by entity id"+idEntity);
 		return abstractEntity—ommonDAO.getEntityById(entityClass, idEntity);
 	}
 	
@@ -99,6 +100,7 @@ public class AbstractEntityCommonServiceImpl implements AbstractEntityCommonServ
 	 * @param entity
 	 */
 	public void saveEntity(Object entity){
+		logger.info("Service:Entity save successful.");
 		abstractEntity—ommonDAO.saveEntity(entity);
 	}
 	
@@ -112,6 +114,7 @@ public class AbstractEntityCommonServiceImpl implements AbstractEntityCommonServ
 	 * @param entity
 	 */
 	public void updateEntity(Object entity){
+		logger.info("Service:Entity update atributte successful.");
 		abstractEntity—ommonDAO.updateEntity(entity);
 	}
 	
@@ -128,6 +131,7 @@ public class AbstractEntityCommonServiceImpl implements AbstractEntityCommonServ
 	 * @param entityClass
 	 */
 	public <T> void deleteEntityById(Class<T> entityClass,Long idEntity){
+		logger.info("Service:Entity delite by id="+idEntity+" successful.");
 		abstractEntity—ommonDAO.deleteEntityById(entityClass, idEntity);
 	}
 	
@@ -141,6 +145,7 @@ public class AbstractEntityCommonServiceImpl implements AbstractEntityCommonServ
 	 * @param entity
 	 */
 	public void deleteEntity(Object entity){
+		logger.info("Service:Entity delete successful.");
 		abstractEntity—ommonDAO.deleteEntity(entity);
 	}
 }

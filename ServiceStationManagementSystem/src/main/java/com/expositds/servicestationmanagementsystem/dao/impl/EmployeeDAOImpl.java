@@ -91,7 +91,7 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 		List<Employee> listEmployee;
 		try {
 			listEmployee=(List<Employee>)criteria.list();
-			logger.info("Employee list loaded successfully");
+			logger.info("DAO:Employee list loaded successfully");
 			
 			for(Employee employee : listEmployee){
 				logger.info("DAO:Employee list by last name"+employeLastName+" contain ="+employee);
@@ -99,7 +99,7 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 			
 		} catch (NullPointerException e) {
 			listEmployee=null;
-			logger.info("Employee list loaded successfully but is empty.");
+			logger.info("DAO:Employee list loaded successfully but is empty.");
 		}
 		return listEmployee;
 	}
@@ -131,14 +131,14 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 		try {
 			employee = (Employee)criteria.uniqueResult();
 			idEmployee= employee.getIdEmployee();
-			 logger.info("Employee loaded successfully, idEmplyee="+idEmployee);
+			 logger.info("DAO:Employee loaded successfully, idEmplyee="+idEmployee);
 
 		}catch (final NullPointerException e) {
 			idEmployee = null;
-			logger.info("Employee not load successfully.");
+			logger.info("DAO:Employee not load successfully.");
 			
 		}catch(NonUniqueResultException e){
-			logger.info("Employee with login and password not unique.");
+			logger.info("DAO:Employee with login and password not unique.");
 		}
 		finally{
 			return idEmployee;
@@ -174,18 +174,18 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 			
 			if(!employee.equals(null)){
 				signIn=true;
-				logger.info("Employee sign in successfully, idEmplyee="+employee.getIdEmployee());
+				logger.info("DAO:Employee sign in successfully, idEmplyee="+employee.getIdEmployee());
 				
 			}else{
-				logger.info("Employee sign in is failed.");
+				logger.info("DAO:Employee sign in is failed.");
 				signIn=false;
 			}
 			
 		}catch (NullPointerException e) {
-			logger.info("Client sign in is failed"+e);
+			logger.info("DAO:Client sign in is failed"+e);
 			
 		}catch(NonUniqueResultException e){
-			logger.info("Client sign in is failed because nonunique result "+e);
+			logger.info("DAO:Client sign in is failed because nonunique result "+e);
 			
 		}finally{
 			return signIn;
@@ -215,14 +215,14 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 		
 		try {
 			listMechanic=(List<Employee>)criteria.list();
-			logger.info("Mechanic list loaded successfully");
+			logger.info("DAO:Mechanic list loaded successfully");
 			
 			for(Employee employee : listMechanic){
-				logger.info("DAO:Mechanic list contain ="+employee);
+				logger.info("DAO:DAO:Mechanic list contain ="+employee);
 			}
 		}catch (NullPointerException e) {
 			listMechanic=null;
-			logger.info("Mechanic list not loaded successfully because is empty.");
+			logger.info("DAO:Mechanic list not loaded successfully because is empty.");
 			
 		}finally{
 			return listMechanic;
@@ -257,7 +257,7 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 		try {
 			listDepartment=(List<Department>)criteria.list();
 			
-			logger.info("Department list for employee with id="+idEmployee+"loaded successfully");
+			logger.info("DAO:Department list for employee with id="+idEmployee+"loaded successfully");
 			
 			for(Department department : listDepartment){
 				logger.info("DAO:Department list for employee contain ="+department);

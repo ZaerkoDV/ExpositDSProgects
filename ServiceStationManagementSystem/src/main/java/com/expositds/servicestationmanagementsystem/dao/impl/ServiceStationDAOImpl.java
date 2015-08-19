@@ -26,6 +26,8 @@ import org.springframework.stereotype.Repository;
 
 import com.expositds.servicestationmanagementsystem.dao.ServiceStationDAO;
 import com.expositds.servicestationmanagementsystem.model.Department;
+import com.expositds.servicestationmanagementsystem.model.Detail;
+import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 
 /**
@@ -91,7 +93,7 @@ public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implement
 		List<Stead> listStead;
 		try{
 			listStead=(List<Stead>)criteria.list();
-			logger.info("List stead which use service station "+idServiceStation+" loaded successfully");
+			logger.info("DAO:List stead which use service station "+idServiceStation+" loaded successfully");
 			
 			for(Stead stead : listStead){
 				logger.info("DAO:List service station steads contain ="+stead);
@@ -99,7 +101,7 @@ public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implement
 			
 		}catch(NullPointerException e){
 			listStead= null;
-			logger.info("List stead which use service station "+idServiceStation+" loaded successfully but is empty.");
+			logger.info("DAO:List stead which use service station "+idServiceStation+" loaded successfully but is empty.");
 		}
 		return listStead;
 	}
@@ -140,7 +142,43 @@ public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implement
 		}catch(NullPointerException e){
 			totalServiceStationArea= 0.0;
 		}
-		logger.info("Total area for service station "+idServiceStation+" is equals="+totalServiceStationArea);
+		logger.info("DAO:Total area for service station "+idServiceStation+" is equals="+totalServiceStationArea);
 		return totalServiceStationArea;
 	}
+	
+	/**
+	 * Return all service sattion which exist in data base else return null.
+	 * 
+	 * @type List
+	 * @throw DataAccessException 
+	 * @throw NullPointerException
+	 * 
+	 * @return List<ServiceStation> or null.
+	 */
+	@SuppressWarnings({ "unchecked", "finally" })
+	public List<ServiceStation> getAllServiceStation(){
+		
+		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
+				.createCriteria(ServiceStation.class);
+		criteria.setMaxResults(20);
+		criteria.setFirstResult(0);
+		
+		List<ServiceStation> listServiceStation = null;
+		try{
+			listServiceStation =(List<ServiceStation>)criteria.list();
+			logger.info("ServiceStation list loaded successfully");
+			
+			for(ServiceStation serviceStation : listServiceStation){
+				logger.info("DAO:ServiceStation list contain ="+serviceStation.getIdServiceStation());
+			}
+
+		}catch(NullPointerException e){
+			listServiceStation=null;
+			logger.info("ServiceStation list loaded successfully,but is empty.");
+			
+		}finally{
+			return listServiceStation;
+		}
+	}
+	
 }

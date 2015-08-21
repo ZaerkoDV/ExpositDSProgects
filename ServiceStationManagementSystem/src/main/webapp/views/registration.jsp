@@ -38,49 +38,39 @@
         <div class="col-md-4"></div>
         <div class="col-md-4">
           <h3>Registration</h3>
-          <form:form class="form-horizontal" method="post" commandName="client">
-            <div class="form-group">
-              <div class="col-sm-10">
-                <form:input type="text" class="form-control" id="firstname" placeholder="First name" path="clientFirstName" />
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-10">
-                <form:input type="text" class="form-control" id="lastname" placeholder="Last name" path="clientLastName" />
-              </div>
-              </div>
-              <div class="form-group">
-              <div class="col-sm-10">
-                <form:input type="email" class="form-control" id="email" placeholder="Email" path="clientEmail" />
-              </div>
-              </div>
-              <div class="form-group">
-              <div class="col-sm-10">
-                <form:input type="text" class="form-control" id="login" placeholder="Login" path="clientLogin" />
-              </div>
-              </div>
-              <div class="form-group">
-              <div class="col-sm-10">
-                <form:input type="password" class="form-control" id="password" placeholder="Password" path="clientPassword" />
-              </div>
-              </div>
-              <div class="form-group">
-              <div class="col-sm-10">
-                <input type="password" class="form-control" id="repassword" placeholder="Re-Password">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-10">
-                <form:input type="text" class="form-control" id="phone" placeholder="Phone number" path="clientTelephone" />
-              </div>
-            </div>
-            <div class="form-group">
+        <form:form class="form-horizontal" method="post" commandName="client" action="${pageContext.request.contextPath}/registration"> 
+			<div class="form-group">
+			<div class="col-sm-10">
+			<form:input type="text" class="form-control" id="firstname" placeholder="First name" path="clientFirstName" />
+			</div>
+			</div>
+			<div class="form-group">
+			<div class="col-sm-10">
+			<form:input type="text" class="form-control" id="lastname" placeholder="Middle name" path="clientMiddleName" />
+			</div>
+			</div>
+			<div class="form-group">
+			<div class="col-sm-10">
+			<form:input type="text" class="form-control" id="lastname" placeholder="Last name" path="clientLastName" />
+			</div>
+			</div>
+			<div class="form-group">
+			<div class="col-sm-10">
+			<form:input type="email" class="form-control" id="email" placeholder="Email" path="clientEmail" />
+			</div>
+			</div>
+			<div class="form-group">
+			<div class="col-sm-10">
+			<form:input type="text" class="form-control" id="phone" placeholder="Phone number" path="clientTelephone" />
+			</div>
+			</div>
+			<div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
                 <a href="#"><button type="button" class="btn btn-default">Back</button></a>
                 <button type="submit" class="btn btn-default">Sign up</button>
               </div>
             </div>
-        </form:form>
+			</form:form>  
         </div>
         <div class="col-md-4"></div>
       </div>

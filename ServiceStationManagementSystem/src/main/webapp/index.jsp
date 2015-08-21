@@ -59,26 +59,26 @@
       </div>
       <!-- /sec:authorize -->
     </div>
-   <!-- c:if test="${!empty listServiceStation}" -->  
+   <c:if test="${!empty listServiceStation}">  
     <table class="table table-hover" style="margin-top: 50px;">
   	<tr>
-  		<th>Logotype</th>
+  		<th>Logo</th>
   		<th>Name</th>
   		<th>Location</th>
   		<th>Mark</th>
   		<th>Go</th>
   	</tr>
-  <!--  c:forEach items="${listServiceStation}" var="ServiceStation" --> 
+  <c:forEach var="ServiceStation" items="${listServiceStation}"> 
   	<tr style="font-size: 18px;">
   		<td><img src="resources/img/logo.png" alt="Logo" class="img-circle"></td>
   		<td>${ServiceStation.serviceStationName}</td>
   		<td>${ServiceStation.serviceStationAddress}</td>
-  		<td>${ServiceStation.mark}</td>
-  		<td><a href="<c:url value='/station/${ServiceStation.idServiceStation}' />"><button type="button" class="btn btn-primary">Go</button></a></td>
+  		<td>${ServiceStationCommentMark.mark}</td>
+  		<td><a href="<c:url value='/station/${serviceStation.idServiceStation}' />"><button type="button" class="btn btn-primary">Go</button></a></td>
   	</tr>
-  <!--  /c:forEach --> 
+  </c:forEach> 
 	</table>
-    <!-- /c:if --> 
+    </c:if> 
     </div> 
   </body>
 </html>

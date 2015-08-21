@@ -75,6 +75,8 @@
 			</beans:props>
 		</beans:property>
 	</beans:bean>
+	
+	
 
 	 
 	 <beans:bean id="abstractEntityСommonDAO" class="com.expositds.servicestationmanagementsystem.dao.impl.AbstractEntityСommonDAOImpl">
@@ -174,10 +176,10 @@
 		<beans:property name="clientSecurityFeatureDAO" ref="clientSecurityFeatureDAO"/>
 	</beans:bean>
 
-	<!-- for test -->
+	<!-- for test >
 	<beans:bean id="testObjectCreator" class="com.expositds.servicestationmanagementsystem.TestObjectCreator">
 		<beans:property name="abstractEntityСommonDAO" ref="abstractEntityСommonDAO"/>
-	</beans:bean>
+	</beans:bean -->
 	
 	
 	<context:annotation-config/>

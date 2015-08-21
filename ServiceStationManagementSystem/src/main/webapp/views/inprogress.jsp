@@ -33,7 +33,7 @@
        <div class="col-md-2"></div>
        <div class="col-md-8">
          <div class="col-md-2" style="padding-top: 15px;"><a href="#"><button type="button" class="btn btn-default"> < Back</button></a></div>
-         <h3>${Client.firstName} ${Client.lastName}</h3>
+         <h3>${clientPage.firstName} ${clientPage.lastName}</h3>
        </div>
        <div class="col-md-2"></div>
      </div>
@@ -47,22 +47,22 @@
      </div>
      <!--STATUS IN PROGRESS -->
      <div class="row" style="padding-top: 50px;">
-     <!--  c:if test="${!empty listDepartmentOrder}" -->
+     <c:if test="${!empty listDepartmentOrder}">
        <table class="table table-striped">
         <tr>
           <th>№</th>
           <th>Mechanic</th>
           <th>Deadline</th>
         </tr>
-        <!--  c:forEach items="${listDepartmentOrder}" var="DepartmentOrder" -->
+        <c:forEach items="${listDepartmentOrder}" var="DepartmentOrder">
         <tr>
           <td>${DepartmentOrder.id}</td>
           <td>${DepartmentOrder.employee}</td>
           <td>${DepartmentOrder.endOrder}</td>
         </tr>
-        <!--  /c:forEach -->
+        </c:forEach>
        </table>
-       <!--  /c:if -->
+       </c:if>
      </div>
      </div>
   </body>

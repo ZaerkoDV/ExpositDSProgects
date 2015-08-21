@@ -89,11 +89,9 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		try{
 			logger.info("DAO:DepartmentOrder list loaded successfully for department with, id="+idDepartment);
 			listDepartmentOrder=(List<DepartmentOrder>)criteria.list();
-			
-			for(DepartmentOrder order : listDepartmentOrder){
-				logger.info("DAO:DepartmentOrder list contain="+order);
-			}
-
+			//	for(DepartmentOrder order : listDepartmentOrder){
+			//		logger.info("DAO:DepartmentOrder list contain="+order);
+			//	}
 		}catch(NullPointerException e){
 			listDepartmentOrder = null;
 			logger.info("DAO:DepartmentOrder list not loaded because list is empty");
@@ -124,11 +122,9 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		try{
 			logger.info("DAO:Client list loaded successfully for department id="+idDepartment);
 			listDepartmentClient=(List<Client>)criteria.list();
-			
-			for(Client client : listDepartmentClient){
-				logger.info("DAO:Client list contain="+client);
-			}
-
+			//	for(Client client : listDepartmentClient){
+			//		logger.info("DAO:Client list contain="+client);
+			//	}
 		}catch(NullPointerException e){
 			listDepartmentClient = null;
 			logger.info("DAO:Client list not loaded because list is empty");
@@ -159,11 +155,9 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		try{
 			logger.info("DAO:Employee list loaded successfully for department id="+idDepartment);
 			listDepartmentEmployee=(List<Employee>)criteria.list();
-			
-			for(Employee employee : listDepartmentEmployee){
-				logger.info("DAO:Employee list contain="+employee);
-			}
-			
+			//	for(Employee employee : listDepartmentEmployee){
+			//	logger.info("DAO:Employee list contain="+employee);
+			//	}
 		}catch(NullPointerException e){
 			listDepartmentEmployee = null;
 			logger.info("DAO:Employee list not loaded because list is empty");
@@ -276,7 +270,17 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		proList.add(Projections.sum("e.wages"));
 		criteria.setProjection(proList);
 		
-		Double sumWage = (Double)criteria.uniqueResult();
+		Double sumWage;
+		try{
+			sumWage = (Double)criteria.uniqueResult();
+			logger.info("DAO:Sum employees wages which work in department load.");
+			if(sumWage.equals(null)){
+				sumWage =0.0;
+			}
+			
+		}catch(NullPointerException e){
+			sumWage=0.0;	
+		}
 		logger.info("DAO:Sum employees wages which work in department equals="+sumWage);
 		return sumWage;
 	}
@@ -304,11 +308,22 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		ProjectionList proList = Projections.projectionList();
 		proList.add(Projections.sum("detailCost"));
 		criteria.setProjection(proList);
-
-		Double totalDetailCost= (Double)criteria.uniqueResult();
-		logger.info("DAO:Sum details cost for done order in department on date equals="+totalDetailCost);
 		
-		return totalDetailCost;
+		Double totalDetailCostForDepartment;
+		try{
+			totalDetailCostForDepartment = (Double)criteria.uniqueResult();
+			logger.info("DAO:Total detail cost for done department order load.");
+			
+			if(totalDetailCostForDepartment.equals(null)){
+				totalDetailCostForDepartment =0.0;
+			}
+			
+		}catch(NullPointerException e){
+			totalDetailCostForDepartment=0.0;	
+		}
+		logger.info("DAO:Sum details cost for done order in department on date equals="+totalDetailCostForDepartment);
+		
+		return totalDetailCostForDepartment;
 	}
 	
 	/**
@@ -334,8 +349,18 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		ProjectionList proList = Projections.projectionList();
 		proList.add(Projections.sum("orderCost"));
 		criteria.setProjection(proList);
-
-		Double income = (Double)criteria.uniqueResult();
+		
+		Double income;
+		try{
+			income = (Double)criteria.uniqueResult();
+			logger.info("DAO:Total detail cost for not completed and overdue department order load.");
+			
+			if(income.equals(null)){
+				income =0.0;
+			}
+		}catch(NullPointerException e){
+			income=0.0;	
+		}
 		logger.info("DAO:Total income for department on date equals="+income);
 		
 		return income;

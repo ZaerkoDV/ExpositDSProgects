@@ -230,6 +230,12 @@
 		    <version>1.9</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.0.6</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

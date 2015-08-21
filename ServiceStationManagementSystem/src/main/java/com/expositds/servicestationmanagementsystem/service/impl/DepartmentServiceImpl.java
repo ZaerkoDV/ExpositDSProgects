@@ -175,9 +175,9 @@ public class DepartmentServiceImpl extends AbstractEntityCommonServiceImpl imple
 	 * 
 	 * @return Total sum(double type) detail cost in department. 
 	 */
-	public Double getTotalDetailCostForDoneDepartmentOrder(Long idDepartment, Date startData,Date endData){
+	public Double getTotalDetailCostForDoneDepartmentOrder(Long idDepartment, Date startDate,Date endDate){
 		logger.info("Service: Count total detail cost for done order in department by department id="+idDepartment);
-		return departmentDAO.getTotalDetailCostForDoneDepartmentOrder(idDepartment, startData, endData);
+		return departmentDAO.getTotalDetailCostForDoneDepartmentOrder(idDepartment, startDate, endDate);
 	}
 	
 	/**
@@ -190,8 +190,8 @@ public class DepartmentServiceImpl extends AbstractEntityCommonServiceImpl imple
 	 * 
 	 * @return full income for department.
 	 */
-	public Double getFullIncomeForDoneDepartmentOrder(Long idDepartment,Date startData,Date endData){
+	public Double getFullIncomeForDoneDepartmentOrder(Long idDepartment,Date startDate,Date endDate){
 		logger.info("Service:Get full income for done order in department by department id="+idDepartment);
-		return departmentDAO.getFullIncomeForDoneDepartmentOrder(idDepartment, startData, endData);
+		return departmentDAO.getFullIncomeForDoneDepartmentOrder(idDepartment, startDate, endDate);
 	}
 }

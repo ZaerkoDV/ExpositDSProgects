@@ -181,4 +181,34 @@ public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implement
 		}
 	}
 	
+	/**
+	 * Return all departments in service station by id service station
+	 * which exist in data base else return null.
+	 * 
+	 * @type List
+	 * @throw DataAccessException 
+	 * @throw NullPointerException
+	 * 
+	 * @return List<Department> or null.
+	 */
+	@SuppressWarnings({ "finally", "unchecked" })
+	public List<Department> getListDepartmentForServiceStation(Long idServiceStation){
+
+		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
+				.createCriteria(Department.class);
+		criteria.createAlias("serviceStation", "ser");
+		criteria.add(Restrictions.eq("ser.idServiceStation", idServiceStation));
+
+		List<Department> listDepartment;
+		try{
+			listDepartment =(List<Department>)criteria.list();
+			logger.info("Department list for service station loaded successfully");
+
+		}catch(NullPointerException e){
+			listDepartment=null;
+			logger.info("Department list for service station loaded successfully but is empty.");	
+		}
+		return listDepartment;
+	}
+	
 }

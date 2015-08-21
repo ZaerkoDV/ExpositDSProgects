@@ -3,6 +3,8 @@
  */
 package com.expositds.servicestationmanagementsystem.service;
 
+
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -20,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.expositds.servicestationmanagementsystem.AbstractTest;
 import com.expositds.servicestationmanagementsystem.TestObjectCreator;
 import com.expositds.servicestationmanagementsystem.model.Department;
+import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
+import com.expositds.servicestationmanagementsystem.model.Detail;
 import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 
@@ -42,15 +46,20 @@ public class ServiceStationServiceTest {//extends AbstractTest {
 //	public ServiceStation serviceStation;
 //	public Stead stead;
 //	public Department department;
+//	public DepartmentOrder departmentOrder;
+//	public Detail detail;
+//	java.util.Date date = new java.util.Date();
 //	
 //	/**
 //	 * Create test object before test start.
 //	 */
 //	@Before
 //	public void initServiceStationBeforeTest(){
-//		serviceStation = testObjectCreator.createServiceStationForTest();
-//		stead=testObjectCreator.createSteadForTest();
-//		department=testObjectCreator.createDepartmentForTest();
+//		detail=testObjectCreator.createDetailForTeat();
+//		departmentOrder=detail.getDepartmentOrder();
+//		department=departmentOrder.getDepartment();
+//		stead=department.getStead();
+//		serviceStation=department.getServiceStation();
 //	}
 //
 //	/**
@@ -61,6 +70,7 @@ public class ServiceStationServiceTest {//extends AbstractTest {
 //		serviceStation = null;
 //		stead=null;
 //		department=null;
+//		departmentOrder=null;
 //	}
 //
 //	/**
@@ -198,7 +208,6 @@ public class ServiceStationServiceTest {//extends AbstractTest {
 //	 * destroy test object after method is finish. 
 //	 * 
 //	 * @type List
-//	 * @return List<ServiceStation> or null.
 //	 */
 //	@Transactional
 //	@Rollback(true)
@@ -208,10 +217,67 @@ public class ServiceStationServiceTest {//extends AbstractTest {
 //		List<ServiceStation> listAllServiceStation=serviceStationService.getAllServiceStation();
 //		Assert.assertFalse(listAllServiceStation.isEmpty());
 //	}
-	
-	
-	
-	//other test methods
-	
-
+//
+//	/**
+//	 * Method testGettingListDepartmentForServiceStation are testing create
+//	 * list of all departments in service staton by id. That method use test
+//	 * object, which create before test run and destroy test object after
+//	 * method is finish. 
+//	 * 
+//	 * @type List
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListDepartmentForServiceStation(){
+//		Long idServiceStation=department.getServiceStation().getIdServiceStation();
+//		List<Department> listDepartments=serviceStationService.getListDepartmentForServiceStation(idServiceStation);
+//		Assert.assertFalse(listDepartments.isEmpty());		
+//	}
+//
+//	/**
+//	 * Method testGettingFinancialReportForDepartment are testing generate pdf departament
+//	 * financial report which save on same path.That method use test object, which create
+//	 * before test run and destroy test object after method is finish.   
+//	 * 
+//	 * @see javax.swing.JFileChooser
+//	 * @see com.itextpdf.text
+//	 * 
+//	 * @return (void)generate pdf file which contain financial report for departmet.
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingFinancialReportForDepartment(){
+//		
+//		Long idDepartment=department.getIdDepartment();
+//		
+//		Date startDate=new Date(date.getTime()-100000000);
+//		Date endDate=new Date(date.getTime());		
+//		serviceStationService.getFinancialReportForDepartmet(idDepartment, startDate, endDate);
+//	}
+//	
+//	/**
+//	 * Method testGettingFinancialReportForServiceStation are testing generate service station
+//	 * financial report with pdf format which save on same path.That method use test object,
+//	 * which create before test run and destroy test object after method is finish.   
+//	 * 
+//	 * @see javax.swing.JFileChooser
+//	 * @see com.itextpdf.text
+//	 * 
+//	 * @return (void)generate pdf file which contain financial report for service station.
+//	 */
+//	//!!!!!!In hand check change
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingFinancialReportForServiceStation(){
+//		
+//		Long idServiceStation=serviceStation.getIdServiceStation();
+//		//Long idServiceStation=(long)1;
+//	
+//		Date startDate=new Date(date.getTime()-1000000000);
+//		Date endDate=new Date(date.getTime());		
+//		serviceStationService.getFinancialReportForServiceStation(idServiceStation, startDate, endDate);
+//	}
 }

@@ -16,6 +16,7 @@ package com.expositds.servicestationmanagementsystem.dao;
 
 import java.util.List;
 
+import com.expositds.servicestationmanagementsystem.model.Department;
 import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 
@@ -75,4 +76,16 @@ public interface ServiceStationDAO extends AbstractEntityCommonDAO {
 	 * @return List<ServiceStation> or null.
 	 */
 	public List<ServiceStation> getAllServiceStation();
+	
+	/**
+	 * Return all departments in service station by id service station
+	 * which exist in data base else return null.
+	 * 
+	 * @type List
+	 * @throw DataAccessException 
+	 * @throw NullPointerException
+	 * 
+	 * @return List<Department> or null.
+	 */
+	public List<Department> getListDepartmentForServiceStation(Long idServiceStation);
 }

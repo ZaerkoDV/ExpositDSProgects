@@ -239,4 +239,23 @@ public class ServiceStationDAOTest {//extends AbstractTest  {
 //		List<ServiceStation> listAllServiceStation= serviceStationDAO.getAllServiceStation();
 //		Assert.assertFalse(listAllServiceStation.isEmpty());
 //	}
+//	
+//	/**
+//	 * Method testGettingListDepartmentForServiceStation are testing create
+//	 * list of all departments in service staton by id. That method use test
+//	 * object, which create before test run and destroy test object after
+//	 * method is finish. 
+//	 * 
+//	 * @type List
+//	 * @return List<Department> or null.
+//	 */
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListDepartmentForServiceStation(){
+//				
+//		List<Department> listAllServiceStation= serviceStationDAO
+//				.getListDepartmentForServiceStation(department.getServiceStation().getIdServiceStation());
+//		Assert.assertFalse(listAllServiceStation.isEmpty());
+//	}
 }

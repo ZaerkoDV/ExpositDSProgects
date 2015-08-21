@@ -208,9 +208,9 @@ public class TestObjectCreator {
 		departmentOrder.setOrderDescription("testOrderDescription");
 		departmentOrder.setStartOrder(new Date(date.getTime()));
 		departmentOrder.setEndOrder(new Date(date.getTime()+1000));
-		departmentOrder.setOrderCost(100.0);
+		departmentOrder.setOrderCost(10000.0);
 		departmentOrder.setWorkCost((Double)10.0);
-		departmentOrder.setOrderStatus("TestStatus");
+		departmentOrder.setOrderStatus("done");
 		departmentOrder.setClient(client);
 		departmentOrder.setEmployee(employee);
 		departmentOrder.setDepartment(department);

@@ -95,7 +95,39 @@ public interface DepartmentDAO extends AbstractEntityCommonDAO {
 	 */
 	public Double getFullIncomeForNotcompletedOverdueDepartmentOrder(Long idDepartment);
 	
+	/**
+	 * Method return sum wages for all employes which work in department.  
+	 * 
+	 * @type Long
+	 * @type Double
+	 * @param idDepartment
+	 * @throw NullPointerException
+	 * 
+	 * @return sem wages or null if department have not employes 
+	 */
 	public Double getSumEmployeeWagesForDeportment(Long idDepartment);
+	
+	/**
+	 * Method return total cost detail which use in department orders and 
+	 * have status done.  
+	 * 
+	 * @type Long
+	 * @param idDepartment
+	 * @throw NullPointerException
+	 * 
+	 * @return Total sum(double type) detail cost in department. 
+	 */
 	public Double getTotalDetailCostForDoneDepartmentOrder(Long idDepartment, Date startData,Date endData);
+	
+	/**
+	 * Method return full income(work cost and detail cost) which have department for
+	 * deprtment order which have status done.   
+	 * 
+	 * @type Long
+	 * @param idDepartment
+	 * @throw NullPointerException
+	 * 
+	 * @return full income for department.
+	 */
 	public Double getFullIncomeForDoneDepartmentOrder(Long idDepartment,Date startData,Date endData);
 }

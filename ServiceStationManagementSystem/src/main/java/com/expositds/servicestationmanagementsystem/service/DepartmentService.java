@@ -38,7 +38,10 @@ public interface DepartmentService extends  AbstractEntityCommonService{
 	public List<Employee> getListEmployeByIdDepartment(Long idDepartment);
 	public Double getTotalDetailCostForNotcompletedOverdueDepartmentOrder(Long idDepartment);
 	public Double getFullIncomeForNotcompletedOverdueDepartmentOrder(Long idDepartment);
+	
 	public Double getSumEmployeeWagesForDeportment(Long idDepartment);
 	public Double getTotalDetailCostForDoneDepartmentOrder(Long idDepartment, Date startData,Date endData);
 	public Double getFullIncomeForDoneDepartmentOrder(Long idDepartment,Date startData,Date endData);
+	
+	
 }

@@ -31,25 +31,30 @@
       </div>
       <sec:authorize access="isAuthenticated()">
       <div class="col-md-2" style="margin-top: 30px;">
-      <a href="<c:url value="/ServiceStationManagementSystem/profile" />">${ClientSecurityFeature.clientLogin}</a><br>
-      <a href="<c:url value="/ServiceStationManagementSystem/logout" />" style="margin-left: 50px;"><button type="button" class="btn btn-default">Logout</button></a>
+      		<a href="<c:url value="/ServiceStationManagementSystem/profile" />">${ClientSecurityFeature.clientLogin}</a><br>
+      		<a href="<c:url value="/ServiceStationManagementSystem/logout" />" style="margin-left: 50px;">
+      		<button type="button" class="btn btn-default">Logout</button></a>
       </div>
       </sec:authorize>
       <sec:authorize access="!isAuthenticated()">
       <div class="col-md-2" style="padding-top: 20px;">
       <c:url value="/j_spring_security_check" var="loginUrl" />
          <form class="form-inline" action="${loginUrl}" method="post">
+         
 		  <div class="form-group">
 		    <input type="login" class="form-control" id="exampleInputEmail3" name="j_username" placeholder="Login">
 		  </div><br>
+		  
 		  <div class="form-group" style="margin-top: 5px;">
 		    <input type="password" class="form-control" id="exampleInputPassword3" name="j_password" placeholder="Password">
 		  </div><br>
+		  
 		  <div class="checkbox">
 		    <label>
 		      <input type="checkbox" name="_spring_security_remember_me"> Remember me
 		    </label>
 		  </div><br>
+		  
 		  <a href="<c:url value="/ServiceStationManagementSystem/login" />"><button type="submit" class="btn btn-default">Sign in</button></a>
           <a href="<c:url value="/registration" />"><button type="button" class="btn btn-default">Sign up</button></a><br>
 		</form>
@@ -65,7 +70,7 @@
   		<th>Mark</th>
   		<th>Go</th>
   	</tr>
-  <!--  c:forEach items="${listServiceStation}" var="ServiceStation" --> 
+  	<!--  c:forEach items="${listServiceStation}" var="ServiceStation" --> 
   	<tr style="font-size: 18px;">
   		<td><img src="resources/img/logo.png" alt="Logo" class="img-circle"></td>
   		<td>${ServiceStation.name}</td>
@@ -73,7 +78,7 @@
   		<td>${ServiceStation.mark}</td>
   		<td><a href="<c:url value='/station/${ServiceStation.id}' />"><button type="button" class="btn btn-primary">Go</button></a></td>
   	</tr>
-  <!--  /c:forEach --> 
+  	<!-- /c:forEach --> 
 	</table>
     <!-- /c:if --> 
     </div> 

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- @author Artyom_Khomyakov -->
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,6 +46,7 @@
      </div>
      <!--STATUS OVERDUE -->
      <div class="row" style="padding-top: 50px;">
+     <!--  c:if test="${!empty listDepartmentOrder}" -->
        <table class="table table-striped">
         <tr>
           <th>${DepartmentOrder.id}</th>
@@ -54,15 +56,18 @@
           <th>Comments</th>
           <th>Delete</th>
         </tr>
+         <!-- c:forEach items="${listDepartmentOrder}" var="DepartmentOrder" -->
         <tr>
           <td>1</td>
           <td>${DepartmentOrder.employee}</td>
           <td>${DepartmentOrder.endOrder}</td>
-          <td><a href="<c:url value='/ServiceStationManagementSystem/profile/renew/${DepartmentOrder.id}' />"><button type="button" class="btn btn-xs btn-success">Renew</button></a></td>
-          <td><a href="<c:url value='/ServiceStationManagementSystem/profile/addcomment/${ServiceStation.id}' />"><button type="button" class="btn btn-xs btn-primary">Add a comment</button></a></td>
-          <td><a href="<c:url value='/ServiceStationManagementSystem/profile/delete/${DepartmentOrder.id}' />"><button type="button" class="btn btn-xs btn-danger">Delete</button></a></td>
+          <td><a href="<c:url value='/profile/overdue/renew/${DepartmentOrder.id}' />"><button type="button" class="btn btn-xs btn-success">Renew</button></a></td>
+          <td><a href="<c:url value='/profile/overdue/addcomment/${ServiceStation.id}' />"><button type="button" class="btn btn-xs btn-primary">Add a comment</button></a></td>
+          <td><a href="<c:url value='/profile/overdue/delete/${DepartmentOrder.id}' />"><button type="button" class="btn btn-xs btn-danger">Delete</button></a></td>
         </tr>
+        <!-- /c:forEach -->
        </table>
+       <!-- /c:if -->
      </div>
    </div>
   </body>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- @author Artyom_Khomyakov -->
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,22 +47,22 @@
      </div>
      <!--STATUS IN PROGRESS -->
      <div class="row" style="padding-top: 50px;">
-     <c:if test="${!empty listDepartmentOrder}">
+     <!--  c:if test="${!empty listDepartmentOrder}" -->
        <table class="table table-striped">
         <tr>
           <th>№</th>
           <th>Mechanic</th>
           <th>Deadline</th>
         </tr>
-        <c:forEach items="${listDepartmentOrder}" var="DepartmentOrder">
+        <!--  c:forEach items="${listDepartmentOrder}" var="DepartmentOrder" -->
         <tr>
           <td>${DepartmentOrder.id}</td>
           <td>${DepartmentOrder.employee}</td>
           <td>${DepartmentOrder.endOrder}</td>
         </tr>
-        </c:forEach>
+        <!--  /c:forEach -->
        </table>
-       </c:if>
+       <!--  /c:if -->
      </div>
      </div>
   </body>

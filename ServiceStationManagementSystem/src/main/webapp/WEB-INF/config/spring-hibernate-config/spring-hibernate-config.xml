@@ -174,16 +174,20 @@
 		<beans:property name="clientSecurityFeatureDAO" ref="clientSecurityFeatureDAO"/>
 	</beans:bean>
 
-	<!-- for test -->
 	<beans:bean id="testObjectCreator" class="com.expositds.servicestationmanagementsystem.TestObjectCreator">
 		<beans:property name="abstractEntityСommonDAO" ref="abstractEntityСommonDAO"/>
 	</beans:bean>
-	
+<!--
+	<beans:bean id="clientController" class="com.expositds.servicestationmanagementsystem.controller.ClientController">
+		<beans:property name="clientDAO" ref="clientDAO" />
+	</beans:bean>
+-->
 	
 	<context:annotation-config/>
-	
+		
 	<context:component-scan base-package="com.expositds.servicestationmanagementsystem">
-		<context:include-filter type="regex" expression="com.expositds.servicestationmanagementsystem.dao.*"/>
+		<context:include-filter type="regex" expression="com.expositds.servicestationmanagementsystem.*"/>	
+	    <context:include-filter type="regex" expression="com.expositds.servicestationmanagementsystem.dao.*"/>
 		<context:include-filter type="regex" expression="com.expositds.servicestationmanagementsystem.service.*"/>
 		<context:include-filter type="regex" expression="com.expositds.servicestationmanagementsystem.controller.*"/>
 	</context:component-scan>

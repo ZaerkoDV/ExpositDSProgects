@@ -20,6 +20,7 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>/WEB-INF/config/context-config.xml</param-value>
+     <!--<param-value>/WEB-INF/config/spring-security.xml</param-value>-->
   </context-param>
   
   <!--pages which display when application start -->
@@ -53,7 +54,7 @@
  
   <filter-mapping>
     <filter-name>springSecurityFilterChain</filter-name>
-	<url-pattern>/</url-pattern>
+	<url-pattern>/*</url-pattern>
   </filter-mapping>
   -->
   

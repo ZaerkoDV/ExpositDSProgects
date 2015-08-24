@@ -24,6 +24,7 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.dao.DepartmentDAO;
 import com.expositds.servicestationmanagementsystem.model.Client;
@@ -77,6 +78,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 	 * 
 	 * @return List<DepartmentOrder> in department.
 	 */
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<DepartmentOrder> getListDepartmentOrderByIdDepartment(Long idDepartment){
 		
@@ -89,9 +91,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		try{
 			logger.info("DAO:DepartmentOrder list loaded successfully for department with, id="+idDepartment);
 			listDepartmentOrder=(List<DepartmentOrder>)criteria.list();
-			//	for(DepartmentOrder order : listDepartmentOrder){
-			//		logger.info("DAO:DepartmentOrder list contain="+order);
-			//	}
+
 		}catch(NullPointerException e){
 			listDepartmentOrder = null;
 			logger.info("DAO:DepartmentOrder list not loaded because list is empty");
@@ -109,6 +109,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 	 * 
 	 * @return List<Client> in department.
 	 */
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<Client> getListClientByIdDepartment(Long idDepartment){
 		
@@ -122,9 +123,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		try{
 			logger.info("DAO:Client list loaded successfully for department id="+idDepartment);
 			listDepartmentClient=(List<Client>)criteria.list();
-			//	for(Client client : listDepartmentClient){
-			//		logger.info("DAO:Client list contain="+client);
-			//	}
+
 		}catch(NullPointerException e){
 			listDepartmentClient = null;
 			logger.info("DAO:Client list not loaded because list is empty");
@@ -142,6 +141,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 	 * 
 	 * @return List<Employee> in department.
 	 */
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<Employee> getListEmployeByIdDepartment(Long idDepartment){
 
@@ -155,9 +155,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		try{
 			logger.info("DAO:Employee list loaded successfully for department id="+idDepartment);
 			listDepartmentEmployee=(List<Employee>)criteria.list();
-			//	for(Employee employee : listDepartmentEmployee){
-			//	logger.info("DAO:Employee list contain="+employee);
-			//	}
+
 		}catch(NullPointerException e){
 			listDepartmentEmployee = null;
 			logger.info("DAO:Employee list not loaded because list is empty");
@@ -175,6 +173,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 	 * 
 	 * @return Total sum(double type) detail cost in department. 
 	 */
+	@Transactional
 	public Double getTotalDetailCostForNotcompletedOverdueDepartmentOrder(Long idDepartment){ 
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -216,6 +215,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 	 * 
 	 * @return Total sum(double type) detail cost in department. 
 	 */
+	@Transactional
 	public Double getFullIncomeForNotcompletedOverdueDepartmentOrder(Long idDepartment){
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -257,6 +257,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 	 * 
 	 * @return sem wages or null if department have not employes 
 	 */
+	@Transactional
 	public Double getSumEmployeeWagesForDeportment(Long idDepartment){
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -277,7 +278,6 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 			if(sumWage.equals(null)){
 				sumWage =0.0;
 			}
-			
 		}catch(NullPointerException e){
 			sumWage=0.0;	
 		}
@@ -295,6 +295,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 	 * 
 	 * @return Total sum(double type) detail cost in department. 
 	 */
+	@Transactional
 	public Double getTotalDetailCostForDoneDepartmentOrder(Long idDepartment, Date startData,Date endData){
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -336,6 +337,7 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 	 * 
 	 * @return full income for department.
 	 */
+	@Transactional
 	public Double getFullIncomeForDoneDepartmentOrder(Long idDepartment,Date startData,Date endData){
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()

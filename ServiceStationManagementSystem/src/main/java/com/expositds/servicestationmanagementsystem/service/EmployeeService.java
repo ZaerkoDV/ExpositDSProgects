@@ -16,7 +16,6 @@ package com.expositds.servicestationmanagementsystem.service;
 
 import java.util.List;
 
-import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.Department;
 import com.expositds.servicestationmanagementsystem.model.Employee;
 
@@ -94,5 +93,4 @@ public interface EmployeeService extends AbstractEntityCommonService {
 	 * @return List<Department> all department in which employee work.
 	 */
 	public List<Department> getListDepartmentForEmployee(Long idEmployee);
-	
 }

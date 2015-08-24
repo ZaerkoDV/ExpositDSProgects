@@ -21,11 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
 import com.expositds.servicestationmanagementsystem.TestObjectCreator;
-import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.Department;
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
 import com.expositds.servicestationmanagementsystem.model.Detail;
-import com.expositds.servicestationmanagementsystem.model.Employee;
 import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 
@@ -237,50 +235,6 @@ public class ServiceStationServiceTest {//extends AbstractTest {
 //		Assert.assertFalse(listDepartments.isEmpty());		
 //	}
 //
-//	/**
-//	 * Method testGettingListEmployeeForServiceStation are testing create
-//	 * list of all employees in service staton by id. That method use test
-//	 * object, which create before test run and destroy test object after
-//	 * method is finish. 
-//	 * 
-//	 * @type List
-//	 * @see org.springframework.transaction.annotation.Transactional
-//	 * @see org.springframework.test.annotation.Rollback
-//	 * @see org.junit.Test
-//	 * @see org.junit.Assert
-//	 */
-//	@Transactional
-//	@Rollback(true)
-//	@Test
-//	public void testGettingListEmployeeForServiceStation(){
-//				
-//		List<Employee> listEmployeeInServiceStation= serviceStationService
-//				.getListEmployeeForServiceStation(serviceStation.getIdServiceStation());
-//		Assert.assertFalse(listEmployeeInServiceStation.isEmpty());
-//	}
-//	
-//	/**
-//	 * Method testGettingClientForServiceStation are testing create
-//	 * list of all clients in service staton by id. That method use test
-//	 * object, which create before test run and destroy test object after
-//	 * method is finish. 
-//	 * 
-//	 * @type List
-//	 * @see org.springframework.transaction.annotation.Transactional
-//	 * @see org.springframework.test.annotation.Rollback
-//	 * @see org.junit.Test
-//	 * @see org.junit.Assert
-//	 */
-//	@Transactional
-//	@Rollback(true)
-//	@Test
-//	public void testGettingClientForServiceStation(){
-//				
-//		List<Client> listClientInServiceStation= serviceStationService
-//				.getListClientForServiceStation(serviceStation.getIdServiceStation());
-//		Assert.assertFalse(listClientInServiceStation.isEmpty());
-//	}
-//	
 //	/**
 //	 * Method testGettingFinancialReportForDepartment are testing generate pdf departament
 //	 * financial report which save on same path.That method use test object, which create

@@ -21,7 +21,6 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.dao.SteadDAO;
 import com.expositds.servicestationmanagementsystem.model.Department;
@@ -73,7 +72,6 @@ public class SteadDAOImpl extends AbstractEntity—ommonDAOImpl implements SteadDA
 	 * 
 	 * @return List<Stead> all stead if steads exist else null.
 	 */
-	@Transactional
 	@SuppressWarnings({"unchecked"})
 	public List<Stead> getListStead(){
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -81,7 +79,11 @@ public class SteadDAOImpl extends AbstractEntity—ommonDAOImpl implements SteadDA
 		List<Stead> steadList;
 		try{
 			steadList=(List<Stead>)criteria.list();
+			
 			logger.info("DAO:List of stead loaded successfully");
+			for(Stead stead : steadList){
+				logger.info("DAO:List steads contain="+stead);
+			}
 
 		}catch(NullPointerException e){
 			logger.info("DAO:Stead list loaded successfully but is empty.");
@@ -102,7 +104,6 @@ public class SteadDAOImpl extends AbstractEntity—ommonDAOImpl implements SteadDA
 	 * 
 	 * @return List<Department> which use current stead else return null.
 	 */
-	@Transactional
 	@SuppressWarnings({ "unchecked" })
 	public List<Department> getListDepartmentUseCurrentStead(Long idStead){
 
@@ -113,9 +114,12 @@ public class SteadDAOImpl extends AbstractEntity—ommonDAOImpl implements SteadDA
 		criteria.add(Restrictions.eq("s.idStead", idStead));
 		
 		try{
-			listDepartmetUseCurrentStead=(List<Department>)criteria.list();			
+			listDepartmetUseCurrentStead=(List<Department>)criteria.list();
+			
 			logger.info("DAO:List of departments which use current stead="+idStead+" loaded successfully");
-
+			for(Department department : listDepartmetUseCurrentStead){
+				logger.info("DAO:List departments contain="+department);
+			}
 
 		}catch(NullPointerException e){
 			listDepartmetUseCurrentStead = null;

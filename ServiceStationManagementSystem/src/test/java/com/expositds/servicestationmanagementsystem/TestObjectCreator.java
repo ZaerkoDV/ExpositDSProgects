@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.expositds.servicestationmanagementsystem.dao.AbstractEntityCommonDAO;
+import com.expositds.servicestationmanagementsystem.dao.AbstractEntityCommonDAOTest;
 import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.ClientSecurityFeature;
 import com.expositds.servicestationmanagementsystem.model.Department;
@@ -36,12 +37,10 @@ import com.expositds.servicestationmanagementsystem.model.Stead;
  * @see org.junit
  * @see org.springframework.test
  * @see org.slf4j
- * @see org.springframework.stereotype.Component
  * 
  * @version 1.0 17.08.2015
  * @author Zaerko Denis
  */
-@Component(value="testObjectCreator")
 public class TestObjectCreator {
 
 	private static final Logger logger = LoggerFactory.getLogger(TestObjectCreator.class);

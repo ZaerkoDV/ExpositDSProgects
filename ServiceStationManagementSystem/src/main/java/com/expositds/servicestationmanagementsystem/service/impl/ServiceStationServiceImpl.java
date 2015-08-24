@@ -29,9 +29,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.expositds.servicestationmanagementsystem.dao.DepartmentDAO;
 import com.expositds.servicestationmanagementsystem.dao.ServiceStationDAO;
-import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.Department;
-import com.expositds.servicestationmanagementsystem.model.Employee;
 import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 import com.expositds.servicestationmanagementsystem.service.ServiceStationService;
@@ -202,36 +200,6 @@ public class ServiceStationServiceImpl extends AbstractEntityCommonServiceImpl i
 	public List<Department> getListDepartmentForServiceStation(Long idServiceStation){
 		logger.info("Service:Create list with all departments in service staton.");
 		return serviceStationDAO.getListDepartmentForServiceStation(idServiceStation);
-	}
-	
-	/**
-	 * Return all employees which work in service station by id service station
-	 * else return null.
-	 * 
-	 * @type Long
-	 * @type List
-	 * @param idServiceStation
-	 * 
-	 * @return List<Employee> or null.
-	 */
-	public List<Employee>getListEmployeeForServiceStation(Long idServiceStation){
-		logger.info("Service:Create list with all employees in service staton.");
-		return serviceStationDAO.getListEmployeeForServiceStation(idServiceStation);
-	}
-	
-	/**
-	 * Return all clients which work in service station by id service station
-	 * else return null.
-	 * 
-	 * @type Long
-	 * @type List
-	 * @param idServiceStation
-	 * 
-	 * @return List<Employee> or null.
-	 */
-	public List<Client>getListClientForServiceStation(Long idServiceStation){
-		logger.info("Service:Create list with all clients in service staton.");
-		return serviceStationDAO.getListClientForServiceStation(idServiceStation);
 	}
 	
 	/**

@@ -24,7 +24,6 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.dao.ClientDAO;
 import com.expositds.servicestationmanagementsystem.model.Client;
@@ -81,7 +80,6 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 	 * 
 	 * @return List<Client> all client with last name as parametr else null.
 	 */
-	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<Client> getListClientByLastName(String clientLastName){
 
@@ -95,6 +93,10 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 		try {
 			listClient= (List<Client>)criteria.list();
 			logger.info("DAO:Client list loaded successfully");
+			
+			for(Client client : listClient ){
+				logger.info("DAO:Client list by last name"+clientLastName+" contain ="+client);
+			}
 			
 		} catch (NullPointerException e) {
 			logger.info("DAO:Client list not loaded.");
@@ -116,7 +118,6 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 	 * 
 	 * @return Long
 	 */
-	@Transactional
 	@SuppressWarnings("finally")
 	public Long getIdClientByLoginPassword(String clientLogin, String clientPassword){
 
@@ -160,7 +161,6 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 	 * 
 	 * @return Client or null.
 	 */
-	@Transactional
 	public Client getClientByEmail(String clientEmail){
 
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -195,7 +195,6 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 	 * 
 	 * @return Boolean
 	 */
-	@Transactional
 	@SuppressWarnings("finally")
 	public Boolean signInClientByLoginPassword(String clientLogin, String clientPassword){
 	
@@ -213,11 +212,11 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 			signIn=true;		
 
 		}catch (NullPointerException e) {
-			logger.info("DAO:Client sign is failed");
+			logger.info("DAO:Client sign is failed"+e);
 			signIn=false;
 
 		}catch(NonUniqueResultException e){
-			logger.info("DAO:Client sign in is failed because nonunique result ");
+			logger.info("DAO:Client sign in is failed because nonunique result "+e);
 			signIn=false;
 
 		}finally{
@@ -234,7 +233,6 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 	 * 
 	 * @return int
 	 */
-	@Transactional
 	public int getCountClient(){
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -265,7 +263,6 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 	 * 
 	 * @return List<DepartmentOrder> or null;
 	 */
-	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<DepartmentOrder> getListOrderAllServiceStationForClient(Long idClient){
 		
@@ -280,6 +277,10 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 		try{
 			clientOrderList=(List<DepartmentOrder>)criteria.list();
 			logger.info("DAO:List order for client loaded successfully");
+			
+			for(DepartmentOrder order : clientOrderList){
+				logger.info("DAO:Client order list contain ="+order);
+			}
 			
 		}catch(NullPointerException e){
 			clientOrderList=null;
@@ -301,7 +302,6 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 	 * 
 	 * @return List<DepartmentOrder> or null;
 	 */
-	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<DepartmentOrder> getListNotcompletedOverdueOrderForClient(Long idClient){
 		
@@ -322,6 +322,10 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 		try{
 			clientNotcompletedOverdueOrderList=(List<DepartmentOrder>)criteria.list();
 			logger.info("DAO:List not completed and overdue order loaded successfully");
+			
+			for(DepartmentOrder order : clientNotcompletedOverdueOrderList){
+				logger.info("DAO:Client not completed and overdue order list contain ="+order.toString());
+			}
 
 		}catch(NullPointerException e){
 			clientNotcompletedOverdueOrderList=null;
@@ -343,7 +347,6 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 	 * 
 	 * @return List<DepartmentOrder> or null;
 	 */
-	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<DepartmentOrder> getListDoneOrderForClient(Long idClient){
 		
@@ -358,7 +361,12 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 		
 		try{
 			clientDoneOrderList=(List<DepartmentOrder>)criteria.list();
+			
 			logger.info("DAO:List done order loaded successfully");
+			
+			for(DepartmentOrder order : clientDoneOrderList){
+				logger.info("DAO:Client done order list contain ="+order.toString());
+			}
 
 		}catch(NullPointerException e){
 			clientDoneOrderList=null;

@@ -23,10 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.AbstractTest;
 import com.expositds.servicestationmanagementsystem.TestObjectCreator;
-import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.Department;
-import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
-import com.expositds.servicestationmanagementsystem.model.Employee;
 import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 
@@ -74,18 +71,15 @@ public class ServiceStationDAOTest {//extends AbstractTest  {
 //	public ServiceStation serviceStation;
 //	public Stead stead;
 //	public Department department;
-//	public DepartmentOrder departmentOrder;
-//	
 //	
 //	/**
 //	 * Create test object before test start.
 //	 */
 //	@Before
 //	public void initServiceStationBeforeTest(){
-//		departmentOrder=testObjectCreator.createDepartmentOrder();
-//		department=departmentOrder.getDepartment();
-//		stead=department.getStead();
-//		serviceStation=department.getServiceStation();
+//		serviceStation = testObjectCreator.createServiceStationForTest();
+//		stead=testObjectCreator.createSteadForTest();
+//		department=testObjectCreator.createDepartmentForTest();
 //	}
 //	
 //	/**
@@ -96,7 +90,6 @@ public class ServiceStationDAOTest {//extends AbstractTest  {
 //		serviceStation = null;
 //		stead=null;
 //		department=null;
-//		departmentOrder=null;
 //	}
 //
 //	/**
@@ -233,11 +226,10 @@ public class ServiceStationDAOTest {//extends AbstractTest  {
 //	 * destroy test object after method is finish. 
 //	 * 
 //	 * @type List
-//	 * @see org.springframework.transaction.annotation.Transactional
-//	 * @see org.springframework.test.annotation.Rollback
-//	 * @see org.junit.Test
-//	 * @see org.junit.Assert
+//	 * @throw DataAccessException 
+//	 * @throw NullPointerException
 //	 * 
+//	 * @return List<ServiceStation> or null.
 //	 */
 //	@Transactional
 //	@Rollback(true)
@@ -255,10 +247,7 @@ public class ServiceStationDAOTest {//extends AbstractTest  {
 //	 * method is finish. 
 //	 * 
 //	 * @type List
-//	 * @see org.springframework.transaction.annotation.Transactional
-//	 * @see org.springframework.test.annotation.Rollback
-//	 * @see org.junit.Test
-//	 * @see org.junit.Assert
+//	 * @return List<Department> or null.
 //	 */
 //	@Transactional
 //	@Rollback(true)
@@ -268,49 +257,5 @@ public class ServiceStationDAOTest {//extends AbstractTest  {
 //		List<Department> listAllServiceStation= serviceStationDAO
 //				.getListDepartmentForServiceStation(department.getServiceStation().getIdServiceStation());
 //		Assert.assertFalse(listAllServiceStation.isEmpty());
-//	}
-//	
-//	/**
-//	 * Method testGettingListEmployeeForServiceStation are testing create
-//	 * list of all employees in service staton by id. That method use test
-//	 * object, which create before test run and destroy test object after
-//	 * method is finish. 
-//	 * 
-//	 * @type List
-//	 * @see org.springframework.transaction.annotation.Transactional
-//	 * @see org.springframework.test.annotation.Rollback
-//	 * @see org.junit.Test
-//	 * @see org.junit.Assert
-//	 */
-//	@Transactional
-//	@Rollback(true)
-//	@Test
-//	public void testGettingListEmployeeForServiceStation(){
-//				
-//		List<Employee> listEmployeeInServiceStation= serviceStationDAO
-//				.getListEmployeeForServiceStation(serviceStation.getIdServiceStation());
-//		Assert.assertFalse(listEmployeeInServiceStation.isEmpty());
-//	}
-//	
-//	/**
-//	 * Method testGettingClientForServiceStation are testing create
-//	 * list of all clients in service staton by id. That method use test
-//	 * object, which create before test run and destroy test object after
-//	 * method is finish. 
-//	 * 
-//	 * @type List
-//	 * @see org.springframework.transaction.annotation.Transactional
-//	 * @see org.springframework.test.annotation.Rollback
-//	 * @see org.junit.Test
-//	 * @see org.junit.Assert
-//	 */
-//	@Transactional
-//	@Rollback(true)
-//	@Test
-//	public void testGettingClientForServiceStation(){
-//				
-//		List<Client> listClientInServiceStation= serviceStationDAO
-//				.getListClientForServiceStation(serviceStation.getIdServiceStation());
-//		Assert.assertFalse(listClientInServiceStation.isEmpty());
 //	}
 }

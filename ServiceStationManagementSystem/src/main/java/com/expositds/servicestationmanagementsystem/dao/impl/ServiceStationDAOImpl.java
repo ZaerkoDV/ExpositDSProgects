@@ -23,14 +23,10 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.dao.ServiceStationDAO;
-import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.Department;
-import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
 import com.expositds.servicestationmanagementsystem.model.Detail;
-import com.expositds.servicestationmanagementsystem.model.Employee;
 import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 
@@ -85,7 +81,6 @@ public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implement
 	 * 
 	 * @return List<Stead> which use(include) in service station.
 	 */
-	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<Stead> getListSteadUseServiceStation(Long idServiceStation){
 		
@@ -99,6 +94,10 @@ public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implement
 		try{
 			listStead=(List<Stead>)criteria.list();
 			logger.info("DAO:List stead which use service station "+idServiceStation+" loaded successfully");
+			
+			for(Stead stead : listStead){
+				logger.info("DAO:List service station steads contain ="+stead);
+			}
 			
 		}catch(NullPointerException e){
 			listStead= null;
@@ -121,7 +120,6 @@ public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implement
 	 * 
 	 * @return List<Stead> which use(include) in service station.
 	 */
-	@Transactional
 	public Double getTotalServiceStationArea(Long idServiceStation){
 
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -157,7 +155,6 @@ public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implement
 	 * 
 	 * @return List<ServiceStation> or null.
 	 */
-	@Transactional
 	@SuppressWarnings({ "unchecked", "finally" })
 	public List<ServiceStation> getAllServiceStation(){
 		
@@ -170,6 +167,10 @@ public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implement
 		try{
 			listServiceStation =(List<ServiceStation>)criteria.list();
 			logger.info("ServiceStation list loaded successfully");
+			
+			for(ServiceStation serviceStation : listServiceStation){
+				logger.info("DAO:ServiceStation list contain ="+serviceStation.getIdServiceStation());
+			}
 
 		}catch(NullPointerException e){
 			listServiceStation=null;
@@ -190,7 +191,6 @@ public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implement
 	 * 
 	 * @return List<Department> or null.
 	 */
-	@Transactional
 	@SuppressWarnings({ "finally", "unchecked" })
 	public List<Department> getListDepartmentForServiceStation(Long idServiceStation){
 
@@ -211,69 +211,4 @@ public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implement
 		return listDepartment;
 	}
 	
-	/**
-	 * Return all employees which work in service station by id service station
-	 * else return null.
-	 * 
-	 * @type Long
-	 * @type List
-	 * @param idServiceStation
-	 * @throw DataAccessException 
-	 * @throw NullPointerException
-	 * 
-	 * @return List<Employee> or null.
-	 */
-	@Transactional
-	@SuppressWarnings("unchecked")
-	public List<Employee> getListEmployeeForServiceStation(Long idServiceStation){
-		
-		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
-				.createCriteria(DepartmentOrder.class);
-		criteria.createAlias("department", "dep");
-		criteria.createAlias("dep.serviceStation", "ser");
-		criteria.add(Restrictions.eq("ser.idServiceStation", idServiceStation));
-		criteria.setProjection(Projections.property("employee"));
-		
-		List<Employee> listEmployee;
-		try{
-			listEmployee=(List<Employee>)criteria.list();	
-			
-		}catch(NullPointerException e){
-			listEmployee=null;
-		}
-		return listEmployee;
-	}
-	
-	/**
-	 * Return all clients which use service station by id service station
-	 * else return null.
-	 * 
-	 * @type Long
-	 * @type List
-	 * @param idServiceStation
-	 * @throw DataAccessException 
-	 * @throw NullPointerException
-	 * 
-	 * @return List<Client> or null.
-	 */
-	@Transactional
-	@SuppressWarnings("unchecked")
-	public List<Client> getListClientForServiceStation(Long idServiceStation){
-		
-		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
-				.createCriteria(DepartmentOrder.class);
-		criteria.createAlias("department", "dep");
-		criteria.createAlias("dep.serviceStation", "ser");
-		criteria.add(Restrictions.eq("ser.idServiceStation", idServiceStation));
-		criteria.setProjection(Projections.property("client"));
-		
-		List<Client> listClient;
-		try{
-			listClient=(List<Client>)criteria.list();	
-			
-		}catch(NullPointerException e){
-			listClient=null;
-		}
-		return listClient;
-	}
 }

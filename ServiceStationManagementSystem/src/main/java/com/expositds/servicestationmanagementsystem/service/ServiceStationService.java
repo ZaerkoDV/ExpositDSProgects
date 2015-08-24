@@ -17,9 +17,7 @@ package com.expositds.servicestationmanagementsystem.service;
 import java.util.Date;
 import java.util.List;
 
-import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.Department;
-import com.expositds.servicestationmanagementsystem.model.Employee;
 import com.expositds.servicestationmanagementsystem.model.ServiceStation;
 import com.expositds.servicestationmanagementsystem.model.Stead;
 
@@ -81,30 +79,6 @@ public interface ServiceStationService extends AbstractEntityCommonService{
 	 * @return List<Department> or null.
 	 */
 	public List<Department> getListDepartmentForServiceStation(Long idServiceStation);
-	
-	/**
-	 * Return all employees which work in service station by id service station
-	 * else return null.
-	 * 
-	 * @type Long
-	 * @type List
-	 * @param idServiceStation
-	 * 
-	 * @return List<Employee> or null.
-	 */
-	public List<Employee> getListEmployeeForServiceStation(Long idServiceStation);
-	
-	/**
-	 * Return all clients which use service station by id service station
-	 * else return null.
-	 * 
-	 * @type Long
-	 * @type List
-	 * @param idServiceStation
-	 * 
-	 * @return List<Client> or null.
-	 */
-	public List<Client> getListClientForServiceStation(Long idServiceStation);
 	
 	/**
 	 * Generate pdf file which contain financial report for departmet

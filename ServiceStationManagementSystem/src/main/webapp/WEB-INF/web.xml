@@ -20,7 +20,6 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>/WEB-INF/config/context-config.xml</param-value>
-     <!--<param-value>/WEB-INF/config/spring-security.xml</param-value>-->
   </context-param>
   
   <!--pages which display when application start -->
@@ -45,7 +44,21 @@
       <param-value>true</param-value>
     </init-param>
   </filter>
-
+  
+  <!-- 
+  <filter>
+        <filter-name>hibernateFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+        <init-param>
+            <param-name>singleSession</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>hibernateFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+ -->
   <!--
   <filter>
  	<filter-name>springSecurityFilterChain</filter-name>
@@ -54,7 +67,7 @@
  
   <filter-mapping>
     <filter-name>springSecurityFilterChain</filter-name>
-	<url-pattern>/*</url-pattern>
+	<url-pattern>/</url-pattern>
   </filter-mapping>
   -->
   

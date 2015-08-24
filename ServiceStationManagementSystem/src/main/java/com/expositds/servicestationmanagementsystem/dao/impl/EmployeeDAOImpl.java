@@ -23,7 +23,6 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.dao.EmployeeDAO;
 import com.expositds.servicestationmanagementsystem.model.Department;
@@ -80,7 +79,6 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 	 * 
 	 * @return List<Employee> all employee with last name as parametr.
 	 */
-	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<Employee> getListEmployeByLastName(String employeLastName){
 
@@ -94,6 +92,10 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 		try {
 			listEmployee=(List<Employee>)criteria.list();
 			logger.info("DAO:Employee list loaded successfully");
+			
+			for(Employee employee : listEmployee){
+				logger.info("DAO:Employee list by last name"+employeLastName+" contain ="+employee);
+			}
 			
 		} catch (NullPointerException e) {
 			listEmployee=null;
@@ -115,7 +117,6 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 	 * 
 	 * @return Long
 	 */
-	@Transactional
 	@SuppressWarnings("finally")
 	public Long getIdEmployeByLoginPassword(String employeLogin, String employePassword){
 
@@ -157,7 +158,6 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 	 * 
 	 * @return Boolean
 	 */
-	@Transactional
 	@SuppressWarnings("finally")
 	public Boolean signInEmployeByLoginPassword(String employeLogin, String employePassword){
 	
@@ -182,10 +182,10 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 			}
 			
 		}catch (NullPointerException e) {
-			logger.info("DAO:Employee sign in is failed");
+			logger.info("DAO:Client sign in is failed"+e);
 			
 		}catch(NonUniqueResultException e){
-			logger.info("DAO:Employee sign in is failed because nonunique result ");
+			logger.info("DAO:Client sign in is failed because nonunique result "+e);
 			
 		}finally{
 			return signIn;
@@ -203,7 +203,6 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 	 * 
 	 * @return List<Employee> all employee which have function as mechanic.
 	 */
-	@Transactional
 	@SuppressWarnings({ "finally", "unchecked" })
 	public List<Employee> getListMechanic(){
 
@@ -217,7 +216,10 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 		try {
 			listMechanic=(List<Employee>)criteria.list();
 			logger.info("DAO:Mechanic list loaded successfully");
-
+			
+			for(Employee employee : listMechanic){
+				logger.info("DAO:DAO:Mechanic list contain ="+employee);
+			}
 		}catch (NullPointerException e) {
 			listMechanic=null;
 			logger.info("DAO:Mechanic list not loaded successfully because is empty.");
@@ -240,7 +242,6 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 	 * 
 	 * @return List<Department> all department in which employee work.
 	 */
-	@Transactional
 	@SuppressWarnings({ "unchecked" })
 	public List<Department> getListDepartmentForEmployee(Long idEmployee){
 		
@@ -255,8 +256,12 @@ public class EmployeeDAOImpl extends AbstractEntity—ommonDAOImpl implements Empl
 		
 		try {
 			listDepartment=(List<Department>)criteria.list();
+			
 			logger.info("DAO:Department list for employee with id="+idEmployee+"loaded successfully");
 			
+			for(Department department : listDepartment){
+				logger.info("DAO:Department list for employee contain ="+department);
+			}
 		}catch (NullPointerException e) {
 			listDepartment=null;
 		}

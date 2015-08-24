@@ -23,7 +23,6 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.dao.DepartmentOrderDAO;
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
@@ -78,7 +77,6 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 	 * 	 
 	 * @return List<DepartmentOrder> for employee
 	 */
-	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<DepartmentOrder> getListDepartmentOrderForEmployee(Long idEmployee){
 		
@@ -93,6 +91,10 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 		try{
 			logger.info("DAO:DepartmentOrder list for employee loaded successfully.");
 			listAllEmployeOrder=(List<DepartmentOrder>)criteria.list();
+			
+			for(DepartmentOrder order : listAllEmployeOrder){
+				logger.info("DAO:DepartmentOrder list for employee contain ="+order);
+			}
 
 		}catch(NullPointerException e){
 			listAllEmployeOrder=null;
@@ -113,7 +115,6 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 	 * 	 
 	 * @return List<DepartmentOrder> for employee.
 	 */
-	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<DepartmentOrder> getListNotcompletedOverdueDepartmentOrderForEmployee(Long idEmployee){
 		
@@ -135,6 +136,10 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 			employeNotcompletedOverdueOrderList=(List<DepartmentOrder>)criteria.list();
 			logger.info("DAO:DepartmentOrder list notcompleted and overdue order for employee loaded successfully.");
 			
+			for(DepartmentOrder order : employeNotcompletedOverdueOrderList){
+				logger.info("DAO:DAO:DepartmentOrder list notcompleted and overdue order for employee contain ="+order);
+			}
+			
 		}catch(NullPointerException e){
 			employeNotcompletedOverdueOrderList=null;
 			logger.info("DAO:DepartmentOrder list notcompleted and overdue order for employee not loaded because is null.");
@@ -154,7 +159,6 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 	 * 	 
 	 * @return List<DepartmentOrder> for employee.
 	 */
-	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<DepartmentOrder> getListDoneDepartmentOrderForEmployee(Long idEmployee){
 		
@@ -193,7 +197,6 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 	 * 	 
 	 * @return Full detail cost
 	 */
-	@Transactional
 	public Double getFullDetailCostForDepartmentOrder(Long idDepartmentOrder){
 		
 		//cost detail for order
@@ -230,7 +233,6 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 	 * 	 
 	 * @return order cost.
 	 */
-	@Transactional
 	public Double getOrderCostForDepartmentOrder(Long idDepartmentOrder){
 		
 		//cost order work

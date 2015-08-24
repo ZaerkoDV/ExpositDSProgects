@@ -29,30 +29,40 @@
   </head>
  <body>
   <div class="container">
-    <div class="row">
-      <div class="col-md-4">
+     <div class="col-md-4">
+          <h2>Service Stations</h2>
       </div>
-      <div class="col-md-8" style="padding-top: 20px;">
-        <form class="form-inline">
-          <div class="form-group">
-            <input type="login" class="form-control" id="exampleInputEmail3" placeholder="Login">
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
-          </div>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"> Remember me
-            </label>
-          </div>
-          <a href="#"><button type="submit" class="btn btn-success">Sign in</button></a>
-          <a href="#"><button type="button" class="btn btn-primary">Sign up</button></a>
-        </form>
+      <div class="col-md-6">
+      </div>
+      <!-- sec:authorize access="isAuthenticated()" >
+      <div class="col-md-2" style="margin-top: 30px;">
+      <a href="<c:url value="/ServiceStationManagementSystem/profile" />">${ClientSecurityFeature.clientLogin}</a><br>
+      <a href="<c:url value="/ServiceStationManagementSystem/logout" />" style="margin-left: 50px;"><button type="button" class="btn btn-default">Logout</button></a>
+      </div>
+      <!-- /sec:authorize -->
+      <!-- sec:authorize access="!isAuthenticated()" -->
+      <div class="col-md-2" style="padding-top: 20px;">
+      <c:url value="/j_spring_security_check" var="loginUrl" />
+         <form class="form-inline" action="${loginUrl}" method="post">
+		  <div class="form-group">
+		    <input type="login" class="form-control" id="exampleInputEmail3" name="j_username" placeholder="Login">
+		  </div><br>
+		  <div class="form-group" style="margin-top: 5px;">
+		    <input type="password" class="form-control" id="exampleInputPassword3" name="j_password" placeholder="Password">
+		  </div><br>
+		  <div class="checkbox">
+		    <label>
+		      <input type="checkbox" name="_spring_security_remember_me"> Remember me
+		    </label>
+		  </div><br>
+		  <a href="<c:url value="/ServiceStationManagementSystem/login" />"><button type="submit" class="btn btn-default">Sign in</button></a>
+          <a href="<c:url value="/registration" />"><button type="button" class="btn btn-default">Sign up</button></a><br>
+		</form>
       </div>
       <div class="row" style="padding-top: 150px;">
            <div class="col-md-2"><a href="#"><button type="button" class="btn btn-default">Back</button></a></div>
-           <div class="col-md-4"><h3>${ServiceStation.name}</h3></div>
-           <div class="col-md-2"><a href="<c:url value='/station/${ServiceStation.id}/request/' />"><button type="button" class="btn btn-danger">Make a request</button></a></div>
+           <div class="col-md-4"><h3>${serviceStation.serviceStationName}</h3></div>
+           <div class="col-md-2"><a href="<c:url value='/station/${serviceStation.idServiceStation}/request/' />"><button type="button" class="btn btn-danger">Make a request</button></a></div>
       </div>
       <h4>Main information: </h4>
       <div class="row" style="padding-top: 50px;">
@@ -62,9 +72,9 @@
           <p>Mark: </p>
         </div>
         <div class="col-md-4">
-          <p>${ServiceStation.adress}</p>
-          <p>${ServiceStation.phoneNumber}</p>
-          <p>${ServiceStation.mark}</p>
+          <p>${serviceStation.serviceStationAddress}</p>
+          <p>${serviceStation.serviceStationPhoneNumber}</p>
+          <!-- p>${serviceStationCommentMark.mark}</p -->
         </div>
       </div>
       <h4>Check status: </h4>
@@ -72,7 +82,7 @@
         <div class="form-group">
           <input type="email" class="form-control" id="email" placeholder="email">
         </div>
-        <a href="<c:url value='/station/${stationId}/check' />"><button type="submit" class="btn btn-default">Check</button></a>
+        <a href="<c:url value='/station/${idServiceStation}/check' />"><button type="submit" class="btn btn-default">Check</button></a>
       </form>
       <div class="row" style="padding-top: 50px;">
         <c:if test="${!empty listServiceStationCommentMark}">

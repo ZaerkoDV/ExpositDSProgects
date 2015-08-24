@@ -21,7 +21,6 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.dao.DetailDAO;
 import com.expositds.servicestationmanagementsystem.model.Detail;
@@ -74,7 +73,6 @@ public class DetailDAOImpl extends AbstractEntity—ommonDAOImpl implements  Detai
 	 * 
 	 * @return List<Detail>  
 	 */
-	@Transactional
 	@SuppressWarnings({ "unchecked", "finally" })
 	public List<Detail> getListAllDetail(){
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -86,6 +84,10 @@ public class DetailDAOImpl extends AbstractEntity—ommonDAOImpl implements  Detai
 		try{
 			listDetail=(List<Detail>)criteria.list();
 			logger.info("Detail list with status all loaded successfully");
+			
+			for(Detail detail : listDetail){
+				logger.info("DAO:Detail list contain ="+detail);
+			}
 
 		}catch(NullPointerException e){
 			listDetail=null;
@@ -107,7 +109,6 @@ public class DetailDAOImpl extends AbstractEntity—ommonDAOImpl implements  Detai
 	 * 
 	 * @return List<Detail> with status.
 	 */
-	@Transactional
 	@SuppressWarnings({ "unchecked", "finally" })
 	public List<Detail> getListDetailWithStausAsParam(String detailStaus){
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
@@ -122,7 +123,11 @@ public class DetailDAOImpl extends AbstractEntity—ommonDAOImpl implements  Detai
 				listDetailWithStausAsParam=(List<Detail>)criteria.list();	
 				
 				logger.info("Detail list with status "+detailStaus+" loaded successfully");
-
+				
+				for(Detail detail : listDetailWithStausAsParam){
+					logger.info("DAO:Detail list contain ="+detail);
+				}
+				
 			}else{
 				listDetailWithStausAsParam=null;
 				logger.info("Detail list with status "+detailStaus+" loaded successfully,but empty.");

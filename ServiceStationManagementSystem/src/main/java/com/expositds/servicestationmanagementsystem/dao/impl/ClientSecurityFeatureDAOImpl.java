@@ -19,7 +19,6 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.dao.ClientSecurityFeatureDAO;
 import com.expositds.servicestationmanagementsystem.model.ClientSecurityFeature;
@@ -71,7 +70,6 @@ public class ClientSecurityFeatureDAOImpl extends AbstractEntity—ommonDAOImpl im
 	 * 
 	 * @return true if login and password not exist in data base else false.
 	 */
-	@Transactional
 	public Boolean isUniqueLoginPassword(String clientLogin, String clientPassword){
 
 		Boolean isUnique;

@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.orm.hibernate4.HibernateObjectRetrievalFailureException;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.dao.AbstractEntityCommonDAO;
 
@@ -70,7 +69,6 @@ public class AbstractEntity—ommonDAOImpl extends HibernateDaoSupport implements 
 	 * 
 	 * @return Object or null.
 	 */
-	@Transactional
 	public <T> Object getEntityById(Class<T> entityClass,Long idEntity) {
 
 		try{
@@ -93,7 +91,6 @@ public class AbstractEntity—ommonDAOImpl extends HibernateDaoSupport implements 
 	 * 
 	 * @throws HibernateObjectRetrievalFailureException
 	 */
-	@Transactional
 	public void saveEntity(Object entity){
 		
 		this.getHibernateTemplate().persist(entity);
@@ -110,7 +107,6 @@ public class AbstractEntity—ommonDAOImpl extends HibernateDaoSupport implements 
 	 * @param entity
 	 * @throws HibernateObjectRetrievalFailureException
 	 */
-	@Transactional
 	public void updateEntity(Object entity){
 		
 		this.getHibernateTemplate().update(entity);
@@ -131,7 +127,6 @@ public class AbstractEntity—ommonDAOImpl extends HibernateDaoSupport implements 
 	 * @param entityClass
 	 * @throws HibernateObjectRetrievalFailureException
 	 */
-	@Transactional
 	public <T> void deleteEntityById(Class<T> entityClass,Long idEntity){
 		
 		logger.info("DAO:Entity"+entityClass.getName()+" delete successfully,id="+idEntity);
@@ -150,7 +145,6 @@ public class AbstractEntity—ommonDAOImpl extends HibernateDaoSupport implements 
 	 * @param entity
 	 * @throws HibernateObjectRetrievalFailureException
 	 */
-	@Transactional
 	public void deleteEntity(Object entity){
 		
 		logger.info("DAO:Entity delete successfully");

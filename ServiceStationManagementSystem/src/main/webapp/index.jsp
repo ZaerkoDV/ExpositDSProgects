@@ -68,12 +68,13 @@
   		<th>Mark</th>
   		<th>Go</th>
   	</tr>
-  <c:forEach var="ServiceStation" items="${listServiceStation}"> 
+  	
+  <c:forEach var="serviceStation" items="${listServiceStation}"> 
   	<tr style="font-size: 18px;">
   		<td><img src="resources/img/logo.png" alt="Logo" class="img-circle"></td>
-  		<td>${ServiceStation.serviceStationName}</td>
-  		<td>${ServiceStation.serviceStationAddress}</td>
-  		<td>${ServiceStationCommentMark.mark}</td>
+  		<td>${serviceStation.serviceStationName}</td>
+  		<td>${serviceStation.serviceStationAddress}</td>
+  		<td>${serviceStationCommentMark.mark}</td>
   		<td><a href="<c:url value='/station/${serviceStation.idServiceStation}' />"><button type="button" class="btn btn-primary">Go</button></a></td>
   	</tr>
   </c:forEach> 

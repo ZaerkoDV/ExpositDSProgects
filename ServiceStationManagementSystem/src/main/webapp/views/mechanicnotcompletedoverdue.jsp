@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- @author Artyom_Khomyakov -->
 <html lang="en">
@@ -7,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Comments</title>
+    <title>Not done/Overdue</title>
 
     
     	<link href="resources/libs/bootstrap.min.css" rel="stylesheet">
@@ -43,26 +45,49 @@
         </div>
       </div>
       <div class="row" style="padding-top: 50px;">
-      <h4>Comments</h4>
-      <c:if test="${!empty listServiceStationCommentMark}">
+        <c:if test="${empty listNotDoneOverdue}">
+       <h4 style="padding-top: 50px;">No orders in progress</h4>
+       </c:if> 
+      <c:if test="${empty listNotDoneOverdue}">
+      <h4>In progress</h4>
          <table class="table table-striped">
         <tr>
           <th>№</th>
-          <th>Comment</th>
-          <th>From</th>
-          <th>Mark</th>
+          <th>Description</th>
+          <th>Client</th>
+          <th>Deadline date</th>
+          <th>Cost</th>
+          <th>Details</th>
+          <th>Order item</th>
+          <th>Finish</th>
         </tr>
-        <c:forEach  var="serviceStationCommentMark" items="${listServiceStationCommentMark}">
+         <c:forEach items="${listNotDoneOverdue}" var="notDoneOverdue">
         <tr>
           <td>1</td>
-          <td>${serviceStationCommentMark.comment}</td>
-          <td>${serviceStationCommentMark.client.getClientFirstName()} ${serviceStationCommentMark.client.getClientMiddleName()}</td>
-          <td>${serviceStationCommentMark.mark}</td>
+          <td>${notDoneOverdue.orderDescription}</td>
+          <td>${notDoneOverdue.client.getClientFirstName()} ${serviceStationCommentMark.client.getClientMiddleName()}</td>
+          <td>${notDoneOverdue.endOrder}</td>
+          <form:form commandName="finish" method="post" action="${pageContext.request.contextPath}/mechanicpage/${employee.idEmployee}/notdone/finish/${notDoneOverdue.idDepartmentOrder}">
+          <td>
+          <form:input path="costWork" type="text" class="form-control" id="exampleInputName2" />
+          </td>
+          <td>
+          <!--  c:if test="${!empty listDetail}" -->
+          <select class="form-control">
+          <!-- c:forEach items="${listDetail}" var="Detail" -->
+            <option>${Detail.detailName}</option>
+            <!-- /c:forEach -->
+          </select>
+          <!-- /c:if -->
+          </td>
+          <td><a href="<c:url value='/mechanicpage/${employee.idEmployee}/notdone/order/${notDoneOverdue.idDepartmentOrder}' />"><button type="button" class="btn btn-xs btn-success">Order</button></a></td>
+          <td><a href="<c:url value='/mechanicpage/${employee.idEmployee}/notdone/finish/${notDoneOverdue.idDepartmentOrder}' />"><button type="submit" class="btn btn-xs btn-primary">Finish</button></a></td>
         </tr>
-        </c:forEach>
-       </table>
-       </c:if>
-      </div>
+        </form:form>
+         </c:forEach>
+       </table> 
+       	</c:if>
+         </div>
     </div>
   </body>
 </html>

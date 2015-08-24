@@ -31,21 +31,20 @@
     <div class="container">
       <div class="row" style="padding-top: 50px;">
         <div class="col-md-6">
-         <a href="/ServiceStationManagementSystem/mechanicpage/notdone"><button type="button" class="btn btn-default">Not done</button></a>
-         <a href="/ServiceStationManagementSystem/mechanicpage/inprogress"><button type="button" class="btn btn-warning">In progress</button></a>
-         <a href="/ServiceStationManagementSystem/mechanicpage/done"><button type="button" class="btn btn-success">Done</button></a>
-         <a href="/ServiceStationManagementSystem/mechanicpage/comments"><button type="button" class="btn btn-primary">Comments</button></a>
+         <a href="/ServiceStationManagementSystem/mechanicpage/${employee.idEmployee}/notcompleted"><button type="button" class="btn btn-warning">Not Done/Overdue</button></a>
+         <a href="/ServiceStationManagementSystem/mechanicpage/${employee.idEmployee}/done"><button type="button" class="btn btn-success">Done</button></a>
+         <a href="/ServiceStationManagementSystem/mechanicpage/${employee.idEmployee}/comments"><button type="button" class="btn btn-primary">Comments</button></a>
         </div>
         <div class="col-md-2"></div>
         <div class="col-md-4">
           <div class="col-md-4" style="padding-top: 10px;"><p>Employee:</p></div>
-          <div class="col-md-4" style="padding-top: 10px;"><p>${Employee.firstName} ${Employee.lastName}</p></div>
+          <div class="col-md-4" style="padding-top: 10px;"><p>${employee.employeFirstName} ${employee.employeLastName}</p></div>
           <div class="col-md-4"><a href="/logout"><button type="button" class="btn btn-default">Logout</button></a></div>
         </div>
       </div>
       <div class="row" style="padding-top: 50px;">
   <h4>Done</h4>
-    <!--  c:if test="${!empty listDepartmentOrder}" -->
+    <c:if test="${!empty listDone}">
          <table class="table table-striped">
         <tr>
           <th>№</th>
@@ -54,17 +53,17 @@
           <th>Date end</th>
           <th>Cost</th>
         </tr>
-        <!-- c:forEach items="${listDepartmentOrder}" var="DepartmentOrder" -->
+        <c:forEach items="${listDone}" var="Done">
         <tr>
           <td>1</td>
-          <td>${DepartamentOrder.orderDescription}</td>
-          <td>${DepartamentOrder.client}</td>
-          <td>${DepartamentOrder.endOrder}</td>
-          <td>${DepartamentOrder.workCost} + ${DepartamentOrder.orderCost}</td>
+          <td>${Done.orderDescription}</td>
+          <td>${Done.client}</td>
+          <td>${Done.endOrder}</td>
+          <td>${Done.workCost} + ${Done.orderCost}</td>
         </tr>
-         <!-- /c:forEach -->
+         </c:forEach>
        </table>
-        <!-- /c:if -->
+        </c:if>
         </div>
     </div>
   </body>

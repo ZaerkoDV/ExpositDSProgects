@@ -39,7 +39,7 @@
      <div class="row" style="padding-top: 50px;">
        <h4>Requests list</h4>
        <div class="col-md-4" style="padding-top: 20px;">
-       	 <a href="/ServiceStationManagementSystem/profile/inprogress"><button type="button" class="btn btn-default">In progress</button></a>
+       	 <a href="/ServiceStationManagementSystem/profile/notcompleted"><button type="button" class="btn btn-default">In progress</button></a>
          <a href="/ServiceStationManagementSystem/profile/done"><button type="button" class="btn btn-success">Done</button></a>
          <a href="/ServiceStationManagementSystem/profile/overdue"><button type="button" class="btn btn-danger">Overdue</button></a>
        </div>

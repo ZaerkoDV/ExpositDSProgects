@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -103,7 +104,7 @@ public class ClientController {
 	/*
 	 * This method takes an attribute the client, 
 	 * the clientService save entity and redirect profile page
-	*/
+	*/ 
 	@RequestMapping(value="/registration", method=RequestMethod.POST)
 	public String signup(@ModelAttribute("client") Client client, Model model) {	
 		/*if(!clientSecurityFeatureService.isUniqueLoginPassword(clientSecurityFeature.getClientLogin(), clientSecurityFeature.getClientPassword())){
@@ -147,7 +148,7 @@ public class ClientController {
 		DepartmentOrder order = new DepartmentOrder();
 		model.addAttribute("DepartmentOrder", order);
 		logger.info("GET:Request page loaded successfully"+idServiceStation);
-		return "request";
+		return "clientrequest";
 	}
 	
 	/*
@@ -175,36 +176,36 @@ public class ClientController {
 	 */
 	@RequestMapping(value="/profile", method=RequestMethod.GET)
 	public String home(Model model) {	
-		return "redirect:profile/inprogress";
+		return "redirect:profile/notcompleted";
 	}
 	
 	/*
 	 * This method returns inprogress.jsp page together with a list 
 	 * orders with the status notcompleted.
 	 */
-	@RequestMapping(value="/profile/inprogress", method=RequestMethod.GET)
-	public String inProgress(Client client, Model model) {	
-		return "inprogress";
+	@RequestMapping(value="/profile/notcompleted", method=RequestMethod.GET)
+	public String notcompleted(Client client, Model model) {	
+		return "clientnotcompleted";
 	}
 	
 	@RequestMapping(value="/profile/done", method=RequestMethod.GET)
 	public String done(Model model) {	
-		return "done";
+		return "clientdone";
 	}
 	
 	@RequestMapping(value="/profile/overdue", method=RequestMethod.GET)
 	public String overdue(Model model) {	
-		return "overdue";
+		return "clientoverdue";
 	}
 	
 	@RequestMapping(value="/profile/overdue/renew/{DepartmentId}", method=RequestMethod.GET)
 	public String renew(Model model) {	
-		return "renew";
+		return "clientrenew";
 	}
 	
 	@RequestMapping(value= {"/profile/overdue/addcomment/{ServiceStationId}", "/profile/done/addcomment/{ServiceStationId}"}, method=RequestMethod.GET)
 	public String addcomment(Model model) {	
-		return "addcomment";
+		return "clientaddcomment";
 	}
 	
 	@RequestMapping(value="/profile/overdue/detele/{departmentOrderId}", method=RequestMethod.GET)

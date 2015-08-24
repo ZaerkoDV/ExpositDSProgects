@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Income</title>
+    <title>Costs</title>
 
     
     	<link href="resources/libs/bootstrap.min.css" rel="stylesheet">
@@ -31,15 +31,15 @@
     <div class="container">
       <div class="row" style="padding-top: 50px;">
         <div class="col-md-4">
-         <a href="/ServiceStationManagementSystem/directorpage/income"><button type="button" class="btn btn-success">Income</button></a>
-         <a href="/ServiceStationManagementSystem/directorpage/costs"><button type="button" class="btn btn-danger">Costs</button></a>
-         <a href="/ServiceStationManagementSystem/directorpage/comments"><button type="button" class="btn btn-primary">Comments</button></a>
-         <a href="/ServiceStationManagementSystem/directorpage/report"><button type="button" class="btn btn-warning">Report</button></a>
+         <a href="/ServiceStationManagementSystem/directorpage/${employee.idEmployee}/income"><button type="button" class="btn btn-success">Income</button></a>
+         <a href="/ServiceStationManagementSystem/directorpage/${employee.idEmployee}/costs"><button type="button" class="btn btn-danger">Costs</button></a>
+         <a href="/ServiceStationManagementSystem/directorpage/${employee.idEmployee}/comments"><button type="button" class="btn btn-primary">Comments</button></a>
+         <a href="/ServiceStationManagementSystem/directorpage/${employee.idEmployee}/report"><button type="button" class="btn btn-warning">Report</button></a>
         </div>
         <div class="col-md-4"></div>
         <div class="col-md-4">
           <div class="col-md-2" style="padding-top: 10px;"><p>Director:</p></div>
-          <div class="col-md-6" style="padding-top: 10px;"><p>${Employee.firstName} ${Employee.lastName}</p></div>
+          <div class="col-md-6" style="padding-top: 10px;"><p>${employee.employeFirstName} ${employee.employeLastName}</p></div>
           <div class="col-md-4"><a href="#"><button type="button" class="btn btn-default">Logout</button></a></div>
         </div>
       </div>
@@ -70,26 +70,26 @@
       </select>
       </div>
       <!-- /c:if --> 
-      <a href="<c:url value='/directorpage/income/show' />"><button type="button" class="btn btn-primary">Show</button></a>  
+      <a href="<c:url value='/directorpage/costs/show' />"><button type="button" class="btn btn-primary">Show</button></a>  
       </div>
       <div class="row" style="padding-top: 50px;">
       <!-- c:if test="${empty listDepartamentOrder}" --> 
       <!-- h4>Orders have not received or have not been finished</h4 -->
       <!-- /c:if -->
       <!-- c:if test="${!empty listDepartamentOrder}" --> 
-      <h4>Income</h4>
+      <h4>Costs</h4>
          <table class="table table-striped">
         <tr>
           <th>№</th>
           <th>Description</th>
-          <th>Income</th>
+          <th>Costs</th>
           <th>Date</th>
         </tr>
         <!--  c:forEach items="${listDepartamentOrder}" var="DepartamentOrder" --> 
         <tr>
           <td>1</td>
           <td>${DepartamentOrder.orderDescription}</td>
-          <td>${DepartamentOrder.orderCost}+${DepartamentOrder.workCost}</td>
+          <td>${Stead.steadCost}</td>
           <td>${DepartamentOrder.endOrder}</td>
         </tr>
         <!--  /c:forEach -->

@@ -31,15 +31,15 @@
     <div class="container">
       <div class="row" style="padding-top: 50px;">
         <div class="col-md-4">
-         <a href="/ServiceStationManagementSystem/directorpage/income"><button type="button" class="btn btn-success">Income</button></a>
-         <a href="/ServiceStationManagementSystem/directorpage/costs"><button type="button" class="btn btn-danger">Costs</button></a>
-         <a href="/ServiceStationManagementSystem/directorpage/comments"><button type="button" class="btn btn-primary">Comments</button></a>
-         <a href="/ServiceStationManagementSystem/directorpage/report"><button type="button" class="btn btn-warning">Report</button></a>
+         <a href="/ServiceStationManagementSystem/directorpage/${employee.idEmployee}/income"><button type="button" class="btn btn-success">Income</button></a>
+         <a href="/ServiceStationManagementSystem/directorpage/${employee.idEmployee}/costs"><button type="button" class="btn btn-danger">Costs</button></a>
+         <a href="/ServiceStationManagementSystem/directorpage/${employee.idEmployee}/comments"><button type="button" class="btn btn-primary">Comments</button></a>
+         <a href="/ServiceStationManagementSystem/directorpage/${employee.idEmployee}/report"><button type="button" class="btn btn-warning">Report</button></a>
         </div>
         <div class="col-md-4"></div>
         <div class="col-md-4">
           <div class="col-md-2" style="padding-top: 10px;"><p>Director:</p></div>
-          <div class="col-md-6" style="padding-top: 10px;"><p>${Employee.firstName} ${Employee.lastName}</p></div>
+          <div class="col-md-6" style="padding-top: 10px;"><p>${employee.employeFirstName} ${employee.employeLastName}</p></div>
           <div class="col-md-4"><a href="#"><button type="button" class="btn btn-default">Logout</button></a></div>
         </div>
       </div>

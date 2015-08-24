@@ -3,10 +3,31 @@
  */
 package com.expositds.servicestationmanagementsystem.controller;
 
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
+import com.expositds.servicestationmanagementsystem.model.Detail;
+import com.expositds.servicestationmanagementsystem.model.Employee;
+import com.expositds.servicestationmanagementsystem.model.ServiceStation;
+import com.expositds.servicestationmanagementsystem.model.ServiceStationCommentMark;
+import com.expositds.servicestationmanagementsystem.service.DepartmentOrderService;
+import com.expositds.servicestationmanagementsystem.service.DetailService;
+import com.expositds.servicestationmanagementsystem.service.EmployeeService;
+import com.expositds.servicestationmanagementsystem.service.ServiceStationCommentMarkService;
 
 /**
  * @author Artyom_Khomyakov
@@ -17,47 +38,71 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/mechanicpage")
 public class MechanicController {
 	
+	@Inject
+	@Qualifier("departmentOrderService")
+	private DepartmentOrderService departmenOrderService;
+	
+	@Inject
+	@Qualifier("employeeService")
+	private EmployeeService employeeService;
+	
+	@Inject
+	@Qualifier("detailService")
+	private DetailService detailService;
+	
+	@Inject
+	@Qualifier("serviceStationCommentMarkService")
+	private ServiceStationCommentMarkService serviceStationCommentMarkService;
+	
+	private static final Logger logger = LoggerFactory.getLogger(MechanicController.class);
+	
 	@RequestMapping(method=RequestMethod.GET)
-	public String home(Model model) {
-		return "redirect:mechanicpage/notdone";
+	public String home(@PathVariable("idEmployee") Long idEmployee, Model model) {
+		return "redirect:mechanicpage/{idEmployee}/notdone";
 	}
 	
-	@RequestMapping(value="/notdone", method=RequestMethod.GET)
-	public String notdone(Model model) {	
-		return "mechanicnotdone";
+	
+	@RequestMapping(value="/{idEmployee}/notcompleted", method=RequestMethod.GET)
+	public String notcompleted(@PathVariable("idEmployee") Long idEmployee, Model model) {	
+		List<DepartmentOrder> listNotDoneOverdue = departmenOrderService.getListNotcompletedOverdueDepartmentOrderForEmployee(idEmployee);
+		Object employee = employeeService.getEntityById(Employee.class, idEmployee);
+		/*Object costAllDetail = departmenOrderService.getFullDetailCostForDepartmentOrder(idDepartmentOrder);
+		model.addAttribute("costAllDetail", costAllDetail);*/
+		model.addAttribute("listNotDoneOverdue", listNotDoneOverdue);
+		model.addAttribute("employee", employee);
+		return "mechanicnotcompletedoverdue";
 	}
 	
-	@RequestMapping(value="/inprogress", method=RequestMethod.GET)
-	public String inprogress(Model model) {	
-		return "mechanicinprogress";
-	}
 	
-	@RequestMapping(value="/overdue", method=RequestMethod.GET)
-	public String overdue(Model model) {	
-		return "mechanicoverdue";
-	}
-	
-	@RequestMapping(value="/done", method=RequestMethod.GET)
-	public String done(Model model) {	
+	@RequestMapping(value="/{idEmployee}/done", method=RequestMethod.GET)
+	public String done(@PathVariable("idEmployee") Long idEmployee, Model model) {	
+		List<DepartmentOrder> listDone = departmenOrderService.getListDoneDepartmentOrderForEmployee(idEmployee);
+		Object employee = employeeService.getEntityById(Employee.class, idEmployee);
+		model.addAttribute("listDone", listDone);
+		model.addAttribute("employee", employee);
 		return "mechanicdone";
 	}
 	
-	@RequestMapping(value="/comments", method=RequestMethod.GET)
-	public String comments(Model model) {	
+	@RequestMapping(value="/{idEmployee}/comments", method=RequestMethod.GET)
+	public String comments(@PathVariable("idEmployee") Long idEmployee, Model model) {
+		Object employee = employeeService.getEntityById(Employee.class, idEmployee);
+		//List<ServiceStationCommentMark> listServiceStationCommentMark = serviceStationCommentMarkService.getListCommentMarkStatusAsParamByIdServiceStation(, null);
+		model.addAttribute("employee", employee);
+		//`model.addAttribute("listServiceStationCommentMark", listServiceStationCommentMark);
 		return "mechaniccomments";
 	}
 	
-	@RequestMapping(value="/notdone/save/{DepartmentOrderId}", method=RequestMethod.GET)
+	@RequestMapping(value="/notcompleted/save/{DepartmentOrderId}", method=RequestMethod.GET)
 	public String save(Model model) {	
 		return "mechanicinprogress";
 	}
 	
-	@RequestMapping(value="/inprogress/order/{DepartmentId}", method=RequestMethod.GET)
+	@RequestMapping(value="/notcompleted/order/{DepartmentId}", method=RequestMethod.GET)
 	public String order(Model model) {	
-		return "orderdetail";
+		return "mechanicorderdetail";
 	}
 	
-	@RequestMapping(value="/inprogress/finish/{DepartmentOrderId}", method=RequestMethod.GET)
+	@RequestMapping(value="/notcompleted/finish/{DepartmentOrderId}", method=RequestMethod.GET)
 	public String finish(Model model) {	
 		return "mechanicdone";
 	}

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>In progress</title>
+    <title>Overdue</title>
 
     <!-- Bootstrap
     	<link href="resources/libs/bootstrap.min.css" rel="stylesheet">
@@ -25,45 +25,50 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
   </head>
-  <body>
+ <body>
    <div class="container">
      <div class="row" style="padding-top: 50px;">
        <div class="col-md-2"></div>
        <div class="col-md-8">
          <div class="col-md-2" style="padding-top: 15px;"><a href="#"><button type="button" class="btn btn-default"> < Back</button></a></div>
-         <h3>${clientPage.firstName} ${clientPage.lastName}</h3>
+         <h3>${Client.firstName} ${Client.lastName}</h3>
        </div>
        <div class="col-md-2"></div>
      </div>
      <div class="row" style="padding-top: 50px;">
        <h4>Requests list</h4>
        <div class="col-md-4" style="padding-top: 20px;">
-         <a href="/ServiceStationManagementSystem/profile/inprogress"><button type="button" class="btn btn-default">In progress</button></a>
+		 <a href="/ServiceStationManagementSystem/profile/notcompleted"><button type="button" class="btn btn-default">In progress</button></a>
          <a href="/ServiceStationManagementSystem/profile/done"><button type="button" class="btn btn-success">Done</button></a>
          <a href="/ServiceStationManagementSystem/profile/overdue"><button type="button" class="btn btn-danger">Overdue</button></a>
        </div>
      </div>
-     <!--STATUS IN PROGRESS -->
+     <!--STATUS OVERDUE -->
      <div class="row" style="padding-top: 50px;">
-     <c:if test="${!empty listDepartmentOrder}">
+     <!--  c:if test="${!empty listDepartmentOrder}" -->
        <table class="table table-striped">
         <tr>
-          <th>№</th>
+          <th>${DepartmentOrder.id}</th>
           <th>Mechanic</th>
-          <th>Deadline</th>
+          <th>Deadline Date</th>
+          <th>Renew contract</th>
+          <th>Comments</th>
+          <th>Delete</th>
         </tr>
-        <c:forEach items="${listDepartmentOrder}" var="DepartmentOrder">
+         <!-- c:forEach items="${listDepartmentOrder}" var="DepartmentOrder" -->
         <tr>
-          <td>${DepartmentOrder.id}</td>
+          <td>1</td>
           <td>${DepartmentOrder.employee}</td>
           <td>${DepartmentOrder.endOrder}</td>
+          <td><a href="<c:url value='/profile/overdue/renew/${DepartmentOrder.id}' />"><button type="button" class="btn btn-xs btn-success">Renew</button></a></td>
+          <td><a href="<c:url value='/profile/overdue/addcomment/${ServiceStation.id}' />"><button type="button" class="btn btn-xs btn-primary">Add a comment</button></a></td>
+          <td><a href="<c:url value='/profile/overdue/delete/${DepartmentOrder.id}' />"><button type="button" class="btn btn-xs btn-danger">Delete</button></a></td>
         </tr>
-        </c:forEach>
+        <!-- /c:forEach -->
        </table>
-       </c:if>
+       <!-- /c:if -->
      </div>
-     </div>
+   </div>
   </body>
 </html>

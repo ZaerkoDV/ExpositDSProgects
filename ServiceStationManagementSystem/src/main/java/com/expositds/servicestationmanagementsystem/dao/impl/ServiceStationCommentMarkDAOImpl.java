@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate4.HibernateObjectRetrievalFailureException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.dao.ServiceStationCommentMarkDAO;
 import com.expositds.servicestationmanagementsystem.model.ServiceStationCommentMark;
@@ -81,6 +82,7 @@ public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImp
 	 * 
 	 * @return List<ServiceStationCommentMark> or null;
 	 */
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<ServiceStationCommentMark> getListCommentMarkStatusAsParamByIdServiceStation(Long idServiceStation,String viewStatus){
 
@@ -96,10 +98,6 @@ public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImp
 		try{
 			listServiceStationCommentMark=(List<ServiceStationCommentMark>)criteria.list();
 			logger.info("DAO:List comment mark with view status "+viewStatus+"for department id"+idServiceStation);
-			
-			for(ServiceStationCommentMark serviceStationCommentMark: listServiceStationCommentMark){
-				logger.info("DAO:Comment and mark list for ServiceStation contain ="+serviceStationCommentMark);
-			}
 			
 		}catch(NullPointerException e){
 			listServiceStationCommentMark=null;
@@ -123,6 +121,7 @@ public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImp
 	 * 
 	 * @return List<ServiceStationCommentMark> or null;
 	 */
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<ServiceStationCommentMark> getListCommentMarkByIdClient(Long idClient){
 		
@@ -137,10 +136,6 @@ public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImp
 		try{
 			listCommentMarkByClient=(List<ServiceStationCommentMark>)criteria.list();
 			logger.info("DAO:Client id"+idClient+" comment and mark list load successfully");
-			
-			for(ServiceStationCommentMark serviceStationCommentMark: listCommentMarkByClient){
-				logger.info("DAO:Client comment and mark list contain ="+serviceStationCommentMark);
-			}
 
 		}catch(NullPointerException e){
 			listCommentMarkByClient=null;
@@ -164,6 +159,7 @@ public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImp
 	 * 
 	 * @return List<ServiceStationCommentMark> or null;
 	 */
+	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<ServiceStationCommentMark> getListCommentMarkSortByDegressiveMark(Long idServiceStation){
 		
@@ -179,10 +175,6 @@ public class ServiceStationCommentMarkDAOImpl extends AbstractEntity—ommonDAOImp
 		try{
 			listServiceStationCommentMarkSortDegressiveMark=(List<ServiceStationCommentMark>)criteria.list();
 			logger.info("DAO:List comment and mark which sort by degessive mark load successfully");
-			
-			for(ServiceStationCommentMark serviceStationCommentMark: listServiceStationCommentMarkSortDegressiveMark){
-				logger.info("DAO:Client comment and mark sorted list contain ="+serviceStationCommentMark);
-			}
 
 		}catch(NullPointerException e){
 			listServiceStationCommentMarkSortDegressiveMark=null;

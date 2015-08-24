@@ -19,6 +19,7 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.dao.EmployeeSecurityFeatureDAO;
 import com.expositds.servicestationmanagementsystem.model.EmployeeSecurityFeature;
@@ -70,6 +71,7 @@ public class EmployeeSecurityFeatureDAOImpl extends AbstractEntity—ommonDAOImpl 
 	 * 
 	 * @return true if login and password not exist in data base else false.
 	 */
+	@Transactional
 	public Boolean isUniqueLoginPassword(String employeLogin, String employePassword){
 
 		Boolean isUnique;
@@ -82,7 +84,6 @@ public class EmployeeSecurityFeatureDAOImpl extends AbstractEntity—ommonDAOImpl 
 			if(criteria.list().isEmpty()){
 				isUnique=true;
 				logger.info("DAO:Employee login"+employeLogin+" and password "+employePassword+" is unique.");
-				
 			}else{
 				isUnique=false;
 			}	

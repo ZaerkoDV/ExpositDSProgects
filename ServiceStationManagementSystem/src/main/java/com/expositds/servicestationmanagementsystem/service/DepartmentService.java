@@ -33,15 +33,99 @@ import com.expositds.servicestationmanagementsystem.model.Employee;
  */
 public interface DepartmentService extends  AbstractEntityCommonService{
 
+	/**
+	 * Method return list of order in department by department id. Parametr
+	 * (department id) must be not null and exist in data base.This method
+	 * addresses to method in DAO layer for execution operation. 
+	 * 
+	 * @type Long
+	 * @param idDepartment
+	 * 
+	 * @return List<DepartmentOrder> in department or null.
+	 */
 	public List<DepartmentOrder> getListDepartmentOrderByIdDepartment(Long idDepartment);
+	
+	/**
+	 * Method return list of client in department by id department.Parametr
+	 * (department id) must be not null and exist in data base.This method
+	 * addresses to method in DAO layer for execution operation. 
+	 * 
+	 * @type List
+	 * @type Long
+	 * @param idDepartment
+	 * 
+	 * @return List<Client> in department or null.
+	 */
 	public List<Client> getListClientByIdDepartment(Long idDepartment);
+	
+	/**
+	 * Method return list of employee in department by id department.Parametr
+	 * (department id) must be not null and exist in data base.This method
+	 * addresses to method in DAO layer for execution operation. 
+	 * 
+	 * @type Long
+	 * @param idDepartment
+	 * 
+	 * @return List<Employee> in department.
+	 */
 	public List<Employee> getListEmployeByIdDepartment(Long idDepartment);
+	
+	/**
+	 * Method return total cost detail which use in department orders and 
+	 * have status notcompleted or overdue.This method addresses to method
+	 * in DAO layer for execution operation.
+	 * 
+	 * @type Long
+	 * @param idDepartment
+	 * 
+	 * @return Total sum(double type) detail cost in department. 
+	 */
 	public Double getTotalDetailCostForNotcompletedOverdueDepartmentOrder(Long idDepartment);
+	
+	/**
+	 * Method return full income(work cost and detail cost) which have department.
+	 * This method addresses to method in DAO layer for execution operation.  
+	 * 
+	 * @type Long
+	 * @param idDepartment
+	 * 
+	 * @return Total sum(double type) detail cost in department. 
+	 */
 	public Double getFullIncomeForNotcompletedOverdueDepartmentOrder(Long idDepartment);
 	
+	/**
+	 * Method return sum wages for all employes which work in department.
+	 * This method addresses to method in DAO layer for execution operation.   
+	 * 
+	 * @type Long
+	 * @type Double
+	 * @param idDepartment
+	 * 
+	 * @return sem wages or null if department have not employes 
+	 */
 	public Double getSumEmployeeWagesForDeportment(Long idDepartment);
+	
+	/**
+	 * Method return total cost detail which use in department orders and 
+	 * have status done. This method addresses to method in DAO layer for
+	 * execution operation.
+	 * 
+	 * @type Long
+	 * @param idDepartment
+	 * 
+	 * @return Total sum(double type) detail cost in department. 
+	 */
 	public Double getTotalDetailCostForDoneDepartmentOrder(Long idDepartment, Date startData,Date endData);
+	
+	/**
+	 * Method return full income(work cost and detail cost) which have department for
+	 * deprtment order which have status done. This method addresses to method in DAO
+	 * layer for execution operation.  
+	 * 
+	 * @type Long
+	 * @param idDepartment
+	 * 
+	 * @return full income for department.
+	 */
 	public Double getFullIncomeForDoneDepartmentOrder(Long idDepartment,Date startData,Date endData);
-	
-	
 }

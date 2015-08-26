@@ -20,8 +20,6 @@
 </head>
 <body>
 	
-
-
 	<div class="navbar navbar-default">
 
 		<div class="navbar-header">

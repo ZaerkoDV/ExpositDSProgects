@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.expositds.servicestationmanagementsystem.model.Client;
+import com.expositds.servicestationmanagementsystem.model.Department;
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
 import com.expositds.servicestationmanagementsystem.model.Employee;
 
@@ -128,4 +129,16 @@ public interface DepartmentService extends  AbstractEntityCommonService{
 	 * @return full income for department.
 	 */
 	public Double getFullIncomeForDoneDepartmentOrder(Long idDepartment,Date startData,Date endData);
+	
+	/**
+	 * Return list of all deparment(exist or not exist at that momant). If data base contains
+	 * any department method return list of department else return null. List contain serving on
+	 * 20 rows and start on 1 row. This method addresses to method in DAO layer for execution
+	 * operation.  
+	 * 
+	 * @type List
+	 * 
+	 * @return List<Department>  
+	 */
+	public List<Department> getListAllDepartment();
 }

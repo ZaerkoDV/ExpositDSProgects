@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.expositds.servicestationmanagementsystem.dao.DepartmentDAO;
 import com.expositds.servicestationmanagementsystem.model.Client;
+import com.expositds.servicestationmanagementsystem.model.Department;
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
 import com.expositds.servicestationmanagementsystem.model.Detail;
 import com.expositds.servicestationmanagementsystem.model.Employee;
@@ -366,6 +367,40 @@ public class DepartmentDAOImpl extends AbstractEntity—ommonDAOImpl implements De
 		logger.info("DAO:Total income for department on date equals="+income);
 		
 		return income;
+	}
+	
+	/**
+	 * Return list of all deparment(exist or not exist at that momant). If data base contains
+	 * any department method return list of department else return null. List contain serving on
+	 * 20 rows and start on 1 row. 
+	 * 
+	 * @type List
+	 * @throw DataAccessException 
+	 * @throw NullPointerException
+	 * 
+	 * @return List<Departments>  
+	 */
+	@SuppressWarnings({ "finally", "unchecked" })
+	@Transactional
+	public List<Department> getListAllDepartment(){
+		
+		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
+				.createCriteria(Department.class);	
+		criteria.setMaxResults(20);
+		criteria.setFirstResult(0);
+		
+		List<Department> listDepartment = null;
+		try{
+			listDepartment=(List<Department>)criteria.list();
+			logger.info("Department list loaded successfully");
+
+		}catch(NullPointerException e){
+			listDepartment=null;
+			logger.info("Department list loaded successfully, but is empty.");
+			
+		}finally{
+			return listDepartment;
+		}
 	}
 }
 

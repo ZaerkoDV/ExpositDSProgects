@@ -380,4 +380,12 @@ public class DepartmentDAOTest {//extends AbstractTest  {
 //		
 //		Assert.assertEquals(expected, actual);		
 //	}
+//	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListAllDepartment(){
+//		List<Department> listAllDepartment= departmentDAO.getListAllDepartment();
+//		Assert.assertFalse(listAllDepartment.isEmpty());
+//	}
 }

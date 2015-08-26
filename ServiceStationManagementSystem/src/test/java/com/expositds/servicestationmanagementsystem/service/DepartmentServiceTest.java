@@ -352,4 +352,12 @@ public class DepartmentServiceTest {//extends AbstractTest {
 //		
 //		Assert.assertEquals(expected, actual);		
 //	}
+//	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListAllDepartment(){
+//		List<Department> listAllDepartment= departmentService.getListAllDepartment();
+//		Assert.assertFalse(listAllDepartment.isEmpty());
+//	}
 }

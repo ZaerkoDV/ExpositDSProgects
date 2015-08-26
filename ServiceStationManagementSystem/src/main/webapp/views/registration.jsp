@@ -153,10 +153,10 @@
 											<input type="submit" value="Yes" id="yesbutton"	class="btn btn-primary" data-loading-text="Saving.." data-complete-text="Save Complete!">
 										</div>
 									</div>
-								</div>
-							 </div>
-							<a class="btn btn-primary" href="<spring:url value="/"/>">Return to start page</a> 
-						  </div>
+								  </div>
+							   </div>
+							   <a class="btn btn-primary" href="<spring:url value="/"/>">Return to start page</a> 
+						    </div>
 		            
 			          </fieldset>
 				   </form:form>	

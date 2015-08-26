@@ -22,9 +22,11 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.expositds.servicestationmanagementsystem.dao.DepartmentDAO;
 import com.expositds.servicestationmanagementsystem.model.Client;
+import com.expositds.servicestationmanagementsystem.model.Department;
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
 import com.expositds.servicestationmanagementsystem.model.Employee;
 import com.expositds.servicestationmanagementsystem.service.DepartmentService;
@@ -47,6 +49,7 @@ import com.expositds.servicestationmanagementsystem.service.DepartmentService;
  * @version 1.0 19.08.2015
  * @author Zaerko Denis
  */
+@Service(value="departmentService")
 public class DepartmentServiceImpl extends AbstractEntityCommonServiceImpl implements DepartmentService {
 
 	/**
@@ -193,5 +196,20 @@ public class DepartmentServiceImpl extends AbstractEntityCommonServiceImpl imple
 	public Double getFullIncomeForDoneDepartmentOrder(Long idDepartment,Date startDate,Date endDate){
 		logger.info("Service:Get full income for done order in department by department id="+idDepartment);
 		return departmentDAO.getFullIncomeForDoneDepartmentOrder(idDepartment, startDate, endDate);
+	}
+	
+	/**
+	 * Return list of all deparment(exist or not exist at that momant). If data base contains
+	 * any department method return list of department else return null. List contain serving on
+	 * 20 rows and start on 1 row. This method addresses to method in DAO layer for execution
+	 * operation.  
+	 * 
+	 * @type List
+	 * 
+	 * @return List<Department>  
+	 */
+	public List<Department> getListAllDepartment(){
+		logger.info("Service:List with all department loaded.");
+		return departmentDAO.getListAllDepartment();
 	}
 }

@@ -1,72 +1,77 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <!-- @author Artyom_Khomyakov -->
 <html lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Done</title>
-
-    <!-- Bootstrap
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	    <title>History of done client order</title>
+    	<!-- 
     	<link href="resources/libs/bootstrap.min.css" rel="stylesheet">
 	    <script src="resources/libs/jquery.min.js"/></script>
 	    <script src="resources/libs/bootstrap.min.js"/></script>
 	    -->
-	   
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	  <!-- Latest compiled and minified CSS -->
-
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
-   <div class="container">
-     <div class="row" style="padding-top: 50px;">
-       <div class="col-md-2"></div>
-       <div class="col-md-8">
-         <div class="col-md-2" style="padding-top: 15px;"><a href="#"><button type="button" class="btn btn-default"> < Back</button></a></div>
-         <h3>${Client.firstName} ${Client.lastName}</h3>
-       </div>
-       <div class="col-md-2"></div>
-     </div>
-     <div class="row" style="padding-top: 50px;">
-       <h4>Requests list</h4>
-       <div class="col-md-4" style="padding-top: 20px;">
-       	 <a href="/ServiceStationManagementSystem/profile/inprogress"><button type="button" class="btn btn-default">In progress</button></a>
-         <a href="/ServiceStationManagementSystem/profile/done"><button type="button" class="btn btn-success">Done</button></a>
-         <a href="/ServiceStationManagementSystem/profile/overdue"><button type="button" class="btn btn-danger">Overdue</button></a>
-       </div>
-     </div>
-      <!--STATUS DONE -->
-     <div class="row" style="padding-top: 50px;">
-     <!--  c:if test="${!empty listDepartmentOrder}" -->
-       <table class="table table-striped">
-        <tr>
-          <th>№</th>
-          <th>Mechanic</th>
-          <th>Date</th>
-          <th>Cost</th>
-          <th>Add a comment</th>
-        </tr>
-        <!-- c:forEach items="${listDepartmentOrder}" var="DepartmentOrder" -->
-        <tr>
-          <td>${DepartmentOrder.id}</td>
-          <td>${DepartmentOrder.employee}</td>
-          <td>${DepartmentOrder.endOrder}</td>
-          <td>${DepartmentOrder.orderCost}</td>
-          <td><a href="<c:url value='/profile/done/addcomment/${ServiceStation.id}' />"><button type="button" class="btn btn-xs btn-primary">Add a comment</button></a></td>
-        </tr>
-        <!-- /c:forEach -->
-       </table>
-       <!-- /c:if -->
-     </div> 
-     </div>
+
+  	 <div class="container">    
+	     <nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">Welcome ${client.clientFirstName} ${client.clientLastName} !</a>
+		    </div>
+		    <div>
+		      <ul class="nav nav-pills navbar-right">
+		        <li><a class="btn btn-primary" href="/ServiceStationManagementSystem/">To start page</a></li>
+		        <li><a class="btn btn-primary" href="/ServiceStationManagementSystem/profile/${client.idClient}/clientnotcompledoverdord">To notcompleted/overdue order </a></li>
+		      </ul>
+		    </div>
+		  </div>
+		 </nav>
+	        
+	     <div class="row" style="padding-top: 50px;">
+	     <!--c:if test="${!empty listDepartmentOrder}" -->
+	       <table class="table table-striped">
+	         <thead>
+		        <tr>
+		          <th>№</th>
+		          <th>OrderDescription</th>
+		          <th>Cost</th>
+		          <th>Start</th>
+		          <th>End</th>
+		          <th>Status</th>
+		          <th>Mechanic</th>
+		        </tr>
+	          </thead>
+		      <tbody>
+		        <c:forEach items="${listDoneOrder}" var="order">
+		        <tr>
+		          <td>${order.idDepartmentOrder}</td>
+		          <td>${order.orderDescription}</td>
+		          <td>${order.orderCost}</td>
+		          <td>${order.startOrder}</td>
+		          <td>${order.endOrder}</td>
+		          <td>${order.orderStatus}</td>
+		          <td>${order.employee.employeLastName}</td>
+		          <td>
+		          	<a type="button" class="btn btn-xs btn-primary" 
+		          		href="/ServiceStationManagementSystem/profile/${client.idClient}/${beforepage}/${order.department.serviceStation.idServiceStation}/addservicestationcomment">
+		          	Add a comment 
+		          	</a>
+				  </td>
+		        </tr>
+		        </c:forEach>
+	         </tbody> 
+	       </table>
+	       <!--  /c:if -->
+	     </div>
+      </div>
+     
   </body>
 </html>

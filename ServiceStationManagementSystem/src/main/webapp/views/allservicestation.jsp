@@ -4,6 +4,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!-- @author Artyom_Khomyakov -->
+<!-- @author Denis Zaerko -->
 <html>
 <head>
 		<title>All service satation list</title>
@@ -13,7 +16,6 @@
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
 <style>
 /*
 body {
@@ -94,8 +96,8 @@ body {
 				 <td>${listServiceStation.serviceStationAddress}</td>
 				 <td>${listServiceStation.serviceStationPhoneNumber}</td>
 				 <td>
-				  <a href="<c:url value='/station/${listServiceStation.idServiceStation}' />">
-						<button	type="button" class="btn btn-link">Service station page</button>
+				  <a href="<c:url value='/servicestation/${listServiceStation.idServiceStation}/servicestationreview' />">
+						<button	type="button" class="btn btn-xs btn-primary" >Service station page</button>
 				  </a>
 				 </td>
 				</tr>

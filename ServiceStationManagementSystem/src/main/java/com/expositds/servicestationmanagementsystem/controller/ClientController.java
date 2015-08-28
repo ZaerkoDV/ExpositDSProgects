@@ -3,13 +3,10 @@
  */
 package com.expositds.servicestationmanagementsystem.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -19,14 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.ClientSecurityFeature;
@@ -38,7 +33,6 @@ import com.expositds.servicestationmanagementsystem.model.ServiceStationCommentM
 import com.expositds.servicestationmanagementsystem.service.AbstractEntityCommonService;
 import com.expositds.servicestationmanagementsystem.service.ClientSecurityFeatureService;
 import com.expositds.servicestationmanagementsystem.service.ClientService;
-import com.expositds.servicestationmanagementsystem.service.DepartmentOrderService;
 import com.expositds.servicestationmanagementsystem.service.DepartmentService;
 import com.expositds.servicestationmanagementsystem.service.EmployeeService;
 import com.expositds.servicestationmanagementsystem.service.ServiceStationCommentMarkService;
@@ -123,7 +117,6 @@ public class ClientController {
 		logger.info("ClientController POST: index page");
 		//String confirmUserLogin=DigestUtils.md5Hex(request.getParameter("login"));
 		//String confirmUserPassword =DigestUtils.md5Hex(request.getParameter("password"));
-		
 		String userLogin=request.getParameter("login");
 		String userPassword=request.getParameter("password");
 		
@@ -131,11 +124,12 @@ public class ClientController {
 		Boolean isEmployee=employeeService.signInEmployeByLoginPassword(userLogin, userPassword);
 		
 		if(isClient){//client page
-			Long idClient=clientService.getIdClientByLoginPassword(userLogin, userPassword);
 			
+			Long idClient=clientService.getIdClientByLoginPassword(userLogin, userPassword);
 			return "/profile/"+idClient+"/clientnotcompledoverdord";
 			
 		}else if(isEmployee){//mechanic page
+			
 			Long idEmployee=employeeService.getIdEmployeByLoginPassword(userLogin, userPassword);
 			return "/profile/{"+idEmployee+"}/mechanicnotcompletedoverdord";
 			
@@ -143,7 +137,8 @@ public class ClientController {
 			return "/failure";
 		}
 	}
-	
+											   //getregistration
+							
 	@RequestMapping(value="/registration", method=RequestMethod.GET)
 	public String getregistration(Model model) {	
 		
@@ -153,7 +148,8 @@ public class ClientController {
 		
 		return "/registration";
 	}
-	
+												//postregistration
+								
 	@RequestMapping(value="/registration", method=RequestMethod.POST)
 	public String postregistration(@Valid @ModelAttribute("clientSecurityFeature") ClientSecurityFeature clientSecurityFeature,
 			BindingResult result, Model model){
@@ -178,18 +174,8 @@ public class ClientController {
 			return "/registration";
 		}
 	}
-	
-	@RequestMapping(value="/allservicestation",method=RequestMethod.GET)
-	public String getallservicestation(Model model) {
-		logger.info("ClientController GET: all service stations list");
 		
-		List<ServiceStation> listServiceStation=(List<ServiceStation>)serviceStationService.getAllServiceStation();
-		model.addAttribute("listServiceStation", listServiceStation);
-		
-		return "/allservicestation"; 						
-	}
-	
-											//client pages
+											// get client pages
 	
 ////???????	
 //get work      http://localhost:8080/ServiceStationManagementSystem/profile/1/clientnotcompledoverdord
@@ -210,6 +196,8 @@ public class ClientController {
 		return "/clientnotcompledoverdord"; 						
 	}
 	
+										//post client pages
+	
 	@RequestMapping(value="/profile/{idClient}/clientdoneord",method=RequestMethod.GET)
 	public String getclientdoneord(@PathVariable("idClient") Long idClient,Model model) {
 		
@@ -224,30 +212,41 @@ public class ClientController {
 		model.addAttribute("beforepage","clientdoneord");
 		
 		return "/clientdoneord"; 						
-	}
-												
+	}						
 												//delete
 	
-	@RequestMapping(value="/profile/{idClient}/{idDepartmentOrder}/delete",method=RequestMethod.GET)
-	public String getdeleteclientord(@PathVariable("idClient") Long idClient,@PathVariable("idDepartmentOrder") Long idDepartmentOrder,
+	@RequestMapping(value="/profile/{idClient}/{beforepage}/{idDepartmentOrder}/delete",method=RequestMethod.GET)
+	public String getdeleteclientord(@PathVariable("idClient") Long idClient,@PathVariable("beforepage") String beforepage,
+			@PathVariable("idDepartmentOrder") Long idDepartmentOrder,
 			Model model) {
 		
 		logger.info("ClientController GET: delete order by id department order="+idDepartmentOrder);
 		//delete order
 		abstractEntity—ommonService.deleteEntityById(DepartmentOrder.class, idDepartmentOrder);
 		
-		//return to clientnotcompledoverdord and refresh order list
-		List<DepartmentOrder> listNotcompletedOverdueOrder=clientService.getListNotcompletedOverdueOrderForClient(idClient);
-		model.addAttribute("listNotcompletedOverdueOrder", listNotcompletedOverdueOrder);
-		
 		Client client=(Client) abstractEntity—ommonService.getEntityById(Client.class, idClient);
 		model.addAttribute("client",client);
 		
-		model.addAttribute("beforepage","clientnotcompledoverdord");
+		//return to clientnotcompledoverdord and refresh order list
+		if(beforepage.equals("clientnotcompledoverdord")){
+			List<DepartmentOrder> listNotcompletedOverdueOrder=clientService.getListNotcompletedOverdueOrderForClient(idClient);
+			model.addAttribute("listNotcompletedOverdueOrder", listNotcompletedOverdueOrder);
+			
+			model.addAttribute("beforepage","clientnotcompledoverdord");
+		}
 		
-		return "/clientnotcompledoverdord";
+		//return to incompleteclientallord and refresh order list
+		if(beforepage.equals("incompleteclientallord")){
+			List<DepartmentOrder> listNotCompletedOverdueClientOrder= clientService.getListNotcompletedOverdueOrderForClient(client.getIdClient());
+			model.addAttribute("listNotCompletedOverdueClientOrder", listNotCompletedOverdueClientOrder);
+			
+			List<DepartmentOrder> listDoneClientOrder= clientService.getListDoneOrderForClient(client.getIdClient());
+			model.addAttribute("listDoneClientOrder", listDoneClientOrder);
+			
+			model.addAttribute("beforepage","incompleteclientallord");
+		}
+		return "/"+beforepage;
 	}
-	
 												//getrenew
 	
 	@RequestMapping(value="/profile/{idClient}/{idDepartmentOrder}/renew",method=RequestMethod.GET)
@@ -273,31 +272,39 @@ public class ClientController {
 		return "/clientreneword";
 	}
 	
+													//postrenew
+	
 	@RequestMapping(value="/profile/{idClient}/{idDepartmentOrder}/renew",method=RequestMethod.POST)
 	public String postrenewclientord(@PathVariable("idClient") Long idClient,@PathVariable("idDepartmentOrder") Long idDepartmentOrder,
 			@ModelAttribute("departmentOrder") DepartmentOrder departmentOrder,BindingResult result,Model model) {
 
-		logger.info("ClientController GET: renew client order by id department order="+idDepartmentOrder);
-		//abstractEntity—ommonService.updateEntity(departmentOrder);
-
+		logger.info("ClientController GET: delete client order by id old department order="+idDepartmentOrder);
+		logger.info("ClientController GET: save client order with new id department order="+departmentOrder.getEmployee().getIdEmployee());
+		
+		Client client=(Client) abstractEntity—ommonService.getEntityById(Client.class, idClient);
+		Department newDepartment= (Department) abstractEntity—ommonService.getEntityById(Department.class, departmentOrder.getDepartment().getIdDepartment());
+		Employee newEmployee=(Employee) abstractEntity—ommonService.getEntityById(Employee.class, departmentOrder.getEmployee().getIdEmployee());
+		
+		//update old order data
+		departmentOrder.setClient(client);
+		departmentOrder.setDepartment(newDepartment);
+		departmentOrder.setEmployee(newEmployee);
+		departmentOrder.setStartOrder(new Date());
+		departmentOrder.setOrderStatus("notcompleted");
+		abstractEntity—ommonService.updateEntity(departmentOrder);
+		
 		//return to page before
 		List<DepartmentOrder> listNotcompletedOverdueOrder=clientService.getListNotcompletedOverdueOrderForClient(idClient);
 		model.addAttribute("listNotcompletedOverdueOrder", listNotcompletedOverdueOrder);
+		
+		model.addAttribute("departmentOrder",departmentOrder);
+	
+		model.addAttribute("client",client);
 
 		return "/clientnotcompledoverdord";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-												//client coments
+											//get client coments for service station
 	
 	@RequestMapping(value="/profile/{idClient}/{beforepage}/{idServiceStation}/addservicestationcomment",method=RequestMethod.GET)
 	public String getaddservicestationcomment(@PathVariable("idClient") Long idClient,@PathVariable("beforepage") String beforePage,
@@ -320,6 +327,8 @@ public class ClientController {
 	
 		return "/addservicestationcomment";
 	}
+	
+											//post client coments for service station
 
 	@RequestMapping(value="/profile/{idClient}/{beforepage}/{idServiceStation}/addservicestationcomment",method=RequestMethod.POST)
 	public String postaddservicestationcomment(@Valid @ModelAttribute("serviceStationCommentMark") ServiceStationCommentMark serviceStationCommentMark,
@@ -340,92 +349,159 @@ public class ClientController {
 		logger.info("ClientController POST:addservicestationcomment page comment save");
 		
 		
-		//return to page beforePage frome come here
+		//return client (or incompleted client) to page beforePage frome he come
 		if(beforePage.equals("clientnotcompledoverdord")){
 			List<DepartmentOrder> listNotcompletedOverdueOrder=clientService.getListNotcompletedOverdueOrderForClient(idClient);
 			model.addAttribute("listNotcompletedOverdueOrder", listNotcompletedOverdueOrder);
 		}
 		
 		if(beforePage.equals("clientdoneord")){	
-			//return to clientdoneord page
 			List<DepartmentOrder> listDoneOrder=clientService.getListDoneOrderForClient(idClient);
 			model.addAttribute("listDoneOrder", listDoneOrder);
 		}
+		
+		if(beforePage.equals("incompleteclientallord")){
+			List<DepartmentOrder> listNotCompletedOverdueClientOrder= clientService.getListNotcompletedOverdueOrderForClient(client.getIdClient());
+			model.addAttribute("listNotCompletedOverdueClientOrder", listNotCompletedOverdueClientOrder);
+			
+			List<DepartmentOrder> listDoneClientOrder= clientService.getListDoneOrderForClient(client.getIdClient());
+			model.addAttribute("listDoneClientOrder", listDoneClientOrder);
+		}
+				
 		model.addAttribute("client",client);
 		
 		return "/"+beforePage;
 	}
+									//getallservicestation
 	
+	@RequestMapping(value="/allservicestation",method=RequestMethod.GET)
+	public String getallservicestation(Model model) {
+		
+		logger.info("ClientController GET: all service stations list");
+		List<ServiceStation> listServiceStation=(List<ServiceStation>)serviceStationService.getAllServiceStation();
+		model.addAttribute("listServiceStation", listServiceStation);
+		
+		return "/allservicestation"; 						
+	}
+									//get review service station page
 	
+	@RequestMapping(value="/servicestation/{idServiceStation}/servicestationreview",method=RequestMethod.GET)
+	public String getservicestationreview(@PathVariable("idServiceStation") Long idServiceStation, Model model) {
+		
+		logger.info("ClientController GET: service station review page");
+		
+		String viewStatus="all";
+		List<ServiceStationCommentMark> listServiceStationCommentMark=serviceStationCommentMarkService
+				.getListCommentMarkStatusAsParamByIdServiceStation(idServiceStation, viewStatus);
+		model.addAttribute("listServiceStationCommentMark", listServiceStationCommentMark);
+		
+		ServiceStation serviceStation=(ServiceStation) abstractEntity—ommonService.getEntityById(ServiceStation.class, idServiceStation);
+		model.addAttribute("serviceStation", serviceStation);
+		
+		List<Department>listServiceStationDepartment=serviceStationService.getListDepartmentForServiceStation(idServiceStation);
+		int countDepartment=listServiceStationDepartment.size();
+		model.addAttribute("countDepartment", countDepartment);	
+		
+		List<Client>listServiceStationClient=serviceStationService.getListClientForServiceStation(idServiceStation);
+		int clientCount=listServiceStationClient.size();
+		model.addAttribute("clientCount", clientCount);
+		
+		Client client=new Client();
+		model.addAttribute("client", client);
+				
+		return "/servicestationreview";
+	}
+									    //post review service station page
 	
+	@RequestMapping(value="/servicestation/{idServiceStation}/servicestationreview",method=RequestMethod.POST)
+	public String postservicestationreview(@ModelAttribute("client") Client client,
+			@PathVariable("idServiceStation") Long idServiceStation,BindingResult result, Model model) {
+		
+		logger.info("ClientController POST: service station review page");	
+		Client autorizedClient =clientService.getClientByEmail(client.getClientEmail());
+			
+		return "/profile/"+autorizedClient.getIdClient()+"/incompleteclientallord";
+	}
 	
+										//get incompleted client page
+///??????
+/////////	
+	@RequestMapping(value="/profile/{idClient}/incompleteclientallord",method=RequestMethod.GET)
+	public String getincompleteclientallord(@PathVariable("idClient") Long idClient, Model model) {
+		
+		logger.info("ClientController GET: incompleted client page");	
+		
+		List<DepartmentOrder> listNotCompletedOverdueClientOrder= clientService.getListNotcompletedOverdueOrderForClient(idClient);
+		model.addAttribute("listNotCompletedOverdueClientOrder", listNotCompletedOverdueClientOrder);
+		
+		List<DepartmentOrder> listDoneClientOrder= clientService.getListDoneOrderForClient(idClient);
+		model.addAttribute("listDoneClientOrder", listDoneClientOrder);
+		
+		Client client =(Client) abstractEntity—ommonService.getEntityById(Client.class, idClient);
+		model.addAttribute("client", client);
+		
+		model.addAttribute("beforepage","incompleteclientallord");	
+		
+		return "/incompleteclientallord";
+	}
 	
+										//get add new client order in department
 	
-	
-	
-	
-	
-	
-	
+	@RequestMapping(value="/profile/incompleteclientneword",method=RequestMethod.GET)
+	public String getincompleteclientneword(Model model) {
+		
+		logger.info("ClientController GET:client create new department order");
+		
+		//create new department order
+		DepartmentOrder departmentOrder=new DepartmentOrder();
+		model.addAttribute("departmentOrder",departmentOrder);
+		
+		List<Department> listAllDepartment=departmentService.getListAllDepartment();
+		model.addAttribute("listAllDepartment",listAllDepartment);
+		
+		List<Employee> listAllMechanic=employeeService.getListMechanic();
+		model.addAttribute("listAllMechanic",listAllMechanic);
+		
+		return "/incompleteclientneword";
+	}
 
-//	
-//	@RequestMapping(value="/station/{stationId}", method=RequestMethod.GET)
-//	public String station(Model model) {	
-//		return "station";
-//	}
-//	
-//	@RequestMapping(value="/station/{stationId}/request", method=RequestMethod.GET)
-//	public String request(Model model) {	
-//		return "request";
-//	}
-//	
-//	@RequestMapping(value="/station/{stationId}/request/send", method=RequestMethod.GET)
-//	public String send(Model model) {	
-//		return "redirect:/station/{stationId}/request";
-//	}
-//	
-//	@RequestMapping(value="/station/{stationId}/check", method=RequestMethod.GET)
-//	public String check(Model model) {	
-//		return "redirect:/station/{stationId}";
-//	}
-//	
-//	/**
-//     * Retrieves the profile pages
-//     *
-//     */
-//	@RequestMapping(value="/profile", method=RequestMethod.GET)
-//	public String home(Model model) {	
-//		return "redirect:profile/inprogress";
-//	}
-//	
-//	@RequestMapping(value="/profile/inprogress", method=RequestMethod.GET)
-//	public String inProgress(Model model) {	
-//		return "inprogress";
-//	}
-//	
-//	@RequestMapping(value="/profile/done", method=RequestMethod.GET)
-//	public String done(Model model) {	
-//		return "done";
-//	}
-//	
-//	@RequestMapping(value="/profile/overdue", method=RequestMethod.GET)
-//	public String overdue(Model model) {	
-//		return "overdue";
-//	}
-//	
-//	@RequestMapping(value="/profile/overdue/renew/{DepartmentId}", method=RequestMethod.GET)
-//	public String renew(Model model) {	
-//		return "renew";
-//	}
-//	
-//	@RequestMapping(value= {"/profile/overdue/addcomment/{ServiceStationId}", "/profile/done/addcomment/{ServiceStationId}"}, method=RequestMethod.GET)
-//	public String addcomment(Model model) {	
-//		return "addcomment";
-//	}
-//	
-//	@RequestMapping(value="/profile/overdue/detele/{departmentOrderId}", method=RequestMethod.GET)
-//	public String delete(Model model) {	
-//		return "redirect:/overdue";
-//	}
+									//post add new client order in department
 	
+	@RequestMapping(value="/profile/incompleteclientneword",method=RequestMethod.POST)
+	public String getincompleteclientneword(@Valid @ModelAttribute("departmentOrder") DepartmentOrder departmentOrder,
+			BindingResult result,Model model) {
+		
+		logger.info("ClientController POST:client create new department order");
+		
+		//if email is not uniqual or empty
+		if(departmentOrder.getClient().getClientEmail()=="") {
+			model.addAttribute("error","error");
+
+		}else{
+			Client client =new Client();
+			client.setClientFirstName("unknow");
+			client.setClientFirstName("unknow");
+			client.setClientEmail(departmentOrder.getClient().getClientEmail());
+			abstractEntity—ommonService.saveEntity(client);
+
+			Employee employee= (Employee) abstractEntity—ommonService.getEntityById(Employee.class, departmentOrder.getEmployee().getIdEmployee());
+			Department department= (Department) abstractEntity—ommonService.getEntityById(Department.class, departmentOrder.getDepartment().getIdDepartment());
+
+			departmentOrder.setClient(client);
+			departmentOrder.setDepartment(department);
+			departmentOrder.setEmployee(employee);
+			departmentOrder.setStartOrder(new Date());
+			departmentOrder.setOrderStatus("notcompleted");
+			abstractEntity—ommonService.saveEntity(departmentOrder);
+		}
+		
+		model.addAttribute("departmentOrder",departmentOrder);
+		List<Department> listAllDepartment=departmentService.getListAllDepartment();
+		model.addAttribute("listAllDepartment",listAllDepartment);
+		
+		List<Employee> listAllMechanic=employeeService.getListMechanic();
+		model.addAttribute("listAllMechanic",listAllMechanic);
+		
+		return "/incompleteclientneword";
+	}
 }

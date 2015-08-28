@@ -67,7 +67,7 @@ body {
 			</div>
 			<div>
 				<ul class="nav nav-pills navbar-right">
-					<form id="loginForm" action="/ServiceStationManagementSystem/index" method="POST" class="navbar-form navbar-right"><!-- commandName="clientSecurityFeature" -->
+					<form id="signInByLoginPasswordForm" action="/ServiceStationManagementSystem/index" method="POST" class="navbar-form navbar-right"><!-- commandName="clientSecurityFeature" -->
 						<div class="form-group">
 							<p>
 							   <input type="text" id="loginInput" name="login" class="form-control" placeholder="Login" />
@@ -93,7 +93,7 @@ body {
    <div class="rightmenu">
 	   <div class="col-md-3">
 	      <ul class="nav nav-pills nav-stacked">
-	        <li class="active"><a href="<spring:url value="/allservicestation"/>">Show all service station</a></li>
+	        <li class="active"><a href="<spring:url value="/allservicestation"/>">All service station</a></li>
 	      </ul>
 	   </div>
 	   <div class="clearfix visible-lg"></div>

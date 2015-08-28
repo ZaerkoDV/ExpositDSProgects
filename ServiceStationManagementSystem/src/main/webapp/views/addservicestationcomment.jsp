@@ -2,10 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!-- @author Artyom_Khomyakov -->
 
+<!-- @author Artyom_Khomyakov -->
+<!-- @author Denis Zaerko -->
 <html lang="en">
 <head>
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,8 +32,10 @@
 		    <div>
 		      <ul class="nav nav-pills navbar-right">
 		        <li><a class="btn btn-primary" href="/ServiceStationManagementSystem/">To start page</a></li>
-		        <li><a class="btn btn-primary" href="/ServiceStationManagementSystem/profile/${client.idClient}/clientnotcompledoverdord"> Back notcompleted/overdue order page</a></li>
-		        <li><a class="btn btn-primary" href="/ServiceStationManagementSystem/profile/${client.idClient}/clientdoneord">Return done order page</a></li>
+		          <c:if test="${beforepage !='incompleteclientallord'}">
+		        	<li><a class="btn btn-primary" href="/ServiceStationManagementSystem/profile/${client.idClient}/clientnotcompledoverdord"> Back notcompleted/overdue order page</a></li>
+		        	<li><a class="btn btn-primary" href="/ServiceStationManagementSystem/profile/${client.idClient}/clientdoneord">Return done order page</a></li>
+		     	 </c:if>
 		      </ul>
 		    </div>
 	    </div>

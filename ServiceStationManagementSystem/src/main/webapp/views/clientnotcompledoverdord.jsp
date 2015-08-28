@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <!-- @author Artyom_Khomyakov -->
+<!-- @author Denis Zaerko -->
 <html lang="en">
 <head>
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -48,7 +50,7 @@ body {
 		 </nav>
 	        
 	     <div class="row" style="padding-top: 50px;">
-	     <!--c:if test="${!empty listDepartmentOrder}" -->
+	     <c:if test="${!empty listNotcompletedOverdueOrder}"><!-- last change -->
 	       <table class="table table-striped">
 	         <thead>
 		        <tr>
@@ -80,12 +82,12 @@ body {
 		          <td><a type="button" class="btn btn-xs btn-primary" 
 		          		href="/ServiceStationManagementSystem/profile/${client.idClient}/${order.idDepartmentOrder}/renew">Renew order</a></td>
 		          <td><a type="button" class="btn btn-xs btn-primary" 
-		          	href="/ServiceStationManagementSystem/profile/${client.idClient}/${order.idDepartmentOrder}/delete">Delete order</a></td>
+		          	href="/ServiceStationManagementSystem/profile/${client.idClient}/${beforepage}/${order.idDepartmentOrder}/delete">Delete order</a></td>
 		        </tr>
 		        </c:forEach>
 	         </tbody> 
 	       </table>
-	       <!--  /c:if -->
+	       </c:if>
 	     </div>
       </div>
      

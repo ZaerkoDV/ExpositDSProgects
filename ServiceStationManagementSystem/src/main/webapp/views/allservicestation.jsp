@@ -89,7 +89,7 @@ body {
 			 </tr>
 		 </thead>
 		 <tbody>
-			<c:forEach var="listServiceStation" items="${listServiceStation}">
+			<c:forEach items="${listServiceStation}" var="listServiceStation">
 			    <tr>
 				 <td>${listServiceStation.serviceStationLogotype}</td>
 				 <td>${listServiceStation.serviceStationName}</td>

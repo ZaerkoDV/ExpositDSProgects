@@ -236,8 +236,8 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 		//cost order work
 		Criteria criteriaForOrder = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
 				.createCriteria(DepartmentOrder.class);
-		criteriaForOrder.setProjection(Projections.property("orderCost"));
 		criteriaForOrder.add(Restrictions.eq("idDepartmentOrder", idDepartmentOrder));
+		criteriaForOrder.setProjection(Projections.property("orderCost"));
 		
 		Double orderCost;
 		try{
@@ -251,5 +251,36 @@ public class DepartmentOrderDAOImpl extends AbstractEntity—ommonDAOImpl implemen
 		}
 		logger.info("DAO:Order cost for department order id="+idDepartmentOrder+" equals="+orderCost);
 		return orderCost;
+	}
+	
+	/**
+	 * Return detail list for department order.If list is empty return null.Parametr 
+	 * idDepartmentOrder is attrebute of DepartmentOrder.
+	 * 
+	 * @type Long
+	 * @param idDepartmentOrder
+	 * @throws NullPointerException
+	 * 	 
+	 * @return List<Detail> for department order.
+	 */
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public List<Detail> getListDetailForDepartmentOrder(Long idDepartmentOrder){
+		
+		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
+				.createCriteria(Detail.class);
+		criteria.createAlias("departmentOrder", "d");
+		criteria.add(Restrictions.eq("d.idDepartmentOrder", idDepartmentOrder));
+		
+		List<Detail> listDetail;
+		try{
+			listDetail=(List<Detail>)criteria.list();
+			logger.info("DAO:List details for department loaded.");
+			
+		}catch(NullPointerException e){
+			listDetail=null;
+			logger.info("DAO:List details for department loaded but is empty.");
+		}
+		return listDetail;
 	}
 }

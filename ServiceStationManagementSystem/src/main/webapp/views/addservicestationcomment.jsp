@@ -72,7 +72,7 @@
 		 <div class="form-group">
 		   <div class="col-xs-2">
 		     <p style="padding-top: 20px;">Add mark</p>
-		      <form:select class="form-control input-sm"  path="mark">
+		      <form:select class="form-control input-sm" path="mark">
 		      	<form:option value="1" label="1" />
 				<form:option value="2" label="2" />
 				<form:option value="3" label="3" />

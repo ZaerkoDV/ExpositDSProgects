@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import com.expositds.servicestationmanagementsystem.dao.DepartmentOrderDAO;
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
+import com.expositds.servicestationmanagementsystem.model.Detail;
 import com.expositds.servicestationmanagementsystem.service.DepartmentOrderService;
 
 /**
@@ -150,7 +151,21 @@ public class DepartmentOrderServiceImpl extends AbstractEntityCommonServiceImpl 
 	 * @return order cost.
 	 */
 	public Double getOrderCostForDepartmentOrder(Long idDepartmentOrder){
-		logger.info("Service: Get order cost for department orde by order id="+idDepartmentOrder);
+		logger.info("Service: Get order cost for department order by order id="+idDepartmentOrder);
 		return departmentOrderDAO.getOrderCostForDepartmentOrder(idDepartmentOrder);
+	}
+	
+	/**
+	 * Return detail list for department order.If list is empty return null.Parametr 
+	 * idDepartmentOrder is attrebute of DepartmentOrder.
+	 * 
+	 * @type Long
+	 * @param idDepartmentOrder
+	 * 	 
+	 * @return List<Detail> for department order.
+	 */
+	public List<Detail> getListDetailForDepartmentOrder(Long idDepartmentOrder){
+		logger.info("Service: Get list details for department order by order id="+idDepartmentOrder);
+		return departmentOrderDAO.getListDetailForDepartmentOrder(idDepartmentOrder);		
 	}
 }

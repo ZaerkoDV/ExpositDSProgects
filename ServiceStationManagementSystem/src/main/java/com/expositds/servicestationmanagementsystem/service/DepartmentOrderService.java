@@ -17,6 +17,7 @@ package com.expositds.servicestationmanagementsystem.service;
 import java.util.List;
 
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
+import com.expositds.servicestationmanagementsystem.model.Detail;
 
 /**
  * <p>The interface DepartmentOrderService contain methods ads which realize in class
@@ -95,4 +96,15 @@ public interface DepartmentOrderService extends AbstractEntityCommonService {
 	 * @return order cost.
 	 */
 	public Double getOrderCostForDepartmentOrder(Long idDepartmentOrder);
+	
+	/**
+	 * Return detail list for department order.If list is empty return null.Parametr 
+	 * idDepartmentOrder is attrebute of DepartmentOrder.
+	 * 
+	 * @type Long
+	 * @param idDepartmentOrder
+	 * 	 
+	 * @return List<Detail> for department order.
+	 */
+	public List<Detail> getListDetailForDepartmentOrder(Long idDepartmentOrder);
 }

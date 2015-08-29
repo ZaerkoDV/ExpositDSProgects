@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.ClientSecurityFeature;
@@ -104,7 +105,6 @@ public class ClientController {
 		this.serviceStationCommentMarkService=serviceStationCommentMarkService;
 	}
 	
-	
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index() {
 		logger.info("ClientController GET: index page");
@@ -112,7 +112,7 @@ public class ClientController {
 	}
 	
 	@RequestMapping(value="/index", method=RequestMethod.POST)
-	public String login(HttpServletRequest request, HttpServletResponse response){
+	public ModelAndView login(HttpServletRequest request, HttpServletResponse response){
 		
 		logger.info("ClientController POST: index page");
 		//String confirmUserLogin=DigestUtils.md5Hex(request.getParameter("login"));
@@ -126,15 +126,15 @@ public class ClientController {
 		if(isClient){//client page
 			
 			Long idClient=clientService.getIdClientByLoginPassword(userLogin, userPassword);
-			return "/profile/"+idClient+"/clientnotcompledoverdord";
+			return new ModelAndView("redirect:" + "/profile/"+idClient+"/clientnotcompledoverdord");
 			
 		}else if(isEmployee){//mechanic page
 			
 			Long idEmployee=employeeService.getIdEmployeByLoginPassword(userLogin, userPassword);
-			return "/profile/{"+idEmployee+"}/mechanicnotcompletedoverdord";
-			
+			return new ModelAndView("redirect:" + "/profile/"+idEmployee+"/mechanicnotcompletedoverdord");
+////&&&&			
 		}else{//else return to start page
-			return "/failure";
+			return new ModelAndView("redirect:" + "/failure");
 		}
 	}
 											   //getregistration
@@ -414,13 +414,13 @@ public class ClientController {
 									    //post review service station page
 	
 	@RequestMapping(value="/servicestation/{idServiceStation}/servicestationreview",method=RequestMethod.POST)
-	public String postservicestationreview(@ModelAttribute("client") Client client,
+	public ModelAndView postservicestationreview(@ModelAttribute("client") Client client,
 			@PathVariable("idServiceStation") Long idServiceStation,BindingResult result, Model model) {
 		
 		logger.info("ClientController POST: service station review page");	
 		Client autorizedClient =clientService.getClientByEmail(client.getClientEmail());
 			
-		return "/profile/"+autorizedClient.getIdClient()+"/incompleteclientallord";
+		return new ModelAndView("redirect:" + "/profile/"+autorizedClient.getIdClient()+"/incompleteclientallord");
 	}
 	
 										//get incompleted client page

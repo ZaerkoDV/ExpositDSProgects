@@ -290,4 +290,25 @@ public class DepartmentOrderServiceTest {//extends AbstractTest {
 //		Double expected=departmentOrder.getOrderCost();
 //		Assert.assertEquals(expected, actual);
 //	}
+//	
+//	/**
+//	 * Method testGettingListDetailForDepartmentOrder are testing operation 
+//	 * get list detail for department order. That method use test object,
+//	 * which create before test run and destroy test object after method
+//	 * is finish.   
+//	 * 
+//	 * @see org.springframework.transaction.annotation.Transactional
+//	 * @see org.springframework.test.annotation.Rollback
+//	 * @see org.junit.Test
+//	 * @see org.junit.Assert
+//	 */	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListDetailForDepartmentOrder(){
+//		
+//		Long idDepartmentOrder=detail.getDepartmentOrder().getIdDepartmentOrder();
+//		List<Detail> listDetailForDepartmentOrder=departmentOrderService.getListDetailForDepartmentOrder(idDepartmentOrder);
+//		Assert.assertFalse(listDetailForDepartmentOrder.isEmpty());
+//	}
 }

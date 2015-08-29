@@ -72,7 +72,7 @@ body {
 		          <td>${order.startOrder}</td>
 		          <td>${order.endOrder}</td>
 		          <td>${order.orderStatus}</td>
-		          <td>${order.employee.employeLastName}</td>
+		          <td>${order.employee.employeLastName} ${order.employee.employeLastName}</td>
 		          <td>
 		          	<a type="button" class="btn btn-xs btn-primary" 
 		          		href="/ServiceStationManagementSystem/profile/${client.idClient}/${beforepage}/${order.department.serviceStation.idServiceStation}/addservicestationcomment">

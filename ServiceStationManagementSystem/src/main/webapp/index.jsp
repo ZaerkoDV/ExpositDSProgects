@@ -16,18 +16,19 @@
     <script src="resources/libs/bootstrap.min.js"/></script>
 <!--
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
  -->
 <style>
 
-body {
+body {  
 	height: 100%;
 	margin: 0;
     background: url(resources/img/index.jpeg);
     background-size: 100% 250%; 
-    background-repeat: no-repeat;
+    background-repeat:no-repeat;
     display: compact;
+	 
 }
 
 .message {
@@ -57,7 +58,7 @@ body {
 </style>  
 
 </head>
- <body>
+ <body style="height: 200px; width: 1600px;">
  
 	<div class="container">
 	   <nav class="navbar nav-tab">
@@ -69,6 +70,7 @@ body {
 				<ul class="nav nav-pills navbar-right">
 					<form id="signInByLoginPasswordForm" action="/ServiceStationManagementSystem/index" method="POST" class="navbar-form navbar-right"><!-- commandName="clientSecurityFeature" -->
 						<div class="form-group">
+			
 							<p>
 							   <input type="text" id="loginInput" name="login" class="form-control" placeholder="Login" />
 							</p>
@@ -82,6 +84,7 @@ body {
 							  <button  type="submit" class="btn btn-primary">Sign In</button>
 								<a class="btn btn-primary" href="<spring:url value="/registration"/>">Sign Up</a> 
 							</p>
+					
 						</div>
 					</form>			
 				</ul>
@@ -89,6 +92,7 @@ body {
 		</div>
 	  </nav>
    </div>
+   
    
    <div class="rightmenu">
 	   <div class="col-md-3">

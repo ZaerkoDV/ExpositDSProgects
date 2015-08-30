@@ -6,12 +6,11 @@
 
 <!-- @author Artyom_Khomyakov -->
 <!-- @author Denis Zaerko -->
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Registration</title>
-
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Client registration</title>
     	<!-- Bootstrap
     	<link href="resources/libs/bootstrap.min.css" rel="stylesheet">
 	    <script src="resources/libs/jquery.min.js"/></script>
@@ -20,7 +19,6 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
 <style>
 /*body {	
 	height: 100%;
@@ -97,7 +95,7 @@
 				              </div>
 			              </div>
 			              <div class="form-group">
-							<label for="dateOfBirth" class="col-lg-3 control-label">Date of birth</label>
+							<label for="dateOfBirth" class="col-lg-3 control-label">Date of birth(example 01/01/2000)</label>
 							<div class="date form_date col-lg-9" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
 								<form:input type="text" class="form-control" id="dateOfBirth" placeholder="Date of birth" path="client.clientBirthday"/>
 								<form:errors path="client.clientBirthday" cssClass="error" />

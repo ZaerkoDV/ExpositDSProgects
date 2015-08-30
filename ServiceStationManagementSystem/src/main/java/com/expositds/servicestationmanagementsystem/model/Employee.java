@@ -91,7 +91,10 @@ public class Employee {
 	@NotNull
 	@Column(name="wages")
 	private Double wages;
-
+		
+	@Column(name="director_of_id_service_station")
+	private Long directorOfServiceStation;
+	
 	/**
 	 * Overloaded constructor of Employee class.
 	 * 
@@ -109,9 +112,11 @@ public class Employee {
 	 * @param employeBirthday
 	 * @param employeEmail
 	 * @param wages
+	 * @param directorOfServiceStation
 	 */
 	public Employee(Long idEmployee, String employeFirstName, String employeLastName, String employeMiddleName,
-			String employeFunction,String employeTelephone, Date employeBirthday, String employeEmail, Double wages){
+			String employeFunction,String employeTelephone, Date employeBirthday, String employeEmail, Double wages,
+			Long directorOfServiceStation){
 	
 		this.idEmployee=idEmployee;
 		this.employeFirstName=employeFirstName;
@@ -122,6 +127,7 @@ public class Employee {
 		this.employeBirthday=employeBirthday;
 		this.employeEmail=employeEmail;
 		this.wages=wages;
+		this.directorOfServiceStation=directorOfServiceStation;
 	}
 	
 	/**
@@ -293,6 +299,24 @@ public class Employee {
 	}
 	
 	/**
+	 * @type Long
+	 * @return directorOfServiceStation attribute of the Employee
+	 */
+	public Long getDirectorOfServiceStation() {
+		return directorOfServiceStation;
+	}
+
+	/**
+	 * Method change id service station which lead director
+	 * 
+	 * @type Long
+	 * @param directorOfServiceStation
+	 */
+	public void setDirectorOfServiceStation(Long directorOfServiceStation) {
+		this.directorOfServiceStation = directorOfServiceStation;
+	}
+	
+	/**
 	 * Overload basic method hashCode()
 	 * 
 	 * @type Integer
@@ -314,7 +338,8 @@ public class Employee {
 		if(!this.idEmployee.equals(null)){
 			return this.idEmployee.toString()+" "+this.employeFirstName.toString()+" "+this.employeLastName.toString()+" "
 		+this.employeMiddleName.toString()+" "+this.employeTelephone.toString()+" "+this.employeFunction.toString()+" "
-					+this.employeBirthday.toString()+" "+this.employeEmail.toString()+" "+this.wages.toString();
+					+this.employeBirthday.toString()+" "+this.employeEmail.toString()+" "+this.wages.toString()+" "
+		+this.directorOfServiceStation.toString();
 		}
 		return super.toString();
 	}

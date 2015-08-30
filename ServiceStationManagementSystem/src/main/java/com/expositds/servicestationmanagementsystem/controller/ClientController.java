@@ -40,9 +40,8 @@ import com.expositds.servicestationmanagementsystem.service.ServiceStationCommen
 import com.expositds.servicestationmanagementsystem.service.ServiceStationService;
 
 /**
- * @author Artyom_Khomyakov
  * @author Denis Zaerko
- *
+ * @author Artyom_Khomyakov
  */
 @Controller(value="clientController")
 public class ClientController {
@@ -110,7 +109,7 @@ public class ClientController {
 		logger.info("ClientController GET: index page");
 		return "/index"; 						
 	}
-	
+////&&&& director&	
 	@RequestMapping(value="/index", method=RequestMethod.POST)
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response){
 		
@@ -132,7 +131,7 @@ public class ClientController {
 			
 			Long idEmployee=employeeService.getIdEmployeByLoginPassword(userLogin, userPassword);
 			return new ModelAndView("redirect:" + "/profile/"+idEmployee+"/mechanicnotcompletedoverdord");
-////&&&&			
+			
 		}else{//else return to start page
 			return new ModelAndView("redirect:" + "/failure");
 		}

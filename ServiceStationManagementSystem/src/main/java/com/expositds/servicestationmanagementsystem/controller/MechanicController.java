@@ -24,6 +24,8 @@ import com.expositds.servicestationmanagementsystem.model.Client;
 import com.expositds.servicestationmanagementsystem.model.DepartmentOrder;
 import com.expositds.servicestationmanagementsystem.model.Detail;
 import com.expositds.servicestationmanagementsystem.model.Employee;
+import com.expositds.servicestationmanagementsystem.model.ServiceStation;
+import com.expositds.servicestationmanagementsystem.model.ServiceStationCommentMark;
 import com.expositds.servicestationmanagementsystem.service.AbstractEntityCommonService;
 import com.expositds.servicestationmanagementsystem.service.DepartmentOrderService;
 import com.expositds.servicestationmanagementsystem.service.DepartmentService;
@@ -32,11 +34,9 @@ import com.expositds.servicestationmanagementsystem.service.ServiceStationCommen
 import com.expositds.servicestationmanagementsystem.service.ServiceStationService;
 
 /**
- * @author Artyom_Khomyakov
  * @author Denis Zaerko
- *
+ * @author Artyom_Khomyakov
  */
-
 @Controller(value="mechanicController")
 public class MechanicController {
 	
@@ -96,7 +96,7 @@ public class MechanicController {
 	@RequestMapping(value="/profile/{idEmployee}/mechanicnotcompletedoverdord",method=RequestMethod.GET)
 	public String getmechanicnotcompletedoverdord(@PathVariable("idEmployee") Long idEmployee,Model model) {
 		
-		logger.info("ClientController GET: mechanic notcompleted overdue order page");
+		logger.info("MechanicController GET: mechanic notcompleted overdue order page");
 		
 		Employee employee=(Employee) abstractEntity—ommonService.getEntityById(Employee.class, idEmployee);
 		model.addAttribute("employee",employee);
@@ -112,7 +112,7 @@ public class MechanicController {
 	@RequestMapping(value="/profile/{idEmployee}/mechanicdoneord",method=RequestMethod.GET)
 	public String getmechanicmechanicdoneord(@PathVariable("idEmployee") Long idEmployee,Model model) {
 		
-		logger.info("ClientController GET: mechanic done order page");
+		logger.info("MechanicController GET: mechanic done order page");
 		
 		Employee employee=(Employee) abstractEntity—ommonService.getEntityById(Employee.class, idEmployee);
 		model.addAttribute("employee",employee);
@@ -128,7 +128,7 @@ public class MechanicController {
 	public String getmechaniccreateord(@PathVariable("idEmployee") Long idEmployee,
 			@PathVariable("idDepartmentOrder") Long idDepartmentOrder, Model model) {
 		
-		logger.info("ClientController GET: mechanic create order page");
+		logger.info("MechanicController GET: mechanic create order page");
 		
 		DepartmentOrder departmentOrder=(DepartmentOrder) abstractEntity—ommonService
 				.getEntityById(DepartmentOrder.class, idDepartmentOrder);
@@ -149,7 +149,7 @@ public class MechanicController {
 	public ModelAndView postmechaniccreateord(@Valid @ModelAttribute("departmentOrder") DepartmentOrder departmentOrder,
 			@PathVariable("idEmployee") Long idEmployee,@PathVariable("idDepartmentOrder") Long idDepartmentOrder,	Model model){
 		
-		logger.info("ClientController POST: mechanic create order page");
+		logger.info("MechanicController POST: mechanic create order page");
 		DepartmentOrder departmentOrderAfterEdit=(DepartmentOrder) abstractEntity—ommonService
 				.getEntityById(DepartmentOrder.class, idDepartmentOrder);
 		
@@ -175,7 +175,7 @@ public class MechanicController {
 	public String getmechanicchangedetail(@PathVariable("idEmployee") Long idEmployee,@PathVariable("idDepartmentOrder") 
 			Long idDepartmentOrder, Model model){
 		
-		logger.info("ClientController GET: mechanic create detail for order.");
+		logger.info("MechanicController GET: mechanic create detail for order.");
 		
 		Detail detail=new Detail();
 		model.addAttribute("detail", detail);
@@ -191,7 +191,7 @@ public class MechanicController {
 			@PathVariable("idEmployee") Long idEmployee,@PathVariable("idDepartmentOrder") Long idDepartmentOrder,
 			BindingResult result, Model model){
 		
-		logger.info("ClientController POST: mechanic create detail for order.");
+		logger.info("MechanicController POST: mechanic create detail for order.");
 		
 		DepartmentOrder departmentOrder=(DepartmentOrder) abstractEntity—ommonService
 				.getEntityById(DepartmentOrder.class, idDepartmentOrder);
@@ -208,7 +208,7 @@ public class MechanicController {
 	public String getdetailindepartmentord(@PathVariable("idEmployee") Long idEmployee,
 			@PathVariable("idDepartmentOrder") Long idDepartmentOrder, Model model) {
 
-		logger.info("ClientController GET: page details for department order");
+		logger.info("MechanicController GET: page details for department order");
 		List<Detail> listDetail=departmentOrderService.getListDetailForDepartmentOrder(idDepartmentOrder);
 		model.addAttribute("listDetail",listDetail);
 
@@ -224,9 +224,49 @@ public class MechanicController {
 	public ModelAndView getDeleteDetailInDepartmentOrd(@PathVariable("idEmployee") Long idEmployee,@PathVariable("idDepartmentOrder") 
 		Long idDepartmentOrder,@PathVariable("idDetail") Long idDetail, Model model) {
 
-		logger.info("ClientController GET: delete detail frome department order");
+		logger.info("MechanicController GET: delete detail frome department order");
 		abstractEntity—ommonService.deleteEntityById(Detail.class, idDetail);
 
 		return new ModelAndView("redirect:" + "/profile/"+idEmployee+"/"+idDepartmentOrder+"/detailindepartmentord");
 	}
+	
+								//get mechanic comments in service station
+	
+	@RequestMapping(value="/profile/{idEmployee}/mechanicselectcomments",method=RequestMethod.GET)
+	public String getmechanicselectcomments(@PathVariable("idEmployee") Long idEmployee,Model model) {
+		
+		logger.info("MechanicController GET: mechanic select comment page");
+	
+		ServiceStationCommentMark serviceStationCommentMark=new ServiceStationCommentMark();
+		model.addAttribute("serviceStationCommentMark",serviceStationCommentMark);
+		
+		List<ServiceStation> listServiceStation=serviceStationService.getAllServiceStation();
+		model.addAttribute("listServiceStation",listServiceStation);
+		
+		model.addAttribute("idEmployee",idEmployee);
+		
+		return "/mechanicselectcomments"; 						
+	}
+	
+								//post mechanic comments in service station
+	
+	@RequestMapping(value="/profile/{idEmployee}/mechanicselectcomments",method=RequestMethod.POST)
+	public String postmechanicselectcomments(@ModelAttribute("serviceStationCommentMark") ServiceStationCommentMark serviceStationCommentMark,
+			@PathVariable("idEmployee") Long idEmployee, BindingResult result, Model model) {
+		
+		logger.info("MechanicController POST: mechanic select comment page");
+		Long idServiceStation=serviceStationCommentMark.getServiceStation().getIdServiceStation();
+		
+		List<ServiceStationCommentMark> listServiceStationCommentMark=(List<ServiceStationCommentMark>) serviceStationCommentMarkService
+				.getListCommentMarkStatusAsParamByIdServiceStation(idServiceStation, "mechanic");
+		model.addAttribute("listServiceStationCommentMark",listServiceStationCommentMark);
+		
+		model.addAttribute("idEmployee",idEmployee);
+		
+		ServiceStation serviceStation =(ServiceStation) abstractEntity—ommonService.getEntityById(ServiceStation.class, idServiceStation);
+		model.addAttribute("serviceStation",serviceStation);
+		
+		return "/mechaniccommentsinservicestation";
+	}
+	
 }

@@ -75,7 +75,7 @@
 			   
 			   <div class="form-group">
 			   	  <div class="col-xs-4">
-			         <p style="padding-top: 10px;">Email for correspondence(must be filled)</p>
+			         <p style="padding-top: 10px;">Email for correspondence(must be fill)</p>
 				     <div>
 				         <form:input type="email" class="form-control input-sm" id="clientEmail" placeholder="Email" path="client.clientEmail" />
 				     </div>

@@ -4,7 +4,7 @@
 
 <!-- @author Artyom_Khomyakov -->
 <!-- @author Denis Zaerko -->
-<html>
+<html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Login Failure</title>

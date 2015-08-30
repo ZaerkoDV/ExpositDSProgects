@@ -19,7 +19,6 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		
 </head>
 <body>
    
@@ -42,7 +41,7 @@
 	  </nav>
     
      <h4>Add a comment to service station ${serviceStation.serviceStationName} </h4>  
-     <form:form id="servicestationcommentForm" method="POST" class="bs-example form-horizontal" commandName="serviceStationCommentMark">
+     <form:form id="serviceStationCommentForm" method="POST" class="bs-example form-horizontal" commandName="serviceStationCommentMark">
         
        <div class="form-group">
 		   <p style="padding-top: 20px;">Comment</p>
@@ -94,7 +93,7 @@
 					<div class="modal-content">				
 						<div class="modal-header">
 						    <button type="button" class="close" data-dismiss="modal"aria-hidden="true">&times;</button>
-							<h3>Registraction Form</h3>
+							<h3>Comment form</h3>
 						</div>					
 						<div class="modal-body">
 						   <p>Are you sure you want to do this?</p>

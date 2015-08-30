@@ -7,7 +7,7 @@
 
 <!-- @author Artyom_Khomyakov -->
 <!-- @author Denis Zaerko -->
-<html>
+<html lang="en">
 <head>
 		<title>All service satation list</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

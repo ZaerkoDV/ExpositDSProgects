@@ -4,7 +4,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<html>
+<!-- @author Artyom_Khomyakov -->
+<!-- @author Denis Zaerko -->
+<html lang="en">
 <head>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -84,7 +86,7 @@
 			   
 			   <div class="form-group">
 			     <div class="col-xs-4">
-				    <p style="padding-top: 0px;">End order</p>
+				    <p style="padding-top: 0px;">End order(example 01/01/2000)</p>
 				    <div class="date form_date col-lg-9" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
 						<form:input type="text" class="form-control input-sm" id="endOrder" placeholder="End order" path="endOrder"/>
 				    </div>

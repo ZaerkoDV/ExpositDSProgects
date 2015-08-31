@@ -109,31 +109,40 @@ public class ClientController {
 		logger.info("ClientController GET: index page");
 		return "/index"; 						
 	}
-////&&&& director&	
+
 	@RequestMapping(value="/index", method=RequestMethod.POST)
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response){
 		
 		logger.info("ClientController POST: index page");
-		//String confirmUserLogin=DigestUtils.md5Hex(request.getParameter("login"));
-		//String confirmUserPassword =DigestUtils.md5Hex(request.getParameter("password"));
-		String userLogin=request.getParameter("login");
-		String userPassword=request.getParameter("password");
+		String confirmUserLogin=request.getParameter("login");
+		String confirmUserPassword =DigestUtils.md5Hex(request.getParameter("password"));
+		//System.out.println(confirmUserPassword.toString());
 		
-		Boolean isClient= clientService.signInClientByLoginPassword(userLogin, userPassword);
-		Boolean isEmployee=employeeService.signInEmployeByLoginPassword(userLogin, userPassword);
+		Boolean isClient= clientService.signInClientByLoginPassword(confirmUserLogin, confirmUserPassword);
+		Boolean isEmployee=employeeService.signInEmployeByLoginPassword(confirmUserLogin, confirmUserPassword);
 		
 		if(isClient){//client page
-			
-			Long idClient=clientService.getIdClientByLoginPassword(userLogin, userPassword);
+			Long idClient=clientService.getIdClientByLoginPassword(confirmUserLogin, confirmUserPassword);
 			return new ModelAndView("redirect:" + "/profile/"+idClient+"/clientnotcompledoverdord");
 			
-		}else if(isEmployee){//mechanic page
+		}else if(isEmployee){
+			Long idEmployee=employeeService.getIdEmployeByLoginPassword(confirmUserLogin, confirmUserPassword);
+			Employee employee=(Employee) abstractEntity—ommonService.getEntityById(Employee.class, idEmployee);
 			
-			Long idEmployee=employeeService.getIdEmployeByLoginPassword(userLogin, userPassword);
-			return new ModelAndView("redirect:" + "/profile/"+idEmployee+"/mechanicnotcompletedoverdord");
+			//mechanic page
+			if(employee.getEmployeFunction().equals("mechanic")){
+				return new ModelAndView("redirect:" + "/profile/"+idEmployee+"/mechanicnotcompletedoverdord");		
 			
-		}else{//else return to start page
-			return new ModelAndView("redirect:" + "/failure");
+			//director page
+			}else if(employee.getEmployeFunction().equals("director")){
+				return new ModelAndView("redirect:" + "/profile/"+idEmployee+"/directorpage");
+				
+			}else{
+				return new ModelAndView("/failure");
+			}
+		//else return to start page		
+		}else{
+			return new ModelAndView("/failure");
 		}
 	}
 											   //getregistration

@@ -1,5 +1,17 @@
 /**
+ * @package com.expositds.servicestationmanagementsystem.controlle
  * 
+ * Package com.expositds.servicestationmanagementsystem.controlle contain set of classes
+ * which perform controller function in ServiceStationManagementSystem project. This project
+ * is based on MVC architecture.This class is part of controller in MVC architecture. Controller
+ * provides communication between the user and the system: controls user input and uses models
+ * and views to implement the necessary response. In Service Station Management System, define
+ * three roles Client, Mechanic,Director. For each role,define separate controller.All classes
+ * which contain postfix ìControllerî provide to work Controller for Service Station Management
+ * System application.
+ * 
+ * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
+ * to use information or have any questions. 
  */
 package com.expositds.servicestationmanagementsystem.controller;
 
@@ -34,14 +46,40 @@ import com.expositds.servicestationmanagementsystem.service.ServiceStationCommen
 import com.expositds.servicestationmanagementsystem.service.ServiceStationService;
 
 /**
+ * Class contain methods which describe communication between user with role mechanic and system.
+ * 
+ * User with role mechanic performs clinet orders in department. When client do order he choose
+ * mechanic from list of mechanics and department(servicestation). If client choose mechanic this
+ * mechanic will be hired in department for order perform. 
+ * Class MechanicController use technologe IoC for work with other layer in application. All methods
+ * are public in class. For logging use framework shell slf4j and framework log4j.Class contain
+ * also private, static variable logger, which use to call log message.Controller use spring
+ * framework for organize request/response mappling.
+ * 
+ * @version 1.0 31.08.2015
+ * 
+ * @see org.springframework.web
+ * @see javax.servlet.http
+ * @see org.springframework.stereotype
+ * 
  * @author Denis Zaerko
  * @author Artyom_Khomyakov
  */
 @Controller(value="mechanicController")
 public class MechanicController {
 	
+	/**
+	 * Variable logger use to get logger level for class MechanicController.
+	 * 
+	 * @param class name: MechanicController
+	 * @return logger for class MechanicController.
+	 */
 	private static final Logger logger = LoggerFactory.getLogger(MechanicController.class);
 	
+	/**
+	 * Annatation Inject use to get dependency injection from service
+	 * layer classes. This is part of specification JSR-330.
+	 */
 	@Inject
 	@Qualifier("abstractEntity—ommonService")
 	private AbstractEntityCommonService abstractEntity—ommonService;
@@ -66,7 +104,10 @@ public class MechanicController {
 	@Qualifier(value="serviceStationCommentMarkService")
 	private ServiceStationCommentMarkService serviceStationCommentMarkService;
 
-	
+	/**
+	 * This is set of methods of dependency injection .
+	 * This methods give the right set(writeable) variable value.
+	 */
 	public void setAbstractEntityCommonService(AbstractEntityCommonService abstractEntity—ommonService) {
 		this.abstractEntity—ommonService = abstractEntity—ommonService;
 	}
@@ -92,7 +133,15 @@ public class MechanicController {
 	}
 	
 								//get mechanic notcompleted and overdue order
-
+	/**
+	 * This method return mechanicnotcompletedoverdord.jsp page with a list of not 
+	 * completed and overdue orders for mechanic.
+	 * 
+	 * @type Long
+	 * @param idEmployee
+	 * 
+	 * @return mechanicnotcompletedoverdord page
+	 */
 	@RequestMapping(value="/profile/{idEmployee}/mechanicnotcompletedoverdord",method=RequestMethod.GET)
 	public String getmechanicnotcompletedoverdord(@PathVariable("idEmployee") Long idEmployee,Model model) {
 		
@@ -108,7 +157,14 @@ public class MechanicController {
 	}
 	
 										//get mechanic done order
-	
+	/**
+	 * This method return mechanicdoneord.jsp page with a list of done orders for mechanic.
+	 * 
+	 * @type Long
+	 * @param idEmployee
+	 * 
+	 * @return mechanicdoneord page
+	 */
 	@RequestMapping(value="/profile/{idEmployee}/mechanicdoneord",method=RequestMethod.GET)
 	public String getmechanicmechanicdoneord(@PathVariable("idEmployee") Long idEmployee,Model model) {
 		
@@ -123,7 +179,15 @@ public class MechanicController {
 		return "/mechanicdoneord";
 	}
 										//get mechanic edit order
-	
+	/**
+	 * This method return mechaniccreateord.jsp page with client order and order management tools for mechanic.
+	 * 
+	 * @type Long
+	 * @param idEmployee
+	 * @param idDepartmentOrder
+	 * 
+	 * @return mechaniccreateord page
+	 */
 	@RequestMapping(value="/profile/{idEmployee}/{idDepartmentOrder}/mechaniccreateord",method=RequestMethod.GET)
 	public String getmechaniccreateord(@PathVariable("idEmployee") Long idEmployee,
 			@PathVariable("idDepartmentOrder") Long idDepartmentOrder, Model model) {
@@ -144,7 +208,18 @@ public class MechanicController {
 	}
 	
 										//post mechanic edit order
-	
+	/**
+	 * This method it allows set work cost, set end order date, set order status, set order description for mechanic and
+	 * then redirect to mechanicnotcompletedoverdord
+	 * 
+	 * @type DepartmentOrder
+	 * @type Long
+	 * 
+	 * @param idEmployee
+	 * @param idDepartmentOrder
+	 *  
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value="/profile/{idEmployee}/{idDepartmentOrder}/mechaniccreateord",method=RequestMethod.POST)
 	public ModelAndView postmechaniccreateord(@Valid @ModelAttribute("departmentOrder") DepartmentOrder departmentOrder,
 			@PathVariable("idEmployee") Long idEmployee,@PathVariable("idDepartmentOrder") Long idDepartmentOrder,	Model model){
@@ -170,7 +245,14 @@ public class MechanicController {
 		return new ModelAndView("redirect:" + "/profile/"+idEmployee+"/mechanicnotcompletedoverdord");
 	}	
 									//get create detail for department order
-	
+	/**
+	 * This method return mechanicchangedetail.jsp page.
+	 * 
+	 * @param idEmployee
+	 * @param idDepartmentOrder
+	 * 
+	 * @return mechanicchangedetail page
+	 */
 	@RequestMapping(value="/profile/{idEmployee}/{idDepartmentOrder}/mechanicchangedetail",method=RequestMethod.GET)
 	public String getmechanicchangedetail(@PathVariable("idEmployee") Long idEmployee,@PathVariable("idDepartmentOrder") 
 			Long idDepartmentOrder, Model model){
@@ -186,6 +268,18 @@ public class MechanicController {
 	}
 									//post create detail for department order
 	
+	/**
+	 * This method it allows create details for Client Order.
+	 * 
+	 * @type Detail
+	 * @type Long 
+	 * 
+	 * @param detail
+	 * @param idEmployee
+	 * @param idDepartmentOrder
+	 * 
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value="/profile/{idEmployee}/{idDepartmentOrder}/mechanicchangedetail",method=RequestMethod.POST)
 	public ModelAndView getmechanicchangedetail(@Valid @ModelAttribute("detail") Detail detail,
 			@PathVariable("idEmployee") Long idEmployee,@PathVariable("idDepartmentOrder") Long idDepartmentOrder,
@@ -203,7 +297,16 @@ public class MechanicController {
 	}
 		
 									//get list details for department order
-	
+	/**
+	 * This method return detailindepartmentord.jsp page with a list of all details in department order.
+	 * 
+	 * @type Long
+	 * 
+	 * @param idEmployee
+	 * @param idDepartmentOrder
+	 * 
+	 * @return detailindepartmentord page
+	 */
 	@RequestMapping(value="/profile/{idEmployee}/{idDepartmentOrder}/detailindepartmentord",method=RequestMethod.GET)
 	public String getdetailindepartmentord(@PathVariable("idEmployee") Long idEmployee,
 			@PathVariable("idDepartmentOrder") Long idDepartmentOrder, Model model) {
@@ -217,9 +320,18 @@ public class MechanicController {
 
 		return "/detailindepartmentord";
 	}
-	
 									//get delete detail in department order
-
+	/**
+	 * This method it allows delete detail in department order by idDetail and then redirect to detailindepartmentord.jsp.
+	 * 
+	 * @type Long
+	 * 
+	 * @param idEmployee
+	 * @param idDepartmentOrder
+	 * @param idDetail
+	 * 
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value="/profile/{idEmployee}/{idDepartmentOrder}/detailindepartmentord/{idDetail}/delete",method=RequestMethod.GET)
 	public ModelAndView getDeleteDetailInDepartmentOrd(@PathVariable("idEmployee") Long idEmployee,@PathVariable("idDepartmentOrder") 
 		Long idDepartmentOrder,@PathVariable("idDetail") Long idDetail, Model model) {
@@ -229,9 +341,16 @@ public class MechanicController {
 
 		return new ModelAndView("redirect:" + "/profile/"+idEmployee+"/"+idDepartmentOrder+"/detailindepartmentord");
 	}
-	
+
 								//get mechanic comments in service station
-	
+	/**
+	 * This method return mechanicselectcomments.jsp page.
+	 * 
+	 * @type Long
+	 * @param idEmploy
+	 * 
+	 * @return mechanicselectcomments page
+	 */
 	@RequestMapping(value="/profile/{idEmployee}/mechanicselectcomments",method=RequestMethod.GET)
 	public String getmechanicselectcomments(@PathVariable("idEmployee") Long idEmployee,Model model) {
 		
@@ -249,7 +368,17 @@ public class MechanicController {
 	}
 	
 								//post mechanic comments in service station
-	
+	/**
+	 * This method it allows select ServiceStation for mechanic to view comments and marks left by him.
+	 * 
+	 * @type Long
+	 * @type ServiceStationCommentMark
+	 * 
+	 * @param idEmployee
+	 * @param ServiceStationCommentMark
+	 * 
+	 * @return mechaniccommentsinservicestation page
+	 */
 	@RequestMapping(value="/profile/{idEmployee}/mechanicselectcomments",method=RequestMethod.POST)
 	public String postmechanicselectcomments(@ModelAttribute("serviceStationCommentMark") ServiceStationCommentMark serviceStationCommentMark,
 			@PathVariable("idEmployee") Long idEmployee, BindingResult result, Model model) {
@@ -268,5 +397,4 @@ public class MechanicController {
 		
 		return "/mechaniccommentsinservicestation";
 	}
-	
 }

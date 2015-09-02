@@ -64,8 +64,8 @@ public class AbstractEntityCommonServiceImpl implements AbstractEntityCommonServ
 	private AbstractEntityCommonDAO abstractEntity—ommonDAO;
 	
 	/**
-	 * This is set method of injection AbstractEntityCommonDAO* dependency.
-	 * This methods give the right set(writeable) abstractEntity—ommonDAO
+	 * This is set of methods which give chance injection AbstractEntityCommonDAO
+	 * dependency. This methods give the right set(writeable) abstractEntity—ommonDAO
 	 */
 	public void setAbstractEntity—ommonDAO(AbstractEntityCommonDAO abstractEntity—ommonDAO) {
 		this.abstractEntity—ommonDAO = abstractEntity—ommonDAO;

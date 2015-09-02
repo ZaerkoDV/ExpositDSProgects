@@ -95,9 +95,9 @@
 				              </div>
 			              </div>
 			              <div class="form-group">
-							<label for="dateOfBirth" class="col-lg-3 control-label">Date of birth(example 01/01/2000)</label>
+							<label for="dateOfBirth" class="col-lg-3 control-label">Date of birth</label>
 							<div class="date form_date col-lg-9" data-date-format="dd/mm/yyyy" data-date-viewmode="years">
-								<form:input type="text" class="form-control" id="dateOfBirth" placeholder="Date of birth" path="client.clientBirthday"/>
+								<form:input type="text" class="form-control" id="dateOfBirth" placeholder="Example 01/01/2000" path="client.clientBirthday"/>
 								<form:errors path="client.clientBirthday" cssClass="error" />
 							</div>
 						  </div>

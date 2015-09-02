@@ -1,5 +1,17 @@
 /**
+ * @package com.expositds.servicestationmanagementsystem.controlle
  * 
+ * Package com.expositds.servicestationmanagementsystem.controlle contain set of classes
+ * which perform controller function in ServiceStationManagementSystem project. This project
+ * is based on MVC architecture.This class is part of controller in MVC architecture. 
+ * Controller provides communication between the user and the system: controls user input
+ * and uses models and views to implement the necessary response. In Service Station Management
+ * System, define three roles Client, Mechanic, Director. For each role, define separate
+ * controller. All classes which contain postfix ìControllerî provide to
+ * work Controller for Service Station Management System application.
+ * 
+ * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
+ * to use information or have any questions. 
  */
 package com.expositds.servicestationmanagementsystem.controller;
 
@@ -40,14 +52,51 @@ import com.expositds.servicestationmanagementsystem.service.ServiceStationCommen
 import com.expositds.servicestationmanagementsystem.service.ServiceStationService;
 
 /**
+ * Class contain methods which describe communication between user with role client and system.
+ * The client(user role) go to the website, the customer sees on the home page a list of all
+ * stations, registered in the system, and brief information about them (name, town and the
+ * average rating of the work). He can go to a separate page Service Station. This page displays
+ * basic information about the work of the Service Station (name, address, phone number, the
+ * average assessment of the work). Also, there are displayed all the reviews and evaluation of
+ * Service Station. If the client has previously used the services of the service, he can view
+ * the status of your order (the status and value of the work) by entering an email into the input
+ * field and pressing the "check". Also, on this page the customer can send the application by
+ * click. On the page that appears in special fields should leave your, e-mail, describe the
+ * task and click "Send". This request will go mechanics. Also, the client has the opportunity
+ * to register in the system. Go to the registration page can be on start page by clicking on
+ * the "Sign up". On the registration page the customer must fill in the following fields:
+ * last name, email, login, password, phone number. Once registered in the system, you can go
+ * to your personal account (profile). In this account the customer can view the status of their
+ * orders.
+ * Class ClinetController use technologe IoC for work with other layer in application. All methods
+ * are public in class. For logging use framework shell slf4j and framework log4j.Class contain
+ * also private, static variable logger, which use to call log message.Controller use spring
+ * framework for organize request/response mappling.
+ * 
+ * @version 1.0 31.08.2015
+ * 
+ * @see org.springframework.web
+ * @see javax.servlet.http
+ * @see org.springframework.stereotype
+ * 
  * @author Denis Zaerko
  * @author Artyom_Khomyakov
  */
 @Controller(value="clientController")
 public class ClientController {
 
+	/**
+	 * Variable logger use to get logger level for class ClientController.
+	 * 
+	 * @param class name: ClientController
+	 * @return logger for class ClientController.
+	 */
 	private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
 	
+	/**
+	 * Annatation Inject use to get dependency injection from service
+	 * layer classes. This is part of specification JSR-330.
+	 */
 	@Inject
 	@Qualifier("abstractEntity—ommonService")
 	private AbstractEntityCommonService abstractEntity—ommonService;
@@ -76,6 +125,10 @@ public class ClientController {
 	@Qualifier(value="serviceStationCommentMarkService")
 	private ServiceStationCommentMarkService serviceStationCommentMarkService;
 	
+	/**
+	 * This is set of methods of dependency injection .
+	 * This methods give the right set(writeable) variable value.
+	 */
 	public void setAbstractEntityCommonService(AbstractEntityCommonService abstractEntity—ommonService) {
 		this.abstractEntity—ommonService = abstractEntity—ommonService;
 	}
@@ -104,12 +157,25 @@ public class ClientController {
 		this.serviceStationCommentMarkService=serviceStationCommentMarkService;
 	}
 	
+	/**
+	 * This method return the index.jsp page
+	 * @type String
+	 * @return index.jsp
+	 */
 	@RequestMapping(value="/index",method=RequestMethod.GET)
 	public String index() {
 		logger.info("ClientController GET: index page");
 		return "/index"; 						
 	}
 
+	/**
+	 * This authentication method. Fill in the fields login and password if they  have been properly
+	 * filled, then redirect to the appropriate page (director page, mechanic page or client page).
+	 * If there were errors at the entrance, then redirects to a failure.jsp page.
+	 * 
+	 * @return ModelAndView
+	 * @type String
+	 */
 	@RequestMapping(value="/index", method=RequestMethod.POST)
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response){
 		
@@ -146,7 +212,13 @@ public class ClientController {
 		}
 	}
 											   //getregistration
-							
+	/**
+	 * This method return the registration.jsp page.
+	 * 
+	 * @param ClientSecurityFeature
+	 * @type String
+	 * @return  registration.jsp
+	 */	
 	@RequestMapping(value="/registration", method=RequestMethod.GET)
 	public String getregistration(Model model) {	
 		
@@ -157,7 +229,14 @@ public class ClientController {
 		return "/registration";
 	}
 												//postregistration
-								
+	/**
+	 * This method saves the client with  if login and password was unique.
+	 * If there were errors, it will redirect to the registration.jsp page.
+	 * 
+	 * @type String
+	 * 
+	 * @return success page
+	 */ 
 	@RequestMapping(value="/registration", method=RequestMethod.POST)
 	public String postregistration(@Valid @ModelAttribute("clientSecurityFeature") ClientSecurityFeature clientSecurityFeature,
 			BindingResult result, Model model){
@@ -181,13 +260,18 @@ public class ClientController {
 			logger.info("ClientController POST: Client not save! Change fields!");
 			return "/registration";
 		}
-	}
-		
+	}	
 											// get client pages
-	
-////???????	
-//get work      http://localhost:8080/ServiceStationManagementSystem/profile/1/clientnotcompledoverdord
-//get not work	http://localhost:8080/ServiceStationManagementSystem/views/profile/1/clientnotcompledoverdord.jsp
+	/**
+	 * This method return the clientnotcompledoverdord.jsp page together with a list 
+	 * orders with the status not completed.
+	 * 
+	 * @type String
+	 * @type Long
+	 * @param idClient
+	 * 
+	 * @return clientnotcompledoverdord page
+	 */
 	@RequestMapping(value="/profile/{idClient}/clientnotcompledoverdord",method=RequestMethod.GET)
 	public String getclientnotcompledoverdorder(@PathVariable("idClient") Long idClient,Model model) {
 		
@@ -203,9 +287,18 @@ public class ClientController {
 		
 		return "/clientnotcompledoverdord"; 						
 	}
-	
 										//post client pages
-	
+	/**
+	 * This method return the clientdoneord.jsp page together with a list 
+	 * orders with the status done.
+	 * 
+	 * @type String
+	 * @type Long
+	 * 
+	 * @param idClient
+	 * 
+	 * @return clientdoneord page
+	 */
 	@RequestMapping(value="/profile/{idClient}/clientdoneord",method=RequestMethod.GET)
 	public String getclientdoneord(@PathVariable("idClient") Long idClient,Model model) {
 		
@@ -222,7 +315,19 @@ public class ClientController {
 		return "/clientdoneord"; 						
 	}						
 												//delete
-	
+	/**
+	 * This method remove the Department Order by id department order
+	 * and redirect to beforepage.
+	 * 
+	 * @type String
+	 * @type Long
+	 * 
+	 * @param idClient
+	 * @param idDepartmentOrder
+	 * @param beforepage
+	 * 
+	 * @return beforepage
+	 */
 	@RequestMapping(value="/profile/{idClient}/{beforepage}/{idDepartmentOrder}/delete",method=RequestMethod.GET)
 	public String getdeleteclientord(@PathVariable("idClient") Long idClient,@PathVariable("beforepage") String beforepage,
 			@PathVariable("idDepartmentOrder") Long idDepartmentOrder,
@@ -255,8 +360,19 @@ public class ClientController {
 		}
 		return "/"+beforepage;
 	}
-												//getrenew
-	
+												//getrenew order
+	/**
+	 * This method return the clientreneword.jsp page with the a list of Departments and a list
+	 * of the mechanics of this department.
+	 * 
+	 * @type String
+	 * @type Long
+	 * 
+	 * @param idClient
+	 * @param idDepartment
+	 * 
+	 * @return clientreneword
+	 */
 	@RequestMapping(value="/profile/{idClient}/{idDepartmentOrder}/renew",method=RequestMethod.GET)
 	public String getrenewclientord(@PathVariable("idClient") Long idClient,@PathVariable("idDepartmentOrder") Long idDepartmentOrder,
 			Model model) {
@@ -281,7 +397,21 @@ public class ClientController {
 	}
 	
 													//postrenew
-	
+	/**
+	 * This method delete client order by id and then update order data (set Client, Department, Employee, Start Order and Order Status) 
+	 * and redirect to before page.
+	 * 
+	 * @type long
+	 * @type String
+	 * @type DepartmentOrder
+	 * @type BindingResult
+	 * 
+	 * @param idClient
+	 * @param idDepartmentOrder
+	 * @param departmentOrder
+	 * 
+	 * @return clientnotcompledoverdord page
+	 */
 	@RequestMapping(value="/profile/{idClient}/{idDepartmentOrder}/renew",method=RequestMethod.POST)
 	public String postrenewclientord(@PathVariable("idClient") Long idClient,@PathVariable("idDepartmentOrder") Long idDepartmentOrder,
 			@ModelAttribute("departmentOrder") DepartmentOrder departmentOrder,BindingResult result,Model model) {
@@ -313,7 +443,18 @@ public class ClientController {
 	}
 	
 											//get client coments for service station
-	
+	/**
+	 * This method return the addservicestationcomment.jsp 
+	 * 
+	 * @type String
+	 * @type Long
+	 * 
+	 * @param beforepage
+	 * @param idClient
+	 * @param idServiceStation
+	 * 
+	 * @return addservicestationcomment.jsp 
+	 */
 	@RequestMapping(value="/profile/{idClient}/{beforepage}/{idServiceStation}/addservicestationcomment",method=RequestMethod.GET)
 	public String getaddservicestationcomment(@PathVariable("idClient") Long idClient,@PathVariable("beforepage") String beforePage,
 			@PathVariable("idServiceStation") Long idServiceStation, Model model) {
@@ -337,7 +478,16 @@ public class ClientController {
 	}
 	
 											//post client coments for service station
-
+	/**
+	 * This method save the comments and marks for sevice station by clinet and redirect to before page.
+	 * 
+	 * @type Long
+	 * @type String
+	 * @param idClinet
+	 * @param beforepage
+	 * 
+	 * @return beforepage
+	 */
 	@RequestMapping(value="/profile/{idClient}/{beforepage}/{idServiceStation}/addservicestationcomment",method=RequestMethod.POST)
 	public String postaddservicestationcomment(@Valid @ModelAttribute("serviceStationCommentMark") ServiceStationCommentMark serviceStationCommentMark,
 		@PathVariable("idClient") Long idClient,@PathVariable("beforepage") String beforePage, @PathVariable("idServiceStation") Long idServiceStation,BindingResult result, Model model) {
@@ -381,7 +531,11 @@ public class ClientController {
 		return "/"+beforePage;
 	}
 									//getallservicestation
-	
+	/**
+	 * This method return the allservicestation.jsp with list of all service station limit 20 per page.
+	 * 
+	 * @return allservicestation.jsp
+	 */
 	@RequestMapping(value="/allservicestation",method=RequestMethod.GET)
 	public String getallservicestation(Model model) {
 		
@@ -393,6 +547,15 @@ public class ClientController {
 	}
 									//get review service station page
 	
+	/**
+	 * This method return the servicestationreview.jsp with main information about service station.
+	 * 
+	 * @type String
+	 * @type Long
+	 * 
+	 * @param idServiceStation
+	 * @return servicestationreview page
+	 */
 	@RequestMapping(value="/servicestation/{idServiceStation}/servicestationreview",method=RequestMethod.GET)
 	public String getservicestationreview(@PathVariable("idServiceStation") Long idServiceStation, Model model) {
 		
@@ -421,6 +584,19 @@ public class ClientController {
 	}
 									    //post review service station page
 	
+	/**
+	 * This method return the incompleteclientallord.jsp by client id with support "getClientByEmail" method of clientService.
+	 * 
+	 * @type String
+	 * @type Long
+	 * @type Clinet
+	 * 
+	 * @param Client
+	 * @param idClient
+	 * @param idServiceStation
+	 * 
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value="/servicestation/{idServiceStation}/servicestationreview",method=RequestMethod.POST)
 	public ModelAndView postservicestationreview(@ModelAttribute("client") Client client,
 			@PathVariable("idServiceStation") Long idServiceStation,BindingResult result, Model model) {
@@ -432,8 +608,15 @@ public class ClientController {
 	}
 	
 										//get incompleted client page
-///??????
-/////////	
+	/**
+	 * This method return the incompleteclientallord.jsp by client id with list of Not Completed & Overdue Client Order
+	 * and list of Done Client Order.
+	 * 
+	 * @type Long
+	 * @param idClient
+	 * 
+	 * @return incompleteclientallord.jsp
+	 */
 	@RequestMapping(value="/profile/{idClient}/incompleteclientallord",method=RequestMethod.GET)
 	public String getincompleteclientallord(@PathVariable("idClient") Long idClient, Model model) {
 		
@@ -453,8 +636,13 @@ public class ClientController {
 		return "/incompleteclientallord";
 	}
 	
-										//get add new client order in department
-	
+										//get add new client order in department	
+	/**
+	 * This method return the incompleteclientneword.jsp page with list of all  departments and list
+	 * of employee of this department.
+	 * 
+	 * @return incompleteclientneword page
+	 */
 	@RequestMapping(value="/profile/incompleteclientneword",method=RequestMethod.GET)
 	public String getincompleteclientneword(Model model) {
 		
@@ -474,7 +662,15 @@ public class ClientController {
 	}
 
 									//post add new client order in department
-	
+	/**
+	 * This method create new department order. Order is created for non-registered client. Throws
+	 * an error if an email is empty or not unique.
+	 * 
+	 * @type DepartmentOrder
+	 * @param DepartmentOrder
+	 * 
+	 * @return incompleteclientneword page
+	 */
 	@RequestMapping(value="/profile/incompleteclientneword",method=RequestMethod.POST)
 	public String getincompleteclientneword(@Valid @ModelAttribute("departmentOrder") DepartmentOrder departmentOrder,
 			BindingResult result,Model model) {

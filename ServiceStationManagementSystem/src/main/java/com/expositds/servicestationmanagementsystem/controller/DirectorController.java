@@ -1,3 +1,18 @@
+/**
+ * @package com.expositds.servicestationmanagementsystem.controlle
+ * 
+ * Package com.expositds.servicestationmanagementsystem.controlle contain set of classes
+ * which perform controller function in ServiceStationManagementSystem project. This project
+ * is based on MVC architecture.This class is part of controller in MVC architecture. Controller
+ * provides communication between the user and the system: controls user input and uses models
+ * and views to implement the necessary response. In Service Station Management System, define
+ * three roles Client, Mechanic,Director. For each role,define separate controller.All classes
+ * which contain postfix ìControllerî provide to work Controller for Service Station Management
+ * System application.
+ * 
+ * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
+ * to use information or have any questions. 
+ */
 package com.expositds.servicestationmanagementsystem.controller;
 
 import java.util.Date;
@@ -32,14 +47,42 @@ import com.expositds.servicestationmanagementsystem.service.ServiceStationCommen
 import com.expositds.servicestationmanagementsystem.service.ServiceStationService;
 
 /**
+ * Class contain methods which describe communication between user with role director and system.
+ * 
+ * User with role mechanic performs clinet orders in department. When client do order he choose
+ * mechanic from list of mecThe role of the director is as follows:gathering information on the
+ * work stations and its departments and generation of financial reports. Also director may right
+ * create new mechanic,delete mechanic and edit information about mechanic.Director may browse 
+ * client comment about service station.
+ * Class DirectorController use technologe IoC for work with other layer in application. All methods
+ * are public in class. For logging use framework shell slf4j and framework log4j.Class contain
+ * also private, static variable logger, which use to call log message.Controller use spring
+ * framework for organize request/response mappling.
+ * 
+ * @version 1.0 31.08.2015
+ * 
+ * @see org.springframework.web
+ * @see javax.servlet.http
+ * @see org.springframework.stereotype
+ * 
  * @author Denis Zaerko
  * @author Artyom_Khomyakov
  */
 @Controller(value="directorController")
 public class DirectorController {
 	
-private static final Logger logger = LoggerFactory.getLogger(DirectorController.class);
+	/**
+	 * Variable logger use to get logger level for class DirectorController.
+	 * 
+	 * @param class name: DirectorController
+	 * @return logger for class DirectorController.
+	 */
+	private static final Logger logger = LoggerFactory.getLogger(DirectorController.class);
 	
+	/**
+	 * Annatation Inject use to get dependency injection from service
+	 * layer classes. This is part of specification JSR-330.
+	 */
 	@Inject
 	@Qualifier("abstractEntity—ommonService")
 	private AbstractEntityCommonService abstractEntity—ommonService;
@@ -68,7 +111,10 @@ private static final Logger logger = LoggerFactory.getLogger(DirectorController.
 	@Qualifier(value="serviceStationCommentMarkService")
 	private ServiceStationCommentMarkService serviceStationCommentMarkService;
 
-	
+	/**
+	 * This is set of methods of dependency injection .
+	 * This methods give the right set(writeable) variable value.
+	 */
 	public void setAbstractEntityCommonService(AbstractEntityCommonService abstractEntity—ommonService) {
 		this.abstractEntity—ommonService = abstractEntity—ommonService;
 	}
@@ -98,7 +144,14 @@ private static final Logger logger = LoggerFactory.getLogger(DirectorController.
 	}
 	
 										//get director page
-
+	/**
+	 * This method return the directorpage.jsp page by id director with a list of all employee of this Service Station
+	 * 
+	 * @type Long
+	 * @param idDirector
+	 * 
+	 * @return directorpage page
+	 */
 	@RequestMapping(value="/profile/{idDirector}/directorpage",method=RequestMethod.GET)
 	public String getdirectorpage(@PathVariable("idDirector") Long idDirector,Model model) {
 
@@ -114,7 +167,15 @@ private static final Logger logger = LoggerFactory.getLogger(DirectorController.
 		return "/directorpage"; 						
 	}
 										//get delete employee
-	
+	/**
+	 * This method removes Employee by idEmployee and redirect to directorpage.jsp page.
+	 * 
+	 * @type Long
+	 * @param idDirector
+	 * @param idEmployee
+	 * 
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value="/profile/{idDirector}/directorpage/{idEmployee}/delete",method=RequestMethod.GET)
 	public ModelAndView getemployeedelete(@PathVariable("idDirector") Long idDirector,
 			@PathVariable("idEmployee") Long idEmployee,Model model) {
@@ -125,7 +186,15 @@ private static final Logger logger = LoggerFactory.getLogger(DirectorController.
 	}
 	
 										//get edit employee
-	
+	/**
+	 * This method return the editemployee.jsp page.
+	 * 
+	 * @type Long
+	 * @param idDirector
+	 * @param idEmployee
+	 * 
+	 * @return editemployee page
+	 */
 	@RequestMapping(value="/profile/{idDirector}/directorpage/{idEmployee}/editemployee",method=RequestMethod.GET)
 	public String geteditemployee(@PathVariable("idDirector") Long idDirector,
 			@PathVariable("idEmployee") Long idEmployee,Model model){
@@ -138,7 +207,18 @@ private static final Logger logger = LoggerFactory.getLogger(DirectorController.
 		return "/editemployee";
 	}
 												//post edit employee
-	
+	/**
+	 * This method update employee data and redirect to directorpage.jsp.
+	 * 
+	 * @type Long
+	 * @type Employee
+	 * 
+	 * @param employee
+	 * @param idDirector
+	 * @param idEmployee
+	 * 
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value="/profile/{idDirector}/directorpage/{idEmployee}/editemployee", method=RequestMethod.POST)
 	public ModelAndView posteditemployee(@Valid @ModelAttribute("employee") Employee employee,
 			@PathVariable("idDirector") Long idDirector,@PathVariable("idEmployee") Long idEmployee,
@@ -151,7 +231,14 @@ private static final Logger logger = LoggerFactory.getLogger(DirectorController.
 		return new ModelAndView("redirect:" + "/profile/"+idDirector+"/directorpage");
 	}
 	
-
+	/**
+	 * This method return the addemployee.jsp page.
+	 * 
+	 * @type Long
+	 * @param idDirector
+	 * 
+	 * @return addemployee page
+	 */
 	@RequestMapping(value="/profile/{idDirector}/addemployee",method=RequestMethod.GET)
 	public String getaddemployee(@PathVariable("idDirector") Long idDirector,Model model){
 		
@@ -165,7 +252,17 @@ private static final Logger logger = LoggerFactory.getLogger(DirectorController.
 		return "/addemployee";
 	}
 	
-	
+	/**
+	 * This method create new Employee and save him.After redirect to directorpage.jsp
+	 * 
+	 * @type Long
+	 * @type EmployeeSecurityFeature
+	 * 
+	 * @param employeeSecurityFeature
+	 * @param idDirector
+	 * 
+	 * @return ModelAndView
+	 */
 	@RequestMapping(value="/profile/{idDirector}/addemployee", method=RequestMethod.POST)
 	public ModelAndView postaddemployee(@Valid @ModelAttribute("employeeSecurityFeature") EmployeeSecurityFeature employeeSecurityFeature,
 			@PathVariable("idDirector") Long idDirector,BindingResult result, Model model){
@@ -182,7 +279,16 @@ private static final Logger logger = LoggerFactory.getLogger(DirectorController.
 	}
 		
 									//get director comments page
-	
+	/**
+	 * This method return the directorcomments.jsp page with a list of all comments and marks left by client to ServiceStation
+	 * with view status = "director".
+	 * 
+	 * @type Long
+	 * @param idDirector
+	 * @param idServiceStation
+	 * 
+	 * @return directorcomments.jsp
+	 */
 	@RequestMapping(value="/profile/{idDirector}/{idServiceStation}/directorcomments",method=RequestMethod.GET)
 	public String getdirectorshowincomexpres(@PathVariable("idDirector") Long idDirector,
 			@PathVariable("idServiceStation") Long idServiceStation,Model model) {
@@ -198,9 +304,18 @@ private static final Logger logger = LoggerFactory.getLogger(DirectorController.
 		
 		return "/directorcomments"; 						
 	}
-	
 								  //get director financical report page
-
+	/**
+	 * This method return the directorgeneratereport.jsp page. On page director may
+	 * select date report and then genetate financical report for service station.
+	 * 
+	 * @type Long
+	 * 
+	 * @param idDirector
+	 * @param idServiceStation
+	 * 
+	 * @return directorgeneratereport page
+	 */
 	@RequestMapping(value="/profile/{idDirector}/{idServiceStation}/directorgeneratereport",method=RequestMethod.GET)
 	public String getdirectorgeneratereport(@PathVariable("idDirector") Long idDirector,
 			@PathVariable("idServiceStation") Long idServiceStation,Model model) {
@@ -222,7 +337,18 @@ private static final Logger logger = LoggerFactory.getLogger(DirectorController.
 	}
 	
 									//post director financical report page
-	
+	/**
+	 * This method return the directorgeneratereport.jsp page. On page director may
+	 * select department of service station, date report and then genetate financical
+	 * report for department.
+	 * 
+	 * @type Long
+	 * 
+	 * @param idDirector
+	 * @param idServiceStation
+	 * 
+	 * @return directorgeneratereport page
+	 */
 	@RequestMapping(value="/profile/{idDirector}/{idServiceStation}/directorgeneratereport",method=RequestMethod.POST)
 	public ModelAndView postdirectorgeneratereport(@ModelAttribute("departmentOrder") DepartmentOrder departmentOrder,
 			@PathVariable("idDirector") Long idDirector,@PathVariable("idServiceStation") Long idServiceStation,

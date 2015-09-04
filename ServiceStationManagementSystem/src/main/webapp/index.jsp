@@ -21,14 +21,22 @@
  -->
 <style>
 
-body {  
-	height: 100%;
-	margin: 0;
-    background: url(resources/img/index.jpeg);
-    background-size: 100% 250%; 
-    background-repeat:no-repeat;
-    display: compact;
-	 
+#bg {
+        position:fixed;
+        top:-50%;
+        left:-50%;
+        width:200%;
+        height:200%;
+}
+#bg img {
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        margin:auto;
+        min-width:50%;
+        min-height:50%;
 }
 
 .message {
@@ -59,6 +67,8 @@ body {
 
 </head>
  <body style="height: 200px; width: 1600px;">
+ 
+ <div id="bg"><img src="resources/img/index.jpg" alt=""></div>
  
 	<div class="container">
 	   <nav class="navbar nav-tab">
@@ -94,7 +104,7 @@ body {
    </div>
    
    
-   <div class="rightmenu">
+   <div class="rightmenu" style="width: 1100px;">
 	   <div class="col-md-3">
 	      <ul class="nav nav-pills nav-stacked">
 	        <li class="active"><a href="<spring:url value="/allservicestation"/>">All service station</a></li>

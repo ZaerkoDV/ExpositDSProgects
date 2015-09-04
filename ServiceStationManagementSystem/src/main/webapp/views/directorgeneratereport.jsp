@@ -64,7 +64,7 @@
 
 			<div class="form-group">
 				<div class="col-xs-4">
-					<p style="padding-top: 0px;">End data report(example 01/01/2000)</p>
+					<p style="padding-top: 0px;">End data report(example 01/02/2000)</p>
 					<div class="date form_date col-lg-9" data-date-format="dd/mm/yyyy"	data-date-viewmode="years">
 						<form:input type="text" class="form-control input-sm"id="endDataReport" placeholder="End data report" path="endOrder" />
 					</div>

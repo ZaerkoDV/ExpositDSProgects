@@ -31,7 +31,7 @@
 			      <ul class="nav nav-pills navbar-right">
 			        <li><a class="btn btn-primary" href="/ServiceStationManagementSystem/">To start page</a></li>
 			        <li><a class="btn btn-primary" 
-			        href="/ServiceStationManagementSystem/profile/${employee.idEmployee}/mechanicnotcompletedoverdord">
+			        href="/ServiceStationManagementSystem/profile/${employee.idEmployee}/mechanicdoneord">
 			        Mechanic done order</a></li>
 			        <li><a class="btn btn-primary" 
 			        href="/ServiceStationManagementSystem/profile/${employee.idEmployee}/mechanicselectcomments">Comments</a></li>

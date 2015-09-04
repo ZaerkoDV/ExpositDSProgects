@@ -585,7 +585,7 @@ public class ClientController {
 									    //post review service station page
 	
 	/**
-	 * This method return the incompleteclientallord.jsp by client id with support "getClientByEmail" method of clientService.
+	 * This method return the incompleteclientallord.jsp by client id
 	 * 
 	 * @type String
 	 * @type Long

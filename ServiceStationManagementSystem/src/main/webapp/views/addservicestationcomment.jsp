@@ -77,11 +77,11 @@
 				<form:option value="3" label="3" />
 				<form:option value="4" label="4" />
 				<form:option value="5" label="5" />
-				<form:option value="5" label="6" />
-				<form:option value="5" label="7" />
-				<form:option value="5" label="8" />
-				<form:option value="5" label="9" />
-				<form:option value="5" label="10" />
+				<form:option value="6" label="6" />
+				<form:option value="7" label="7" />
+				<form:option value="8" label="8" />
+				<form:option value="9" label="9" />
+				<form:option value="10" label="10" />
 		      </form:select>
 		     </div>
 		  </div>

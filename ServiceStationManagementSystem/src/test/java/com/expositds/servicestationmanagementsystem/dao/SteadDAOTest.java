@@ -76,19 +76,9 @@ public class SteadDAOTest {//extends AbstractTest  {
 //	 */
 //	@Before
 //	public void initSteadBeforeTest(){
-//		serviceStation = testObjectCreator.createServiceStationForTest();
-//		stead=testObjectCreator.createSteadForTest();
 //		department=testObjectCreator.createDepartmentForTest();
-//	}
-//	
-//	/**
-//	 * Destroy test object after method finish.
-//	 */
-//	@After 
-//	public void clearDepartmentAfterTest(){
-//		stead=null;
-//		serviceStation=null;
-//		department=null;
+//		stead=department.getStead();
+//		serviceStation=department.getServiceStation();
 //	}
 //
 //	/**

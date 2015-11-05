@@ -88,30 +88,14 @@ public class DepartmentDAOTest {//extends AbstractTest  {
 //	 * Create test object before test start.
 //	 */
 //	@Before
-//	public void initDepartmentBeforeTest(){
-//		serviceStation=testObjectCreator.createServiceStationForTest();
-//		stead=testObjectCreator.createSteadForTest();	
-//		department=testObjectCreator.createDepartmentForTest();
-//		departmentOrder=testObjectCreator.createDepartmentOrder();
+//	public void initDepartmentBeforeTest(){		
 //		detail=testObjectCreator.createDetailForTeat();
-//		client=testObjectCreator.createClientForTest();
-//		employee=testObjectCreator.createEmployeeForTest();
-//		employeeSecurityFeature=testObjectCreator.createEmployeeSecurityFeatureForTest();
-//	}
-//
-//	/**
-//	 * Destroy test object after method finish.
-//	 */
-//	@After 
-//	public void clearDepartmentAfterTest(){
-//		serviceStation=null;
-//		stead=null;
-//		department=null;
-//		client= null;
-//		employee=null;
-//		employeeSecurityFeature=null;
-//		departmentOrder=null;
-//		detail=null;
+//		departmentOrder=detail.getDepartmentOrder();
+//		client=departmentOrder.getClient();
+//		employee=departmentOrder.getEmployee();
+//		department=departmentOrder.getDepartment();
+//		stead=department.getStead();
+//		serviceStation=department.getServiceStation();
 //	}
 //
 //	/**
@@ -292,6 +276,8 @@ public class DepartmentDAOTest {//extends AbstractTest  {
 //	public void testGettingTotalDetailCostForNotcompletedOverdueDepartmentOrder(){
 //		
 //		//Total details cost not zero becouse order have detail.
+//		departmentOrder.setOrderStatus("notcompleted");
+//		
 //		Double actual =departmentDAO
 //				.getTotalDetailCostForNotcompletedOverdueDepartmentOrder(department.getIdDepartment());
 //		Double expected=detail.getDetailCost();
@@ -323,6 +309,7 @@ public class DepartmentDAOTest {//extends AbstractTest  {
 //	@Test
 //	public void testGettingFullIncomeForNotcompletedOverdueDepartmentOrder(){
 //		
+//		departmentOrder.setOrderStatus("notcompleted");
 //		Double actual =departmentDAO.getFullIncomeForNotcompletedOverdueDepartmentOrder(department
 //				.getIdDepartment());
 //		Double expected=departmentOrder.getOrderCost();

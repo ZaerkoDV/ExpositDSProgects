@@ -87,17 +87,6 @@ public class ServiceStationDAOTest {//extends AbstractTest  {
 //		stead=department.getStead();
 //		serviceStation=department.getServiceStation();
 //	}
-//	
-//	/**
-//	 * Destroy test object after method finish.
-//	 */
-//	@After 
-//	public void clearServiceStationAfterTest(){
-//		serviceStation = null;
-//		stead=null;
-//		department=null;
-//		departmentOrder=null;
-//	}
 //
 //	/**
 //	 * Method testSaveServiceStation are testing ServiceStation on

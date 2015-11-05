@@ -78,15 +78,6 @@ public class EmployeeSecurityFeatureDAOTest {//extends AbstractTest {
 //		employee=testObjectCreator.createEmployeeForTest();
 //		employeeSecurityFeature=testObjectCreator.createEmployeeSecurityFeatureForTest();
 //	}
-//
-//	/**
-//	 * Destroy test object after method finish.
-//	 */
-//	@After 
-//	public void clearEmployeeSecurityFeatureAfterTest(){
-//		employee=null;
-//		employeeSecurityFeature = null;
-//	}
 //		
 //	/**
 //	 * Method testSaveEmployeeSecurityFeature are testing EmployeeSecurityFeature

@@ -153,8 +153,8 @@ public class AbstractEntity—ommonDAOImpl extends HibernateDaoSupport implements 
 	@Transactional
 	public void deleteEntity(Object entity){
 		
-		logger.info("DAO:Entity delete successfully");
 		this.getHibernateTemplate().delete(entity);
 		this.getHibernateTemplate().flush();
+		logger.info("DAO:Entity delete successfully");
 	}
 }

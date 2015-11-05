@@ -167,17 +167,18 @@ public class ClientDAOImpl extends AbstractEntity—ommonDAOImpl implements Client
 				.createCriteria(Client.class);
 		criteria.add(Restrictions.eq("clientEmail", clientEmail));
 		
-		Client client = null;
+		Client client;
 		try {
 			client=(Client)criteria.uniqueResult();
 			logger.info("DAO:Client loaded successfully, idClient="+client.getIdClient());
 
-		}catch (NullPointerException e){
-			client= null;
+		}catch (final NullPointerException e){
 			logger.info("DAO:Client not loaded successfully.");
-
-		}catch(NonUniqueResultException e){
+			client= null;
+			
+		}catch(final NonUniqueResultException e){
 			 logger.info("DAO:Client with email not unique.");
+			 client= null;
 		}
 		return client;
 	}

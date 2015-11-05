@@ -602,9 +602,16 @@ public class ClientController {
 			@PathVariable("idServiceStation") Long idServiceStation,BindingResult result, Model model) {
 		
 		logger.info("ClientController POST: service station review page");	
-		Client autorizedClient =clientService.getClientByEmail(client.getClientEmail());
+		Client autorizedClient=(Client)clientService.getClientByEmail(client.getClientEmail());
+		
+       if(!autorizedClient.equals(null)){
+			logger.info("ClientController POST:Redirect to client page");
+			return new ModelAndView("redirect:" + "/profile/"+autorizedClient.getIdClient()+"/incompleteclientallord");	
 			
-		return new ModelAndView("redirect:" + "/profile/"+autorizedClient.getIdClient()+"/incompleteclientallord");
+		}else{
+			logger.info("ClientController POST:Error! Redirect to service station review page");	
+			return new ModelAndView("redirect:" + "/profile/"+idServiceStation+"/servicestationreview");		
+		}
 	}
 	
 										//get incompleted client page

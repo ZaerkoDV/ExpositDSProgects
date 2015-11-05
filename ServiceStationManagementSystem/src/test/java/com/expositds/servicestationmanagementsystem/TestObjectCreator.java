@@ -11,6 +11,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
+import org.apache.tomcat.jni.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -75,6 +76,10 @@ public class TestObjectCreator {
 		return serviceStation;
 	}
 	
+	public void deleteServiceStationAfterTest(Long idServiceStation){
+		abstractEntity—ommonDAO.deleteEntityById(ServiceStation.class, idServiceStation);
+	}
+	
 	/**
 	 * Method create new objects for test. 
 	 * 
@@ -89,6 +94,10 @@ public class TestObjectCreator {
 		abstractEntity—ommonDAO.saveEntity(stead);
 		
 		return stead;
+	}
+	
+	public void deleteSteadAfterTest(Long idStead) {
+		abstractEntity—ommonDAO.deleteEntityById(Stead.class, idStead);
 	}
 	
 	/**
@@ -108,6 +117,13 @@ public class TestObjectCreator {
 		department.setServiceStation(serviceStation);
 		abstractEntity—ommonDAO.saveEntity(department);	
 		return department;
+	}
+	
+	public void deleteDepartmentAfterTest(Long idDepartment) {
+		Department department =(Department) abstractEntity—ommonDAO.getEntityById(Department.class, idDepartment);
+		ServiceStation serviceStation= department.getServiceStation();
+		abstractEntity—ommonDAO.deleteEntity(department);
+		abstractEntity—ommonDAO.deleteEntity(serviceStation);
 	}
 	
 	/**
@@ -130,6 +146,10 @@ public class TestObjectCreator {
 		return client;
 	} 
 	
+	public void deleteClientAfterTest(Long idClient) {
+		abstractEntity—ommonDAO.deleteEntityById(Client.class, idClient);
+	}
+	
 	/**
 	 * Method create new objects for test. 
 	 * 
@@ -140,7 +160,6 @@ public class TestObjectCreator {
 	public ClientSecurityFeature createClientSecurityFeature(){
 		
 		Client client =createClientForTest();
-		
 		ClientSecurityFeature clientSecurityFeature = new ClientSecurityFeature();
 		clientSecurityFeature.setClientLogin("clientLoginTest");
 		clientSecurityFeature.setClientPassword("clientPasswordTest");
@@ -148,6 +167,14 @@ public class TestObjectCreator {
 		abstractEntity—ommonDAO.saveEntity(clientSecurityFeature);
 		
 		return clientSecurityFeature;
+	}
+	
+	public void deleteClientSecurityFeatureAfterTest(Long idClientSecurityFeature) {
+		ClientSecurityFeature clientSecurityFeature=(ClientSecurityFeature) abstractEntity—ommonDAO
+				.getEntityById(ClientSecurityFeature.class, idClientSecurityFeature);
+		Client client=clientSecurityFeature.getClient();
+		abstractEntity—ommonDAO.deleteEntity(clientSecurityFeature);
+		abstractEntity—ommonDAO.deleteEntity(client);		
 	}
 	
 	/**
@@ -162,7 +189,7 @@ public class TestObjectCreator {
 		employee.setEmployeFirstName("employeFirstNameTest");
 		employee.setEmployeLastName("employeLastNameTest");
 		employee.setEmployeMiddleName("employeMiddleNameTest");
-		employee.setEmployeFunction("employeFunctionTest");
+		employee.setEmployeFunction("mechanic");
 		employee.setEmployeTelephone("234567");
 		employee.setEmployeBirthday(new Date(date.getTime()-10));
 		employee.setEmployeEmail("test@mail.ru");
@@ -170,6 +197,10 @@ public class TestObjectCreator {
 		abstractEntity—ommonDAO.saveEntity(employee);
 		
 		return employee;
+	}
+	
+	public void deleteEmployeeAfterTest(Long idEmployee) {		
+		abstractEntity—ommonDAO.deleteEntityById(Employee.class, idEmployee);
 	}
 	
 	/**
@@ -190,6 +221,14 @@ public class TestObjectCreator {
 		abstractEntity—ommonDAO.saveEntity(employeeSecurityFeature);
 		
 		return employeeSecurityFeature;
+	}
+	
+	public void deleteEmployeeSecurityFeatureAfterTest(Long idEmployeeSecurityFeature) {
+		EmployeeSecurityFeature employeeSecurityFeature =(EmployeeSecurityFeature) abstractEntity—ommonDAO
+				.getEntityById(EmployeeSecurityFeature.class,idEmployeeSecurityFeature);
+		Employee employee=employeeSecurityFeature.getEmployee();
+		abstractEntity—ommonDAO.deleteEntity(employeeSecurityFeature);
+		abstractEntity—ommonDAO.deleteEntity(employee);
 	}
 	
 	/**
@@ -220,6 +259,23 @@ public class TestObjectCreator {
 		return departmentOrder;
 	}
 	
+	public void deleteDepartmentOrderAfterTest(Long idDepartmentOrder) {
+		DepartmentOrder departmentOrder=(DepartmentOrder) abstractEntity—ommonDAO
+				.getEntityById(DepartmentOrder.class, idDepartmentOrder);
+		Employee employee=departmentOrder.getEmployee();
+		Client client=departmentOrder.getClient();
+		Department department=departmentOrder.getDepartment();
+		ServiceStation serviceStation=department.getServiceStation();
+		Stead stead= department.getStead();
+		
+		abstractEntity—ommonDAO.deleteEntity(departmentOrder);
+		abstractEntity—ommonDAO.deleteEntity(employee);
+		abstractEntity—ommonDAO.deleteEntity(client);
+		abstractEntity—ommonDAO.deleteEntity(stead);
+		abstractEntity—ommonDAO.deleteEntity(department);
+		abstractEntity—ommonDAO.deleteEntity(serviceStation);
+	}
+	
 	/**
 	 * Method create new objects for test. 
 	 * 
@@ -240,6 +296,24 @@ public class TestObjectCreator {
 		abstractEntity—ommonDAO.saveEntity(detail);
 		
 		return detail;
+	}
+	
+	public void deleteDetailAfterTest(Long idDetail) {
+		Detail detail = (Detail) abstractEntity—ommonDAO.getEntityById(Detail.class, idDetail);
+		DepartmentOrder departmentOrder=detail.getDepartmentOrder();
+		Employee employee=departmentOrder.getEmployee();
+		Client client=departmentOrder.getClient();
+		Department department=departmentOrder.getDepartment();
+		Stead stead= department.getStead();
+		ServiceStation serviceStation=department.getServiceStation();
+		
+		abstractEntity—ommonDAO.deleteEntity(detail);
+		abstractEntity—ommonDAO.deleteEntity(departmentOrder);
+		abstractEntity—ommonDAO.deleteEntity(employee);
+		abstractEntity—ommonDAO.deleteEntity(client);
+		abstractEntity—ommonDAO.deleteEntity(stead);
+		abstractEntity—ommonDAO.deleteEntity(department);
+		abstractEntity—ommonDAO.deleteEntity(serviceStation);
 	}
 	
 	/**
@@ -264,4 +338,17 @@ public class TestObjectCreator {
 		
 		return serviceStationCommentMark;
 	}	
+	
+	public void deleteServiceStationCommentMarkAfterTest(Long idServiceStationCommentMark) {
+		
+		ServiceStationCommentMark serviceStationCommentMark= (ServiceStationCommentMark) abstractEntity—ommonDAO
+					.getEntityById(ServiceStationCommentMark.class,idServiceStationCommentMark);
+		
+		Client client=serviceStationCommentMark.getClient();
+		ServiceStation serviceStation=serviceStationCommentMark.getServiceStation();
+		abstractEntity—ommonDAO.deleteEntity(serviceStationCommentMark);
+		abstractEntity—ommonDAO.deleteEntity(client);
+		abstractEntity—ommonDAO.deleteEntity(serviceStation);
+	}	
+	
 }

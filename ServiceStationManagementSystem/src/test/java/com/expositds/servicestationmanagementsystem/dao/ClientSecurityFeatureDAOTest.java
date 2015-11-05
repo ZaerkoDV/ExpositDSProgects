@@ -76,15 +76,6 @@ public class ClientSecurityFeatureDAOTest {//extends AbstractTest {
 //		client =testObjectCreator.createClientForTest();
 //		clientSecurityFeature = testObjectCreator.createClientSecurityFeature();	
 //	}
-//
-//	/**
-//	 * Destroy test object after method finish.
-//	 */
-//	@After 
-//	public void clearClientSecurityFeatureAfterTest(){
-//		client=null;
-//		clientSecurityFeature = null;
-//	}
 //	
 //	/**
 //	 * Method testSaveClientSecurityFeature are testing ClientSecurityFeature save

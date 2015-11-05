@@ -7,12 +7,11 @@
  */
 package com.expositds.servicestationmanagementsystem.dao;
 
-import java.sql.Date;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -87,27 +86,13 @@ public class EmployeeDAOTest {//extends AbstractTest {
 //	@Before
 //	public void initEmployeeBeforeTest(){
 //		
-//		serviceStation=testObjectCreator.createServiceStationForTest();
-//		stead=testObjectCreator.createSteadForTest();	
-//		department=testObjectCreator.createDepartmentForTest();
 //		departmentOrder=testObjectCreator.createDepartmentOrder();
-//		client=testObjectCreator.createClientForTest();
-//		employee=testObjectCreator.createEmployeeForTest();
+//		client=departmentOrder.getClient();
+//		employee=departmentOrder.getEmployee();
+//		department=departmentOrder.getDepartment();
+//		stead=department.getStead();
+//		serviceStation=department.getServiceStation();
 //		employeeSecurityFeature=testObjectCreator.createEmployeeSecurityFeatureForTest();
-//	}
-//
-//	/**
-//	 * Destroy test object after method finish.
-//	 */
-//	@After 
-//	public void clearEmployeeAfterTest(){
-//		serviceStation= null;
-//		stead= null;
-//		department= null;
-//		client= null;
-//		employee= null;
-//		employeeSecurityFeature = null;
-//		departmentOrder= null;
 //	}
 //
 //	/**
@@ -279,11 +264,6 @@ public class EmployeeDAOTest {//extends AbstractTest {
 //
 //		//Mechanic exist.
 //		Assert.assertFalse(employeeDAO.getListMechanic().isEmpty());
-//
-//		//Mechanic not exist
-//		employee.setEmployeFunction("director");
-//		employeeDAO.updateEntity(employee);
-//		Assert.assertTrue(employeeDAO.getListMechanic().isEmpty());
 //	}
 //
 //	/**

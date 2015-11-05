@@ -78,19 +78,9 @@ public class ServiceStationCommentMarkDAOTest {//extends AbstractTest {
 //	 */
 //	@Before
 //	public void initServiceStationCommentMarkBeforeTest(){
-//		serviceStation=testObjectCreator.createServiceStationForTest();
-//		client=testObjectCreator.createClientForTest();
 //		serviceStationCommentMark=testObjectCreator.createServiceStationCommentMarkForTest();
-//	}
-//
-//	/**
-//	 * Destroy test object after method finish.
-//	 */
-//	@After 
-//	public void clearServiceStationCommentMarkAfterTest(){
-//		client=null;
-//		serviceStation = null;
-//		serviceStationCommentMark= null;
+//		serviceStation=serviceStationCommentMark.getServiceStation();
+//		client=serviceStationCommentMark.getClient();
 //	}
 //
 //	/**

@@ -61,11 +61,6 @@ public class AbstractEntityCommonDAOTest {//extends AbstractTest {
 //		this.serviceStation=testObjectCreator.createServiceStationForTest();
 //	}
 //	
-//	@After 
-//	public void clearObjectsForTest(){
-//		serviceStation= null;
-//	}
-//	
 //	/**
 //	 * Method testSaveEntityt are testing (abstract)entity on save operation.That
 //	 * method use test abstract object, which create before test run and destroy

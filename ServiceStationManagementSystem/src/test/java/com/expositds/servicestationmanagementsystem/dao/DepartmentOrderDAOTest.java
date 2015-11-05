@@ -79,7 +79,6 @@ public class DepartmentOrderDAOTest {//extends AbstractTest {
 //	public Department department;
 //	public Client client;
 //	public Employee employee;
-//	public EmployeeSecurityFeature employeeSecurityFeature;
 //	public DepartmentOrder departmentOrder;
 //	public Detail detail;
 //
@@ -88,29 +87,13 @@ public class DepartmentOrderDAOTest {//extends AbstractTest {
 //	 */
 //	@Before
 //	public void initDepartmentOrderBeforeTest(){
-//		serviceStation=testObjectCreator.createServiceStationForTest();
-//		stead=testObjectCreator.createSteadForTest();	
-//		department=testObjectCreator.createDepartmentForTest();
-//		departmentOrder=testObjectCreator.createDepartmentOrder();
 //		detail=testObjectCreator.createDetailForTeat();
-//		client=testObjectCreator.createClientForTest();
-//		employee=testObjectCreator.createEmployeeForTest();
-//		employeeSecurityFeature=testObjectCreator.createEmployeeSecurityFeatureForTest();
-//	}
-//
-//	/**
-//	 * Destroy test object after method finish.
-//	 */
-//	@After 
-//	public void clearDepartmentOrderAfterTest(){
-//		serviceStation=null;
-//		stead=null;
-//		department=null;
-//		client=null;
-//		employee=null;
-//		departmentOrder=null;
-//		detail=null;
-//		employeeSecurityFeature=null;
+//		departmentOrder=detail.getDepartmentOrder();
+//		client=departmentOrder.getClient();
+//		employee=departmentOrder.getEmployee();
+//		department=departmentOrder.getDepartment();
+//		stead=department.getStead();
+//		serviceStation=department.getServiceStation();
 //	}
 //
 //	/**

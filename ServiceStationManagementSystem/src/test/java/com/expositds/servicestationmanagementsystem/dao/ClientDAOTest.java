@@ -100,22 +100,6 @@ public class ClientDAOTest {//extends AbstractTest {
 //	}
 //
 //	/**
-//	 * Destroy test object after method finish.
-//	 */
-//	@After 
-//	public void clearClientSecurityFeatureAfterTest(){
-//		serviceStation= null;
-//		stead= null;
-//		department= null;
-//		client= null;
-//		clientSecurityFeature = null;
-//		clientSecurityFeature= null;
-//		employee= null;
-//		employeeSecurityFeature=null;
-//		departmentOrder= null;
-//	}
-//
-//	/**
 //	 * Method testSaveClient are testing client on save operation.That method use test
 //	 * object, which create before test run and destroy test object after method is
 //	 * finish. 
@@ -353,8 +337,11 @@ public class ClientDAOTest {//extends AbstractTest {
 //	@Test
 //	public void testGettingListNotcompletedOverdueOrderForClient(){
 //		
-//		//notcomplited order exist.
 //		Long idClient=client.getIdClient();
+//		
+//		//notcomplited order exist.
+//		departmentOrder.setOrderStatus("notcompleted");
+//		clientDAO.updateEntity(departmentOrder);
 //		Assert.assertFalse(clientDAO.getListNotcompletedOverdueOrderForClient(idClient).isEmpty());
 //
 //		//notcomplited order not exist.

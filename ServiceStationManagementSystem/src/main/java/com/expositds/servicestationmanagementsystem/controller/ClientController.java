@@ -530,6 +530,58 @@ public class ClientController {
 		
 		return "/"+beforePage;
 	}
+	
+								//get add new client order in department
+	
+	
+	@RequestMapping(value="/profile/{idClient}/clientneword",method=RequestMethod.GET)
+	public String getclientneword(@PathVariable("idClient") Long idClient,Model model) {
+		
+		logger.info("ClientController GET:save new clien order in department");
+		
+		model.addAttribute("idClient",idClient);
+		
+		//create new department order
+		DepartmentOrder departmentOrder=new DepartmentOrder();
+		model.addAttribute("departmentOrder",departmentOrder);
+		
+		List<Department> listAllDepartment=departmentService.getListAllDepartment();
+		model.addAttribute("listAllDepartment",listAllDepartment);
+		
+		List<Employee> listAllMechanic=employeeService.getListMechanic();
+		model.addAttribute("listAllMechanic",listAllMechanic);
+		
+		return "/clientneword";
+	}
+	
+	@RequestMapping(value="/profile/{idClient}/clientneword",method=RequestMethod.POST)
+	public String getincompleteclientneword(@Valid @PathVariable("idClient") Long idClient,
+			@ModelAttribute("departmentOrder") DepartmentOrder departmentOrder,	BindingResult result,Model model) {
+		
+		logger.info("ClientController POST:client create new department order");
+		
+		Client client= (Client) abstractEntity—ommonService.getEntityById(Client.class, idClient);
+		Employee employee= (Employee) abstractEntity—ommonService.getEntityById(Employee.class, departmentOrder.getEmployee().getIdEmployee());
+		Department department= (Department) abstractEntity—ommonService.getEntityById(Department.class, departmentOrder.getDepartment().getIdDepartment());
+
+		departmentOrder.setClient(client);
+		departmentOrder.setDepartment(department);
+		departmentOrder.setEmployee(employee);
+		departmentOrder.setStartOrder(new Date());
+		departmentOrder.setOrderStatus("notcompleted");
+		abstractEntity—ommonService.saveEntity(departmentOrder);
+
+
+		model.addAttribute("departmentOrder",departmentOrder);
+		List<Department> listAllDepartment=departmentService.getListAllDepartment();
+		model.addAttribute("listAllDepartment",listAllDepartment);
+
+		List<Employee> listAllMechanic=employeeService.getListMechanic();
+		model.addAttribute("listAllMechanic",listAllMechanic);
+
+		return "/clientneword";
+	}
+	
 									//getallservicestation
 	/**
 	 * This method return the allservicestation.jsp with list of all service station limit 20 per page.

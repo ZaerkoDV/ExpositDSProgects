@@ -159,6 +159,7 @@ public class DirectorController {
 		
 		Employee employee=(Employee) abstractEntity—ommonService.getEntityById(Employee.class, idDirector);
 		model.addAttribute("employee",employee);
+		//model.addAttribute("idDirector",idDirector);
 		
 		List<Employee> listEmployeeForServiceStation=serviceStationService
 				.getListEmployeeForServiceStation(employee.getDirectorOfServiceStation());

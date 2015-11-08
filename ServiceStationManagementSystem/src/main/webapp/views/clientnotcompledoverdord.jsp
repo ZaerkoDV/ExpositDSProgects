@@ -43,7 +43,8 @@ body {
 		    <div>
 		      <ul class="nav nav-pills navbar-right">
 		        <li><a class="btn btn-primary" href="/ServiceStationManagementSystem/">To start page</a></li>
-		        <li><a class="btn btn-primary" href="/ServiceStationManagementSystem/profile/${client.idClient}/clientdoneord">To done order</a></li>
+		        <li><a class="btn btn-primary" href="/ServiceStationManagementSystem/profile/${client.idClient}/clientdoneord">Done order</a></li>
+			    <li><a class="btn btn-primary" href="/ServiceStationManagementSystem/profile/${client.idClient}/clientneword">New order</a></li>
 		      </ul>
 		    </div>
 		  </div>

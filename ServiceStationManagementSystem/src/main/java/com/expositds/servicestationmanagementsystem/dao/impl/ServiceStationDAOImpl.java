@@ -228,12 +228,13 @@ public class ServiceStationDAOImpl extends AbstractEntity—ommonDAOImpl implement
 	public List<Employee> getListEmployeeForServiceStation(Long idServiceStation){
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
-				.createCriteria(DepartmentOrder.class);
+				.createCriteria(DepartmentOrder.class);		
 		criteria.createAlias("department", "dep");
 		criteria.createAlias("dep.serviceStation", "ser");
 		criteria.add(Restrictions.eq("ser.idServiceStation", idServiceStation));
-		criteria.setProjection(Projections.property("employee"));
-		
+
+		criteria.setProjection(Projections.distinct(Projections.property("employee")));
+				
 		List<Employee> listEmployee;
 		try{
 			listEmployee=(List<Employee>)criteria.list();	
